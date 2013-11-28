@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+此檔案包含字型的 xml 描述，並且將由 XNA
+Framework 內容管線讀取。請遵循註解來自訂遊戲中字型
+的外觀，以及變更可用來進行繪製的
+字元。
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+
+    <!--
+    修改此字串以變更將匯入的字型。
+    -->
+    <FontName>Segoe UI Mono</FontName>
+
+    <!--
+    大小是以點來測量的浮點值，修改此值即可變更
+    字型的大小。
+    -->
+    <Size>30</Size>
+
+    <!--
+    間距是以像素來測量的浮點值，修改此值即可變更
+    字元間的間距。
+    -->
+    <Spacing>0</Spacing>
+
+    <!--
+    UseKerning 控制字型的配置。如果此值為 true，則當放置字元時，會使用
+    字元間距調整資訊。
+    -->
+    <UseKerning>true</UseKerning>
+
+    <!--
+    Style 可控制字型的樣式。有效的輸入項目為「Regular」、「Bold」、「Italic」，
+    而「Bold」、「Italic」有區分大小寫。
+    -->
+    <Style>Regular</Style>
+
+    <!--
+    如果您取消註解此行，當您繪製或測量文字而該文字沒有包含此字型時，
+    便會以預設字元取代。
+    -->
+    <!-- <DefaultCharacter>*</DefaultCharacter> -->
+
+    <!--
+    CharacterRegions 控制字型中可用的字母。每個
+    從 Start 到 End 的字元都會建立，並且可供繪製使用。
+    預設範圍從 32 (ASCII 空格) 到 126 (~)，包含基本拉丁
+    字元集。字元順序是依照 Unicode 標準。
+    如需詳細資訊，請參閱說明文件。
+    -->
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#32;</Start>
+        <End>&#126;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

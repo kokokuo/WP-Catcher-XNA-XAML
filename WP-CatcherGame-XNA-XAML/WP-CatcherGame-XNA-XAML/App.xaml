@@ -1,0 +1,24 @@
+﻿<Application 
+    x:Class="WP_CatcherGame_XNA_XAML.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+     xmlns:xna="clr-namespace:Microsoft.Xna.Framework;assembly=Microsoft.Xna.Framework.Interop">
+
+    <!--應用程式資源-->
+    <Application.Resources>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--必要物件，用來處理應用程式的存留期事件-->
+        <shell:PhoneApplicationService 
+            Launching="Application_Launching" Closing="Application_Closing" 
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+
+
+    <!--SharedGraphicsDeviceManager 是用來以 XNA 圖形 API 呈現-->
+    <xna:SharedGraphicsDeviceManager />
+    </Application.ApplicationLifetimeObjects>
+
+</Application>
