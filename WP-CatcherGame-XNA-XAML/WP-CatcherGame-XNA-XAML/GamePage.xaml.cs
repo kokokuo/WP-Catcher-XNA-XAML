@@ -24,10 +24,14 @@ using CatcherGame.TextureManager;
 using CatcherGame.GameStates;
 using CatcherGame.FontManager;
 using System.Diagnostics;
+using Facebook.Client;
+using System.Threading.Tasks;
 namespace WP_CatcherGame_XNA_XAML
 {
     public partial class GamePage : PhoneApplicationPage
     {
+        private FacebookSession session;
+
         ContentManager contentManager;
         GameTimer timer;
         SpriteBatch spriteBatch;
@@ -117,7 +121,6 @@ namespace WP_CatcherGame_XNA_XAML
 
             base.OnNavigatedFrom(e);
         }
-
         /// <summary>
         /// 允許頁面執行邏輯，例如更新環境、
         /// 檢查衝突、收集輸入和播放音訊。
@@ -240,6 +243,37 @@ namespace WP_CatcherGame_XNA_XAML
         public ContentManager GetContentManager{
             get { return this.contentManager; }
         }
+
+
+        public async void LoginFacebook()
+        {
+            if (!App.isAuthenticated)
+            {
+                App.isAuthenticated = true;
+                await Authenticate();
+            }
+        }
         
+        private async Task Authenticate()
+        {
+            string message = String.Empty;
+            try
+            {
+                session = await App.FacebookSessionClient.LoginAsync("user_about_me,read_stream");
+                App.AccessToken = session.AccessToken;
+                App.FacebookId = session.FacebookId;
+
+                //Dispatcher.BeginInvoke(() => NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative)));
+            }
+            catch (InvalidOperationException e)
+            {
+                pCurrentScreenState = gameStateTable[GameStateEnum.STATE_MENU];
+                //message = "Login failed! Exception details: " + e.Message;
+                //MessageBox.Show(message);
+                //Authenticate();
+                //Dispatcher.BeginInvoke(() => NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative)));
+            }
+        }
+
     }
 }

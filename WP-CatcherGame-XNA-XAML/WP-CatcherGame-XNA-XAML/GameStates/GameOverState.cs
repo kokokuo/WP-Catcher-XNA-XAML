@@ -85,8 +85,10 @@ namespace CatcherGame.GameStates
                     //關閉按鈕
                     if ( menuButton.IsPixelClick(tL.Position.X, tL.Position.Y))
                     {
-                        Debug.WriteLine("CLICK!! STATE_MENU");
-                        SetNextGameSateByMain(GameStateEnum.STATE_MENU);
+                        
+                        base.LoginFacebook();
+                        //Debug.WriteLine("CLICK!! STATE_MENU");
+                        //SetNextGameSateByMain(GameStateEnum.STATE_MENU);
                     }
                 }
 

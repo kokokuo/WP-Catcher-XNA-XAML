@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Facebook.Client;
 
 namespace WP_CatcherGame_XNA_XAML
 {
@@ -192,5 +193,14 @@ namespace WP_CatcherGame_XNA_XAML
         }
 
         #endregion
+
+
+        /// <summary>
+        /// Facebook參數宣告
+        /// </summary>
+        internal static string AccessToken = String.Empty;
+        internal static string FacebookId = String.Empty;
+        public static bool isAuthenticated = false;
+        public static FacebookSessionClient FacebookSessionClient = new FacebookSessionClient(Constants.Constants.FacebookAppId);
     }
 }

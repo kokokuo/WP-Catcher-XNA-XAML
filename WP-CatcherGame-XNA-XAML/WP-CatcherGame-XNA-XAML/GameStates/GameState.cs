@@ -295,5 +295,9 @@ namespace CatcherGame.GameStates
         {
             return mainGame.GetDeviceScreenHeight();
         }
+        public void LoginFacebook()
+        {
+            mainGame.LoginFacebook();
+        }
     }
 }
