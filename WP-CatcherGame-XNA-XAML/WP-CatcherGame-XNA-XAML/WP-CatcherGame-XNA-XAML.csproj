@@ -54,6 +54,7 @@
     <Reference Include="Facebook.Client">
       <HintPath>..\..\packages\Facebook.Client.0.8.5-alpha\lib\wp71\Facebook.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Devices.Sensors" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Threading.Tasks">

@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Devices.Sensors; //重力感測器
 
 using CatcherGame.TextureManager;
 using CatcherGame.GameStates;
@@ -51,6 +52,8 @@ namespace WP_CatcherGame_XNA_XAML
         //現在這張frame所擁有的所有觸控點集合
         TouchCollection currtenTouchCollection;
 
+        Accelerometer acc; //三軸加速器
+        Vector3 accVector; //紀錄三軸加速器資料
         public GamePage()
         {
             InitializeComponent();
@@ -79,11 +82,26 @@ namespace WP_CatcherGame_XNA_XAML
             TouchPanel.DisplayOrientation = Microsoft.Xna.Framework.DisplayOrientation.LandscapeLeft;
             TouchPanel.EnabledGestures = GestureType.Tap | GestureType.FreeDrag | GestureType.None | GestureType.Hold;
 
-
             touchQueue = new Queue<TouchLocation>();
 
-           
+            //三軸加速器
+            accVector = new Vector3();
+            acc = new Accelerometer();
+            acc.CurrentValueChanged += new EventHandler<SensorReadingEventArgs<AccelerometerReading>>(acc_CurrentValueChanged);
+            try {
+                acc.Start();
+            }
+            catch {}
+
         }
+
+        private void acc_CurrentValueChanged(object sender, SensorReadingEventArgs<AccelerometerReading> arg)
+        {
+            accVector.X = (float)arg.SensorReading.Acceleration.X;
+            accVector.Y = (float)arg.SensorReading.Acceleration.Y;
+            accVector.Z = (float)arg.SensorReading.Acceleration.Z;
+        }
+
 
         private void Init() {
             fontManager = new SpriteFontManager(this);
@@ -275,5 +293,12 @@ namespace WP_CatcherGame_XNA_XAML
             }
         }
 
+        /// <summary>
+        /// 取得三軸加速器的資料
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetAccVector() {
+            return this.accVector;
+        }
     }
 }

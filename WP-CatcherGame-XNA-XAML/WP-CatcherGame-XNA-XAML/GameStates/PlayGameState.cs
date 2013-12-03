@@ -306,7 +306,7 @@ namespace CatcherGame.GameStates
                         if (!isClickPause)
                             isClickPause = pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                     }
-
+                   
                     //遊戲邏輯判斷
                     if (isMoveLeft && !isMoveRight)
                     {
