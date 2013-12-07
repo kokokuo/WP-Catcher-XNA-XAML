@@ -67,7 +67,7 @@ namespace WP_CatcherGame_XNA_XAML
             timer.UpdateInterval = TimeSpan.FromTicks(333333);
             timer.Update += OnUpdate;
             timer.Draw += OnDraw;
-          
+            SupportedOrientations = SupportedPageOrientation.Landscape;
             Debug.WriteLine(SharedGraphicsDeviceManager.Current.PreferredBackBufferHeight);
             Debug.WriteLine(SharedGraphicsDeviceManager.Current.PreferredBackBufferWidth);
 
@@ -87,15 +87,22 @@ namespace WP_CatcherGame_XNA_XAML
             //三軸加速器
             accVector = new Vector3();
             acc = new Accelerometer();
-            if (Accelerometer.IsSupported) {
-                Debug.WriteLine("Support");
-            }
+            
+          
             acc.CurrentValueChanged += new EventHandler<SensorReadingEventArgs<AccelerometerReading>>(acc_CurrentValueChanged);
-            try {
-                acc.Start();
-            }
-            catch {}
 
+            if (Accelerometer.IsSupported)
+            {
+                Debug.WriteLine("Support");
+                try
+                {
+                    acc.Start();
+                }
+                catch { }
+            }
+            else {
+                Debug.WriteLine("Not Support");
+            }
         }
 
         private void acc_CurrentValueChanged(object sender, SensorReadingEventArgs<AccelerometerReading> arg)

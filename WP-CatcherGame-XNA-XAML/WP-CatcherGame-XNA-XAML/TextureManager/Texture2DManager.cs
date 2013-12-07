@@ -69,6 +69,7 @@ namespace CatcherGame.TextureManager
             //道具
             LoadPlayBoostingShoes();
             LoadPlaySlowShoes();
+            LoadLifeHeart();
 
             //載入遊戲中的暫停對話框
             LoadPauseDialogBackground();
@@ -406,6 +407,22 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
+
+
+        //遊戲中的愛心
+        private void LoadLifeHeart()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_HEART;
+
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/Item/heart"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/Item/disappear"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
 
         //遊戲中降速
         private void LoadPlaySlowShoes()

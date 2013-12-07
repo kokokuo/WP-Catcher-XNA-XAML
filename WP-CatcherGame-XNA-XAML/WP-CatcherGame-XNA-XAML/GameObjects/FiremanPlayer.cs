@@ -60,6 +60,8 @@ namespace CatcherGame.GameObjects
             float displayX = (((PlayGameState)gameState).GetLifeTextureLayer().X + ((PlayGameState)gameState).GetLifeTextureLayer().Width / 2 ) - item.Width / 2;
             //註冊使用時間到的時候的事件
             item.EffectTimesUp += item_EffectTimesUp;
+
+            //鞋子部分
             if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES && caughtEffectItem.Count > 0)
             {
                 foreach (EffectItem slowItem in caughtEffectItem)
@@ -114,6 +116,11 @@ namespace CatcherGame.GameObjects
                 }
             }
 
+            //愛心
+            if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_HEART)
+            {
+                ((PlayGameState)gameState).AddCanLostPeopleNumber();
+            }
         }
 
        

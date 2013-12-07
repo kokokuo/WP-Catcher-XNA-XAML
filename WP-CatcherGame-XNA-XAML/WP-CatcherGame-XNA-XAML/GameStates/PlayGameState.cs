@@ -198,6 +198,13 @@ namespace CatcherGame.GameStates
             }
         }
 
+        //增加可漏接的次數
+        public void AddCanLostPeopleNumber()
+        {
+            this.lostPeopleNumber++;
+            
+        }
+
         public override void LoadResource()
         {
             //載入文字
@@ -306,32 +313,33 @@ namespace CatcherGame.GameStates
                         if (!isClickPause)
                             isClickPause = pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                     }
-                   
-                    player.Move(leftGameScreenBorder,rightGameScreenBorder,mainGame.GetAccVector());
-                    ////遊戲邏輯判斷
-                    //if (isMoveLeft && !isMoveRight)
-                    //{
-                    //    //Debug.WriteLine("Click Left Button");
-                    //    player.MoveLeft(leftGameScreenBorder);
-                    //}
-                    //else if (!isMoveLeft && isMoveRight)
-                    //{
-                    //    //Debug.WriteLine("Click Right Button");
-                    //    player.MoveRight(rightGameScreenBorder);
-                    //}
-                    //else if (!isMoveLeft && !isMoveRight)
-                    //{
-                    //    player.SetStand(); //設定站立
-                    //}
+
+
+                    //遊戲邏輯判斷
+                    if (isMoveLeft && !isMoveRight)
+                    {
+                        //Debug.WriteLine("Click Left Button");
+                        player.MoveLeft(leftGameScreenBorder);
+                    }
+                    else if (!isMoveLeft && isMoveRight)
+                    {
+                        //Debug.WriteLine("Click Right Button");
+                        player.MoveRight(rightGameScreenBorder);
+                    }
+                    else if (!isMoveLeft && !isMoveRight)
+                    {
+                        player.SetStand(); //設定站立
+                    }
                     if(isClickPause){
                         this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
                     }
 
                 }
-                //else {
-                  //  player.SetStand(); //設定站立
-                //}
-                player.Move(leftGameScreenBorder, rightGameScreenBorder, mainGame.GetAccVector());
+                else
+                {
+                    player.SetStand(); //設定站立
+                }
+                //player.Move(leftGameScreenBorder, rightGameScreenBorder, mainGame.GetAccVector());
 
                 player.CheckIsCaught(fallingObjects);
 
