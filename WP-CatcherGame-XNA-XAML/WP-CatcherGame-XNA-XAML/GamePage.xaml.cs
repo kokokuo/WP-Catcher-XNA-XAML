@@ -87,6 +87,9 @@ namespace WP_CatcherGame_XNA_XAML
             //三軸加速器
             accVector = new Vector3();
             acc = new Accelerometer();
+            if (Accelerometer.IsSupported) {
+                Debug.WriteLine("Support");
+            }
             acc.CurrentValueChanged += new EventHandler<SensorReadingEventArgs<AccelerometerReading>>(acc_CurrentValueChanged);
             try {
                 acc.Start();

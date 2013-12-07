@@ -297,6 +297,34 @@ namespace CatcherGame.GameObjects
             }
         }
 
+        public void Move(float leftGameScreenBorder, float rightGameScreenBorder, Vector3 accSpeed) {
+
+            if (accSpeed.Y == 0)
+            {
+                isWalking = false;
+            }
+            else
+            {
+                //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
+                if ((this.savedNet.X + (accSpeed.Y * LEFT_MOVE_STEP)) >= leftGameScreenBorder)
+                {
+                    //Debug.WriteLine("Can Move Left Way");
+                    this.x += (accSpeed.Y * LEFT_MOVE_STEP);
+                    this.savedNet.X += (accSpeed.Y * LEFT_MOVE_STEP); //網子跟著移動
+                    isWalking = true;
+
+                }
+                else if ((this.savedNet.X + this.savedNet.Width) + (accSpeed.Y * RIGHT_MOVE_STEP) <= rightGameScreenBorder)
+                {
+                    //Debug.WriteLine("Can Move Right Way");
+                    this.x += (accSpeed.Y * RIGHT_MOVE_STEP);
+                    this.savedNet.X += (accSpeed.Y * RIGHT_MOVE_STEP); //網子跟著移動
+                    isWalking = true;
+
+                }
+            }
+        }
+
         //設定消防員往右移動
         public void MoveRight(float rightGameScreenBorder)
         {

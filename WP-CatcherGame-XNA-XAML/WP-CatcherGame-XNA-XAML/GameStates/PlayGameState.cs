@@ -307,29 +307,32 @@ namespace CatcherGame.GameStates
                             isClickPause = pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                     }
                    
-                    //遊戲邏輯判斷
-                    if (isMoveLeft && !isMoveRight)
-                    {
-                        //Debug.WriteLine("Click Left Button");
-                        player.MoveLeft(leftGameScreenBorder);
-                    }
-                    else if (!isMoveLeft && isMoveRight)
-                    {
-                        //Debug.WriteLine("Click Right Button");
-                        player.MoveRight(rightGameScreenBorder);
-                    }
-                    else if (!isMoveLeft && !isMoveRight)
-                    {
-                        player.SetStand(); //設定站立
-                    }
+                    player.Move(leftGameScreenBorder,rightGameScreenBorder,mainGame.GetAccVector());
+                    ////遊戲邏輯判斷
+                    //if (isMoveLeft && !isMoveRight)
+                    //{
+                    //    //Debug.WriteLine("Click Left Button");
+                    //    player.MoveLeft(leftGameScreenBorder);
+                    //}
+                    //else if (!isMoveLeft && isMoveRight)
+                    //{
+                    //    //Debug.WriteLine("Click Right Button");
+                    //    player.MoveRight(rightGameScreenBorder);
+                    //}
+                    //else if (!isMoveLeft && !isMoveRight)
+                    //{
+                    //    player.SetStand(); //設定站立
+                    //}
                     if(isClickPause){
                         this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
                     }
 
                 }
-                else {
-                    player.SetStand(); //設定站立
-                }
+                //else {
+                  //  player.SetStand(); //設定站立
+                //}
+                player.Move(leftGameScreenBorder, rightGameScreenBorder, mainGame.GetAccVector());
+
                 player.CheckIsCaught(fallingObjects);
 
                 //如果有要移除的元件,執行移除方法
