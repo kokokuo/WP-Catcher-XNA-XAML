@@ -30,6 +30,7 @@ namespace CatcherGame.GameObjects
         //移動步伐
         int LEFT_MOVE_STEP = -7;
         int RIGHT_MOVE_STEP = 7;
+
         bool isWalking; //是否移動
         Net savedNet; //網子類別(Has)
         float init_x, init_y;
@@ -47,11 +48,11 @@ namespace CatcherGame.GameObjects
 
             //數值待解決(改為依裝置吃尺寸去調整)
             savedNet = new Net(currentGameState, id, x + 73, y + 85, this);
-             savedNet.AddSavedPerson += savedNet_AddSavedPerson;
-             savedNet.CaughtEffectItems += savedNet_CaughtEffectItems;
-             savedNet.LoadResource(TexturesKeyEnum.PLAY_NET);
+            savedNet.AddSavedPerson += savedNet_AddSavedPerson;
+            savedNet.CaughtEffectItems += savedNet_CaughtEffectItems;
+            savedNet.LoadResource(TexturesKeyEnum.PLAY_NET);
 
-             caughtCreaturesKey = new List<DropObjectsKeyEnum>();
+            caughtCreaturesKey = new List<DropObjectsKeyEnum>();
         }
         
         private void savedNet_CaughtEffectItems(EffectItem item)
@@ -304,6 +305,7 @@ namespace CatcherGame.GameObjects
             }
         }
 
+        //重力感測器移動
         public void Move(float leftGameScreenBorder, float rightGameScreenBorder, Vector3 accSpeed) {
 
             if (accSpeed.Y == 0)
