@@ -53,11 +53,18 @@ namespace CatcherGame.TextureManager
             LoadPlayGamePauseButton();
             LoadPlayGameLeftMoveButton();
             LoadPlayGameRightMoveButton();
-            LoadPlayGameFireman();
+            //消防員
+            LoadPlayGameFiremanLeft();
+            LoadPlayGameFiremanRight();
+
             LoadPlayGameSmokePicture();
             LoadPlayGameScorePicture();
             LoadPlayGameLifePicture();
-            LoadPlayNet();
+            //網子
+            LoadPlayNetNormal();
+            LoadPlayNetSmall();
+            LoadPlayNetLarge();
+            
             LoadPlayDie();
             LoadPlayFlyOldLady();
             LoadPlayFatDance();
@@ -365,30 +372,70 @@ namespace CatcherGame.TextureManager
 
         }
 
-        //遊戲中的消防員
-        private void LoadPlayGameFireman()
+        //遊戲中的消防員(左邊)
+        private void LoadPlayGameFiremanLeft()
         {
-            TexturesKeyEnum key = TexturesKeyEnum.PLAY_FIREMAN;
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_FIREMAN_LEFT;
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/fireman_1"));
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/fireman_2"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/fireman_left1"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/fireman_left2"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+        //遊戲中的消防員(右邊)
+        private void LoadPlayGameFiremanRight()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_FIREMAN_RIGHT;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/fireman_right1"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/fireman_right2"));
                 _dictionary.Add(key, texture2Ds);
             }
 
         }
 
-
-        //遊戲中的救人網子
-        private void LoadPlayNet()
+        //遊戲中的救人網子(正常)
+        private void LoadPlayNetNormal()
         {
-            TexturesKeyEnum key = TexturesKeyEnum.PLAY_NET;
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_NET_NORMAL;
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net1"));
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net2"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_mid"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_mid)caught"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+
+        //遊戲中的救人網子(縮小)
+        private void LoadPlayNetSmall()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_NET_SMALL;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_small"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_small_caught"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+
+        //遊戲中的救人網子(放大)
+        private void LoadPlayNetLarge()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_NET_LARGE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_big"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_big_caught"));
                 _dictionary.Add(key, texture2Ds);
             }
 

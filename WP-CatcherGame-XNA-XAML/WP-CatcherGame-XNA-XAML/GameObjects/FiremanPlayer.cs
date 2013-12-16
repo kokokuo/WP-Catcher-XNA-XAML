@@ -50,7 +50,10 @@ namespace CatcherGame.GameObjects
             savedNet = new Net(currentGameState, id, x + 73, y + 85, this);
             savedNet.AddSavedPerson += savedNet_AddSavedPerson;
             savedNet.CaughtEffectItems += savedNet_CaughtEffectItems;
-            savedNet.LoadResource(TexturesKeyEnum.PLAY_NET);
+            //網子資源
+            savedNet.LoadResource(TexturesKeyEnum.PLAY_NET_NORMAL);
+            savedNet.LoadResource(TexturesKeyEnum.PLAY_NET_SMALL);
+            savedNet.LoadResource(TexturesKeyEnum.PLAY_NET_LARGE);
 
             caughtCreaturesKey = new List<DropObjectsKeyEnum>();
         }

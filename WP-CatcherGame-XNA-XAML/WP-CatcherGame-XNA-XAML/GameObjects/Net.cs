@@ -24,8 +24,10 @@ namespace CatcherGame.GameObjects
         public event ValueAddedEventHandler AddSavedPerson;
         public event CaughtEffectItemsEventHandler CaughtEffectItems;
 
-        AnimationSprite netStateAnimation; //網子動畫
-        
+        List<AnimationSprite> netStateAnimationList; //所有狀態的網子動畫
+        AnimationSprite pCurrentNetAnimation; 
+        const int NORMAL_NET_KEY = 0, SMALL_NET_KEY = 1, LARGE_NET_KEY = 2;
+
         List<int> willRemoveObjectId;
         bool isCaught; //用來讓網子在接觸到物體時可以撥放網子往下凹的效果動畫,而做的判斷值
         FiremanPlayer player;
@@ -40,7 +42,7 @@ namespace CatcherGame.GameObjects
         {
             this.x = x;
             this.y = y;
-            netStateAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
+            netStateAnimationList = new List<AnimationSprite>();
             
             willRemoveObjectId = new List<int>();
             isCaught = false;
@@ -51,6 +53,12 @@ namespace CatcherGame.GameObjects
         public override void LoadResource(TexturesKeyEnum key)
         {
             SetTexture2DList(key);
+
+            if (netStateAnimationList.Count >= 3)
+            {
+                //設定目前的圖片組是"正常模式"
+                pCurrentNetAnimation = netStateAnimationList[NORMAL_NET_KEY];
+            }
         }
 
         /// <summary>
@@ -59,29 +67,38 @@ namespace CatcherGame.GameObjects
         /// <param name="key"></param>
         private void SetTexture2DList(TexturesKeyEnum key)
         {
-            netStateAnimation.SetTexture2DList(base.gameState.GetTexture2DList(key));
-            this.Height = netStateAnimation.GetCurrentFrameTexture().Height;
-            this.Width = netStateAnimation.GetCurrentFrameTexture().Width;
+
+            AnimationSprite animation = new AnimationSprite(new Vector2(this.x, this.y), 300);
+            animation.SetTexture2DList(base.gameState.GetTexture2DList(key));
+            netStateAnimationList.Add(animation);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            netStateAnimation.Draw(spriteBatch);
+            pCurrentNetAnimation.Draw(spriteBatch);
 
         }
 
+        public void SetNetState(int key) { 
+            
+        }
         public override void Update()
         {
-            netStateAnimation.SetToLeftPos(this.x, this.y);
+            
 
             //如果接住 播完網子往下凹的動畫
             if (isCaught)
             {
-                netStateAnimation.SetNextWantFrameIndex(1); //索引是1
+                pCurrentNetAnimation.SetNextWantFrameIndex(1); //索引是1
             }
             else { //播正常的網子
-                netStateAnimation.SetNextWantFrameIndex(0);
+                pCurrentNetAnimation.SetNextWantFrameIndex(0);
             }
+
+            pCurrentNetAnimation.SetToLeftPos(this.x, this.y);
+
+            this.Height = pCurrentNetAnimation.GetCurrentFrameTexture().Height;
+            this.Width = pCurrentNetAnimation.GetCurrentFrameTexture().Width;
         }
         /// <summary>
         /// 傳進遊戲持有的所有掉落物件,計算有無碰撞

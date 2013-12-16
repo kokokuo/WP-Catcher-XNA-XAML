@@ -212,23 +212,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Play\fireman_big_left1.png">
-      <Name>fireman_big_left1</Name>
+    <Compile Include="Play\fireman_left1.png">
+      <Name>fireman_left1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Play\fireman_big_left2.png">
-      <Name>fireman_big_left2</Name>
+    <Compile Include="Play\fireman_left2.png">
+      <Name>fireman_left2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Play\fireman_big_right1.png">
-      <Name>fireman_big_right1</Name>
+    <Compile Include="Play\fireman_right1.png">
+      <Name>fireman_right1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Play\fireman_big_right2.png">
-      <Name>fireman_big_right2</Name>
+    <Compile Include="Play\fireman_right2.png">
+      <Name>fireman_right2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

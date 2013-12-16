@@ -30,14 +30,21 @@ namespace CatcherGame.TextureManager
         //PALY GAME----------------------------
         PLAY_BACKGROUND,
         PLAY_FLOOR,
-        PLAY_FIREMAN,
+        //FIREMAN
+        PLAY_FIREMAN_LEFT,
+        PLAY_FIREMAN_RIGHT,
+
         PLAY_LEFT_MOVE_BUTTON,
         PLAY_RIGHT_MOVE_BUTTON,
         PLAY_PAUSE_BUTTON,
         PLAY_SMOKE,
         PLAY_LIFE,
         PLAY_SCORE,
-        PLAY_NET,
+        //NET
+        PLAY_NET_NORMAL,
+        PLAY_NET_SMALL,
+        PLAY_NET_LARGE,
+
         PLAY_DIE,
         PLAY_FLYOLDELADY_FALL,
         PLAY_FLYOLDELADY_CAUGHT,
