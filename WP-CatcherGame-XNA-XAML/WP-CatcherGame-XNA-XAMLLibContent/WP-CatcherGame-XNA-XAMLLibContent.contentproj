@@ -545,13 +545,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Play\Item\Net expander.png">
-      <Name>Net expander</Name>
+    <Compile Include="Play\Item\net_expander.png">
+      <Name>net_expander</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Play\Item\Net shrinker.png">
-      <Name>Net shrinker</Name>
+    <Compile Include="Play\Item\net_shrinker.png">
+      <Name>net_shrinker</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

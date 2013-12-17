@@ -58,6 +58,8 @@ namespace CatcherGame.GameObjects
             {
                 //設定目前的圖片組是"正常模式"
                 pCurrentNetAnimation = netStateAnimationList[NORMAL_NET_KEY];
+                this.Height = pCurrentNetAnimation.GetCurrentFrameTexture().Height;
+                this.Width = pCurrentNetAnimation.GetCurrentFrameTexture().Width;
             }
         }
 
@@ -79,13 +81,36 @@ namespace CatcherGame.GameObjects
 
         }
 
-        public void SetNetState(int key) { 
-            
+        /// <summary>
+        /// 切換網子圖片狀態
+        /// </summary>
+        /// <param name="key">0 = 正常網子大小,1 = 縮小版網子大小,2 = 放大版網子大小</param>
+        /// <returns>true 表示輸入的Key是正確的數值</returns>
+        public bool SetNetState(int key) {
+            if (key == NORMAL_NET_KEY) {
+                pCurrentNetAnimation = netStateAnimationList[NORMAL_NET_KEY];
+                this.Height = pCurrentNetAnimation.GetCurrentFrameTexture().Height;
+                this.Width = pCurrentNetAnimation.GetCurrentFrameTexture().Width;
+                return true;    
+            }
+            else if (key == SMALL_NET_KEY) {
+                pCurrentNetAnimation = netStateAnimationList[SMALL_NET_KEY];
+                this.Height = pCurrentNetAnimation.GetCurrentFrameTexture().Height;
+                this.Width = pCurrentNetAnimation.GetCurrentFrameTexture().Width;
+                return true;
+            }
+            else if (key == LARGE_NET_KEY) {
+                pCurrentNetAnimation = netStateAnimationList[LARGE_NET_KEY];
+                this.Height = pCurrentNetAnimation.GetCurrentFrameTexture().Height;
+                this.Width = pCurrentNetAnimation.GetCurrentFrameTexture().Width;
+                return true;
+            }
+            return false;
+
         }
         public override void Update()
         {
             
-
             //如果接住 播完網子往下凹的動畫
             if (isCaught)
             {
@@ -186,9 +211,14 @@ namespace CatcherGame.GameObjects
 
                 if (disposing)
                 {
-                    if (netStateAnimation != null)
+                    if (netStateAnimationList.Count >0)
                     {
-                        netStateAnimation.Dispose();
+                        foreach (AnimationSprite animation in netStateAnimationList)
+                        {
+                            animation.Dispose();
+                        }
+                        netStateAnimationList.Clear();
+                        pCurrentNetAnimation = null;
                     }
                     if (willRemoveObjectId.Count > 0) {
                         willRemoveObjectId.Clear();

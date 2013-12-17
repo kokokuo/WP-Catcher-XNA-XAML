@@ -31,6 +31,7 @@ namespace CatcherGame.TextureManager
         PLAY_BACKGROUND,
         PLAY_FLOOR,
         //FIREMAN
+        PLAY_FIREMAN,
         PLAY_FIREMAN_LEFT,
         PLAY_FIREMAN_RIGHT,
 
@@ -77,6 +78,8 @@ namespace CatcherGame.TextureManager
         PLAY_ITEM_BOOSTING_SHOES,
         PLAY_ITEM_SLOW_SHOES,
         PLAY_ITEM_HEART,
+        PLAY_ITEM_NET_SHRINKER,
+        PLAY_ITEM_NET_EXPANDER,
         //PAUSE DIALOG------------------------------
         PAUSE_DIALOG_BACK,
         PAUSE_EXIT,

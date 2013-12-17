@@ -140,6 +140,14 @@ namespace CatcherGame
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ITEM_HEART);
             generaterEffectItemReocrd.Add(DropObjectsKeyEnum.ITEM_HEART, new EffectItemDataRecord(DropObjectsKeyEnum.ITEM_HEART, 0.15f, loadTexureKeys, 3f, 0f, 1f));
+            //網子
+            loadTexureKeys = new List<TexturesKeyEnum>();
+            loadTexureKeys.Add(TexturesKeyEnum.PLAY_ITEM_NET_EXPANDER);
+            generaterEffectItemReocrd.Add(DropObjectsKeyEnum.ITEM_NET_EXPANDER, new EffectItemDataRecord(DropObjectsKeyEnum.ITEM_NET_EXPANDER, 0.2f, loadTexureKeys, 3f, 0f, 5f));
+
+            loadTexureKeys = new List<TexturesKeyEnum>();
+            loadTexureKeys.Add(TexturesKeyEnum.PLAY_ITEM_NET_SHRINKER);
+            generaterEffectItemReocrd.Add(DropObjectsKeyEnum.ITEM_NET_SHRINKER, new EffectItemDataRecord(DropObjectsKeyEnum.ITEM_NET_SHRINKER, 0.2f, loadTexureKeys, 3f, 0f, 5f));
         }
 
         //計算掉落物產生的機率值 並且是否有滿足條件設定的機率(產生的機率值小於設定的機率)

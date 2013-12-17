@@ -80,8 +80,6 @@ Content\Play\Item\flame_fall_2.xnb
 Content\Play\Item\flame_on_net_1.xnb
 Content\Play\Item\flame_on_net_2.xnb
 Content\Play\Item\heart.xnb
-Content\Play\Item\Net expander.xnb
-Content\Play\Item\Net shrinker.xnb
 Content\Play\Item\slow.xnb
 Content\Play\Item\smoke.xnb
 Content\Play\littlegirl\littlegirlfall1.xnb
@@ -131,3 +129,5 @@ Content\Play\net_mid.xnb
 Content\Play\net_mid_caught.xnb
 Content\Play\net_small.xnb
 Content\Play\net_small_caught.xnb
+Content\Play\Item\net_expander.xnb
+Content\Play\Item\net_shrinker.xnb

@@ -22,6 +22,8 @@ namespace CatcherGame.GameObjects
         //ITEM
         ITEM_BOOSTING_SHOES,
         ITEM_SLOW_SHOES,
-        ITEM_HEART
+        ITEM_HEART,
+        ITEM_NET_EXPANDER,
+        ITEM_NET_SHRINKER
     }
 }

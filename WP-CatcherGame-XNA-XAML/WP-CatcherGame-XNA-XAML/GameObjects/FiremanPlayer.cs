@@ -26,11 +26,12 @@ namespace CatcherGame.GameObjects
         }
 
 
-        AnimationSprite walkAnimation;
+        AnimationSprite leftFireManWalkAnimation; //左邊的消防員
+        AnimationSprite rightFireManWalkAnimation; //右邊的消防員
         //移動步伐
         int LEFT_MOVE_STEP = -7;
         int RIGHT_MOVE_STEP = 7;
-
+        float rightFiremanXPos;
         bool isWalking; //是否移動
         Net savedNet; //網子類別(Has)
         float init_x, init_y;
@@ -43,9 +44,6 @@ namespace CatcherGame.GameObjects
         public FiremanPlayer(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y)
         {
-            Init();
-            //取得網子
-
             //數值待解決(改為依裝置吃尺寸去調整)
             savedNet = new Net(currentGameState, id, x + 73, y + 85, this);
             savedNet.AddSavedPerson += savedNet_AddSavedPerson;
@@ -55,12 +53,33 @@ namespace CatcherGame.GameObjects
             savedNet.LoadResource(TexturesKeyEnum.PLAY_NET_SMALL);
             savedNet.LoadResource(TexturesKeyEnum.PLAY_NET_LARGE);
 
-            caughtCreaturesKey = new List<DropObjectsKeyEnum>();
+            Init();
+            
+
+            
         }
-        
+        protected override void Init()
+        {
+            isWalking = false;
+            this.init_x = this.x = x;
+            this.init_y = this.y = y;
+            leftFireManWalkAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
+            //位置是網子座標 + 網子寬
+            rightFiremanXPos = savedNet.X + savedNet.Width;
+            rightFireManWalkAnimation = new AnimationSprite(new Vector2(rightFiremanXPos, this.y), 300); 
+            caughtEffectItem = new LinkedList<EffectItem>();
+            savePeopleNumber = 0;
+            willRemoveItemsId = new List<int>();
+            state = EffectState.NORMAL;
+
+            caughtCreaturesKey = new List<DropObjectsKeyEnum>();
+
+        }
+
         private void savedNet_CaughtEffectItems(EffectItem item)
         {
-            bool isEliminated = false;
+            bool isShoesEliminated = false;
+            bool isNetEliminated = false;
             float displayX = (((PlayGameState)gameState).GetLifeTextureLayer().X + ((PlayGameState)gameState).GetLifeTextureLayer().Width / 2 ) - item.Width / 2;
             //註冊使用時間到的時候的事件
             item.EffectTimesUp += item_EffectTimesUp;
@@ -76,7 +95,7 @@ namespace CatcherGame.GameObjects
                         slowItem.SetEffectElimination(); 
                         item.SetEffectElimination();
                         willRemoveItemsId.Add(slowItem.Id);
-                        isEliminated = true;
+                        isShoesEliminated = true;
                         break;
                     }
                 }
@@ -90,13 +109,56 @@ namespace CatcherGame.GameObjects
                         boostingItem.SetEffectElimination();
                         item.SetEffectElimination();
                          willRemoveItemsId.Add(boostingItem.Id);
-                        isEliminated = true;
+                        isShoesEliminated = true;
                         break;
                     }
                 }
                
             }
-            if (!isEliminated) //如果沒有被抵銷
+            
+
+            //愛心
+            if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_HEART)
+            {
+                ((PlayGameState)gameState).AddCanLostPeopleNumber();
+            }
+
+
+            //網子
+            if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER && caughtEffectItem.Count > 0)
+            {
+                foreach (EffectItem slowItem in caughtEffectItem)
+                {
+                    if (slowItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER)
+                    {
+                        //互相抵消 所以兩個道具效果都要消除 ->set dead
+                        slowItem.SetEffectElimination();
+                        item.SetEffectElimination();
+                        willRemoveItemsId.Add(slowItem.Id);
+                        isNetEliminated = true;
+                        break;
+                    }
+                }
+
+            }
+            else if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER && caughtEffectItem.Count > 0)
+            {
+                foreach (EffectItem boostingItem in caughtEffectItem)
+                {
+                    if (boostingItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER)
+                    {
+                        //互相抵消 所以兩個道具效果都要消除 -> set dead
+                        boostingItem.SetEffectElimination();
+                        item.SetEffectElimination();
+                        willRemoveItemsId.Add(boostingItem.Id);
+                        isNetEliminated = true;
+                        break;
+                    }
+                }
+
+            }
+
+            if (!isShoesEliminated || !isNetEliminated) //如果沒有被抵銷
             {
                 if (caughtEffectItem.Count == 0) //第一個道具 加在最上面 位置對其在Life的下方
                 {
@@ -110,21 +172,32 @@ namespace CatcherGame.GameObjects
                     item.Y = (caughtEffectItem.Last.Value.Y + caughtEffectItem.Last.Value.Height);
                     caughtEffectItem.AddLast(item);
                 }
-                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES){
+                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
+                {
                     SetSpeedEffect(item.GetKeyEnum());
                 }
-            }
-            else { //被削除的話重設為預設速度
-                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES){
-                    resetSpeedEffect();
+                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER)
+                {
+                    if(item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER){
+                        savedNet.SetNetState(1);
+                    }
+                    else{
+                        savedNet.SetNetState(2);
+                    }
+                    
                 }
             }
-
-            //愛心
-            if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_HEART)
-            {
-                ((PlayGameState)gameState).AddCanLostPeopleNumber();
+            else
+            { //被削除的話重設為預設速度
+                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
+                {
+                    resetSpeedEffect();
+                }
+                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER) {
+                    savedNet.SetNetState(0);
+                }
             }
+            
         }
 
        
@@ -162,7 +235,11 @@ namespace CatcherGame.GameObjects
             if (effectItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || effectItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES) {
                 resetSpeedEffect();
             }
-
+            //變回原來的網子
+            if (effectItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER || effectItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER)
+            {
+                savedNet.SetNetState(0);
+            }
         }
 
         /// <summary>
@@ -199,19 +276,7 @@ namespace CatcherGame.GameObjects
             return caughtCreaturesKey;
         }
 
-        protected override void Init()
-        {
-            isWalking = false;
-            this.init_x = this.x = x;
-            this.init_y = this.y = y;
-            walkAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
-            caughtEffectItem = new LinkedList<EffectItem>();
-            savePeopleNumber = 0;
-            willRemoveItemsId = new List<int>();
-            state = EffectState.NORMAL;
-           
-        }
-
+       
         //從List後面尋找同類的效果道具,並把屬性附加上去
         //e.g加速協時間到移除掉後,第二個加速協移動為第一個,並把效果附加上去
         private void UpdateEffectFromBufferItem()
@@ -246,9 +311,15 @@ namespace CatcherGame.GameObjects
         /// <param name="key"></param>
         private void SetTexture2DList(TexturesKeyEnum key)
         {
-            walkAnimation.SetTexture2DList(base.gameState.GetTexture2DList(key));
-            this.Height = walkAnimation.GetCurrentFrameTexture().Height;
-            this.Width = walkAnimation.GetCurrentFrameTexture().Width;
+            if (key == TexturesKeyEnum.PLAY_FIREMAN) {
+                leftFireManWalkAnimation.SetTexture2DList(base.gameState.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_LEFT));
+                rightFireManWalkAnimation.SetTexture2DList(base.gameState.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_RIGHT));
+                //左邊 + 右邊的高除2(平均高)
+                this.Height = (leftFireManWalkAnimation.GetCurrentFrameTexture().Height + rightFireManWalkAnimation.GetCurrentFrameTexture().Height)/2;
+                //寬 = 左消防員寬 + 網子寬 + 右邊消防員寬
+                this.Width = leftFireManWalkAnimation.GetCurrentFrameTexture().Width + savedNet.Width + rightFireManWalkAnimation.GetCurrentFrameTexture().Width;
+            }
+            
         }
 
       
@@ -256,13 +327,21 @@ namespace CatcherGame.GameObjects
 
         public override void Update()
         {
+            this.rightFiremanXPos = savedNet.X + savedNet.Width;
             //如果正在移動則更新圖像動畫
             if (isWalking){
-                walkAnimation.SetToLeftPos(this.x, this.y);
-                walkAnimation.UpdateFrame(base.gameState.GetTimeSpan());
+                //左邊
+                leftFireManWalkAnimation.SetToLeftPos(this.x, this.y);
+                leftFireManWalkAnimation.UpdateFrame(base.gameState.GetTimeSpan());
+                //右邊
+                rightFireManWalkAnimation.SetToLeftPos(this.rightFiremanXPos, this.y);
+                rightFireManWalkAnimation.UpdateFrame(base.gameState.GetTimeSpan());
                 //設定現在的圖片長寬為遊戲元件的長寬
-                this.Height = walkAnimation.GetCurrentFrameTexture().Height;
-                this.Width = walkAnimation.GetCurrentFrameTexture().Width;
+               
+                //左邊 + 右邊的高除2(平均高)
+                this.Height = (leftFireManWalkAnimation.GetCurrentFrameTexture().Height + rightFireManWalkAnimation.GetCurrentFrameTexture().Height) / 2;
+                //寬 = 左消防員寬 + 網子寬 + 右邊消防員寬
+                this.Width = leftFireManWalkAnimation.GetCurrentFrameTexture().Width + savedNet.Width + rightFireManWalkAnimation.GetCurrentFrameTexture().Width;
             }
             if(caughtEffectItem.Count > 0 ){
                 foreach (EffectItem item in caughtEffectItem){
@@ -280,7 +359,8 @@ namespace CatcherGame.GameObjects
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            walkAnimation.Draw(spriteBatch);
+            leftFireManWalkAnimation.Draw(spriteBatch);
+            rightFireManWalkAnimation.Draw(spriteBatch);
             savedNet.Draw(spriteBatch);
             if (caughtEffectItem.Count >0){
                 foreach (EffectItem item in caughtEffectItem)
@@ -403,9 +483,13 @@ namespace CatcherGame.GameObjects
 
                 if (disposing)
                 {
-                    if (walkAnimation != null)
+                    if (leftFireManWalkAnimation != null)
                     {
-                        walkAnimation.Dispose();
+                        leftFireManWalkAnimation.Dispose();
+                    }
+                    if (rightFireManWalkAnimation != null)
+                    {
+                        rightFireManWalkAnimation.Dispose();
                     }
                     if (savedNet != null) {
                         savedNet.Dispose();

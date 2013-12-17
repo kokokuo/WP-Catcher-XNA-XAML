@@ -74,10 +74,11 @@ namespace CatcherGame.TextureManager
             LoadPlayOldMan();
             LoadPlayRoxanne();
             //道具
-            LoadPlayBoostingShoes();
-            LoadPlaySlowShoes();
-            LoadLifeHeart();
-
+            LoadPlayDropItemBoostingShoes();
+            LoadPlayDropItemSlowShoes();
+            LoadPlayDropItemLifeHeart();
+            LoadPlayDropItemNetExpander();
+            LoadPlayDropNetShrinker();
             //載入遊戲中的暫停對話框
             LoadPauseDialogBackground();
             LoadPauseDialogExitButton();
@@ -407,7 +408,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_mid"));
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_mid)caught"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/net_mid_caught"));
                 _dictionary.Add(key, texture2Ds);
             }
 
@@ -441,8 +442,37 @@ namespace CatcherGame.TextureManager
 
         }
 
+
+        //遊戲中掉落的放大網子道具
+        private void LoadPlayDropItemNetExpander()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_NET_EXPANDER;
+
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/Item/net_expander"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/Item/disappear"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
+        //遊戲中掉落的縮小網子道具
+        private void LoadPlayDropNetShrinker()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_NET_SHRINKER;
+
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/Item/net_shrinker"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/Item/disappear"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
         //遊戲中加速鞋
-        private void LoadPlayBoostingShoes()
+        private void LoadPlayDropItemBoostingShoes()
         {
             TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_BOOSTING_SHOES;
 
@@ -457,7 +487,7 @@ namespace CatcherGame.TextureManager
 
 
         //遊戲中的愛心
-        private void LoadLifeHeart()
+        private void LoadPlayDropItemLifeHeart()
         {
             TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_HEART;
 
@@ -472,7 +502,7 @@ namespace CatcherGame.TextureManager
 
 
         //遊戲中降速
-        private void LoadPlaySlowShoes()
+        private void LoadPlayDropItemSlowShoes()
         {
             TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_SLOW_SHOES;
 

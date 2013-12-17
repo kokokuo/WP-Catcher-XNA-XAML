@@ -74,8 +74,10 @@ namespace CatcherGame.GameStates
 
         public override void BeginInit()
         {
-            int player_x = base.GetDeviceScreenWidthByMainGame() / 2 - base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN)[0].Width / 2;
-            int player_y = base.GetDeviceScreenHeightByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height / 2 - base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN)[0].Height;
+            int player_x = base.GetDeviceScreenWidthByMainGame() / 2 - 
+                (base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_LEFT)[0].Width + base.GetTexture2DList(TexturesKeyEnum.PLAY_NET_NORMAL)[0].Width + base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_RIGHT)[0].Width) / 2;
+            int player_y = base.GetDeviceScreenHeightByMainGame() - 
+                base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height / 2 -  ( base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_LEFT)[0].Height + base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_RIGHT)[0].Height)/2;
             FIREMAN_INIT_X = player_x;
             FIREMAN_INIT_Y = player_y;
             RIGHT_MOVE_BUTTON_X_POS = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON)[0].Width; //-50;
