@@ -278,15 +278,28 @@ namespace CatcherGame.GameObjects
 
        
         //從List後面尋找同類的效果道具,並把屬性附加上去
-        //e.g加速協時間到移除掉後,第二個加速協移動為第一個,並把效果附加上去
+        //e.g加速鞋時間到移除掉後,第二個加速鞋移動為第一個,並把效果附加上去
         private void UpdateEffectFromBufferItem()
         {
             foreach (EffectItem item in caughtEffectItem)
             {
+                //可能同時附加(if)
                 //速度的部分
                 if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
                 {
                     SetSpeedEffect(item.GetKeyEnum());
+                }
+                //網子
+                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER)
+                {
+                    if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER)
+                    {
+                        savedNet.SetNetState(1);
+                    }
+                    else
+                    {
+                        savedNet.SetNetState(2);
+                    }
                 }
             }
 
@@ -328,21 +341,23 @@ namespace CatcherGame.GameObjects
         public override void Update()
         {
             this.rightFiremanXPos = savedNet.X + savedNet.Width;
+
+            //更新左邊右邊
+            leftFireManWalkAnimation.SetToLeftPos(this.x, this.y);
+            rightFireManWalkAnimation.SetToLeftPos(this.rightFiremanXPos, this.y);
             //如果正在移動則更新圖像動畫
             if (isWalking){
                 //左邊
-                leftFireManWalkAnimation.SetToLeftPos(this.x, this.y);
                 leftFireManWalkAnimation.UpdateFrame(base.gameState.GetTimeSpan());
                 //右邊
-                rightFireManWalkAnimation.SetToLeftPos(this.rightFiremanXPos, this.y);
                 rightFireManWalkAnimation.UpdateFrame(base.gameState.GetTimeSpan());
                 //設定現在的圖片長寬為遊戲元件的長寬
-               
-                //左邊 + 右邊的高除2(平均高)
-                this.Height = (leftFireManWalkAnimation.GetCurrentFrameTexture().Height + rightFireManWalkAnimation.GetCurrentFrameTexture().Height) / 2;
-                //寬 = 左消防員寬 + 網子寬 + 右邊消防員寬
-                this.Width = leftFireManWalkAnimation.GetCurrentFrameTexture().Width + savedNet.Width + rightFireManWalkAnimation.GetCurrentFrameTexture().Width;
             }
+            //左邊 + 右邊的高除2(平均高)
+            this.Height = (leftFireManWalkAnimation.GetCurrentFrameTexture().Height + rightFireManWalkAnimation.GetCurrentFrameTexture().Height) / 2;
+            //寬 = 左消防員寬 + 網子寬 + 右邊消防員寬
+            this.Width = leftFireManWalkAnimation.GetCurrentFrameTexture().Width + savedNet.Width + rightFireManWalkAnimation.GetCurrentFrameTexture().Width;
+
             if(caughtEffectItem.Count > 0 ){
                 foreach (EffectItem item in caughtEffectItem){
                     item.Update();
