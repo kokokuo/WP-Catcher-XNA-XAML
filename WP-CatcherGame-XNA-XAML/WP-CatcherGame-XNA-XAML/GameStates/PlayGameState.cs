@@ -103,8 +103,8 @@ namespace CatcherGame.GameStates
             lostPeopleNumber = 3;
             savedPeopleNumber = 0;
             pauseButton = new Button(this, objIdCount++, 0, 0);
-            leftMoveButton = new Button(this, objIdCount++, LEFT_DROPITEM_BORDER, MOVE_BUTTON_Y_POS);
-            rightMoveButton = new Button(this, objIdCount++, RIGHT_DROPITEM_X_BORDER, MOVE_BUTTON_Y_POS);
+           // leftMoveButton = new Button(this, objIdCount++, LEFT_DROPITEM_BORDER, MOVE_BUTTON_Y_POS);
+            //rightMoveButton = new Button(this, objIdCount++, RIGHT_DROPITEM_X_BORDER, MOVE_BUTTON_Y_POS);
 
             player = new FiremanPlayer(this, objIdCount++, FIREMAN_INIT_X, FIREMAN_INIT_Y);
             player.SaveNewPerson +=player_SaveNewPerson;
@@ -145,8 +145,8 @@ namespace CatcherGame.GameStates
             randSys.GenerateDropObjs += randSys_GenerateDropObjs;
 
             //加入圖層
-            AddGameObject(leftMoveButton);
-            AddGameObject(rightMoveButton);
+            //AddGameObject(leftMoveButton);
+           // AddGameObject(rightMoveButton);
             AddGameObject(pauseButton);
 
             //對 對話框做初始化
@@ -218,8 +218,8 @@ namespace CatcherGame.GameStates
             //載入圖片
             base.background = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0];
             pauseButton.LoadResource(TexturesKeyEnum.PLAY_PAUSE_BUTTON);
-            leftMoveButton.LoadResource(TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON);
-            rightMoveButton.LoadResource(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON);
+            //leftMoveButton.LoadResource(TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON);
+            //rightMoveButton.LoadResource(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON);
             player.LoadResource(TexturesKeyEnum.PLAY_FIREMAN);
             
 
@@ -310,10 +310,10 @@ namespace CatcherGame.GameStates
                 if (tc.Count > 0)  {
                     //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
                     foreach (TouchLocation touchLocation in tc) {
-                        if (!isMoveRight)
-                            isMoveRight = rightMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        if (!isMoveLeft)
-                            isMoveLeft = leftMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        //if (!isMoveRight)
+                        //    isMoveRight = rightMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        //if (!isMoveLeft)
+                        //    isMoveLeft = leftMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                         if (!isClickPause)
                             isClickPause = pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
 
@@ -331,20 +331,20 @@ namespace CatcherGame.GameStates
                     }
 
                                         //遊戲邏輯判斷
-                    if (isMoveLeft && !isMoveRight)
-                    {
-                        //Debug.WriteLine("Click Left Button");
-                        player.MoveLeft(leftGameScreenBorder);
-                    }
-                    else if (!isMoveLeft && isMoveRight)
-                    {
-                        //Debug.WriteLine("Click Right Button");
-                        player.MoveRight(rightGameScreenBorder);
-                    }
-                    else if (!isMoveLeft && !isMoveRight)
-                    {
-                        player.SetStand(); //設定站立
-                    }
+                    //if (isMoveLeft && !isMoveRight)
+                    //{
+                    //    //Debug.WriteLine("Click Left Button");
+                    //    player.MoveLeft(leftGameScreenBorder);
+                    //}
+                    //else if (!isMoveLeft && isMoveRight)
+                    //{
+                    //    //Debug.WriteLine("Click Right Button");
+                    //    player.MoveRight(rightGameScreenBorder);
+                    //}
+                    //else if (!isMoveLeft && !isMoveRight)
+                    //{
+                    //    player.SetStand(); //設定站立
+                    //}
                     if(isClickPause){
                         this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
                     }
@@ -354,7 +354,7 @@ namespace CatcherGame.GameStates
                 {
                     player.SetStand(); //設定站立
                 }
-                //player.Move(leftGameScreenBorder, rightGameScreenBorder, mainGame.GetAccVector());
+                player.MoveByGSensor(leftGameScreenBorder, rightGameScreenBorder, mainGame.GetAccVector());
 
 
                 player.CheckIsCaught(fallingObjects);

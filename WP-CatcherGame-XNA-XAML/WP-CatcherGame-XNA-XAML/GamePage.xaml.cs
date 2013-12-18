@@ -57,8 +57,8 @@ namespace WP_CatcherGame_XNA_XAML
         public GamePage()
         {
             InitializeComponent();
-            this.SupportedOrientations = SupportedPageOrientation.Landscape; //設定方位
-            
+            this.SupportedOrientations = SupportedPageOrientation.Landscape; //設定可支援方位
+            this.Orientation = PageOrientation.LandscapeLeft; //設定方位
             // 從應用程式取得內容管理員
             contentManager = (Application.Current as App).Content;
 

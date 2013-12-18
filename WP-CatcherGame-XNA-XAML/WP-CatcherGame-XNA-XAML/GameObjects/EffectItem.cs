@@ -85,6 +85,7 @@ namespace CatcherGame.GameObjects
                 {
                     isDead = true;
                     isFalling = false;
+                    isCaught = false;
                 }    
             }
             else if (isCaught)
@@ -94,6 +95,7 @@ namespace CatcherGame.GameObjects
                 if (totalEapsed >= (effectTime*1000) ) {
                     isDead = true;
                     isCaught = false;
+                    
                     if (EffectTimesUp != null) {
                         EffectTimesUp.Invoke(this);
                     }
@@ -103,7 +105,7 @@ namespace CatcherGame.GameObjects
             else if (isDead) {
                 //從DropObjectList中移除
                 ((PlayGameState)gameState).RemoveDropObjs(this);
-                //移除自己
+                //真正移除自己
                 ((PlayGameState)this.gameState).RemoveGameObject(this.id);
             }
 

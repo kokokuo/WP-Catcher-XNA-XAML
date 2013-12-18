@@ -28,10 +28,12 @@ namespace CatcherGame.GameObjects
 
         AnimationSprite leftFireManWalkAnimation; //左邊的消防員
         AnimationSprite rightFireManWalkAnimation; //右邊的消防員
-        //移動步伐
-        int LEFT_MOVE_STEP = -7;
-        int RIGHT_MOVE_STEP = 7;
-       
+        //G-Sensor
+        int LEFT_MOVE_STEP_SENSOR = -10;
+        int RIGHT_MOVE_STEP_SENSOR = 10;
+        //觸控拖拉
+        float MOVE_STEP_TOUCH = 1;
+
         float rightFiremanXPos; //又邊消防員的位置
         float rightFiremanWidth;
         float leftFiremanWidth;
@@ -131,14 +133,14 @@ namespace CatcherGame.GameObjects
             //網子
             if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER && caughtEffectItem.Count > 0)
             {
-                foreach (EffectItem slowItem in caughtEffectItem)
+                foreach (EffectItem shrinkerItem in caughtEffectItem)
                 {
-                    if (slowItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER)
+                    if (shrinkerItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER)
                     {
                         //互相抵消 所以兩個道具效果都要消除 ->set dead
-                        slowItem.SetEffectElimination();
+                        shrinkerItem.SetEffectElimination();
                         item.SetEffectElimination();
-                        willRemoveItemsId.Add(slowItem.Id);
+                        willRemoveItemsId.Add(shrinkerItem.Id);
                         isNetEliminated = true;
                         break;
                     }
@@ -147,14 +149,14 @@ namespace CatcherGame.GameObjects
             }
             else if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER && caughtEffectItem.Count > 0)
             {
-                foreach (EffectItem boostingItem in caughtEffectItem)
+                foreach (EffectItem expanderItem in caughtEffectItem)
                 {
-                    if (boostingItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER)
+                    if (expanderItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER)
                     {
                         //互相抵消 所以兩個道具效果都要消除 -> set dead
-                        boostingItem.SetEffectElimination();
+                        expanderItem.SetEffectElimination();
                         item.SetEffectElimination();
-                        willRemoveItemsId.Add(boostingItem.Id);
+                        willRemoveItemsId.Add(expanderItem.Id);
                         isNetEliminated = true;
                         break;
                     }
@@ -164,31 +166,36 @@ namespace CatcherGame.GameObjects
 
             if (!isShoesEliminated || !isNetEliminated) //如果沒有被抵銷
             {
-                if (caughtEffectItem.Count == 0) //第一個道具 加在最上面 位置對其在Life的下方
-                {
-                    item.X = displayX;
-                    item.Y = ((PlayGameState)gameState).GetLifeTextureLayer().Y + ((PlayGameState)gameState).GetLifeTextureLayer().Height;
-                    caughtEffectItem.AddFirst(item);
+                if (!isShoesEliminated && !isNetEliminated) {
+                   if (caughtEffectItem.Count == 0) //第一個道具 加在最上面 位置對其在Life的下方
+                    {
+                        item.X = displayX;
+                        item.Y = ((PlayGameState)gameState).GetLifeTextureLayer().Y + ((PlayGameState)gameState).GetLifeTextureLayer().Height;
+                        caughtEffectItem.AddFirst(item);
+                    }
+                    else //加在上一個道具顯示的位置下方
+                    {
+                        item.X = displayX;
+                        item.Y = (caughtEffectItem.Last.Value.Y + caughtEffectItem.Last.Value.Height);
+                        caughtEffectItem.AddLast(item);
+                    }
                 }
-                else //加在上一個道具顯示的位置下方
-                {
-                    item.X = displayX;
-                    item.Y = (caughtEffectItem.Last.Value.Y + caughtEffectItem.Last.Value.Height);
-                    caughtEffectItem.AddLast(item);
-                }
+                
                 if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
                 {
                     SetSpeedEffect(item.GetKeyEnum());
                 }
                 if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_EXPANDER)
                 {
-                    if(item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER){
+                    if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_NET_SHRINKER)
+                    {
                         savedNet.SetNetState(1);
                     }
-                    else{
+                    else
+                    {
                         savedNet.SetNetState(2);
                     }
-                    
+
                 }
             }
             else
@@ -212,21 +219,24 @@ namespace CatcherGame.GameObjects
                 if (key == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES)
                 {
                     state = EffectState.SPEED_UP;
-                    LEFT_MOVE_STEP = -12;
-                    RIGHT_MOVE_STEP = 12;
+                    LEFT_MOVE_STEP_SENSOR = -14;
+                    RIGHT_MOVE_STEP_SENSOR = 14;
+                    MOVE_STEP_TOUCH = 1.5f;
                 }
                 else if (key == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
                 {
                     state = EffectState.SLOW;
-                    LEFT_MOVE_STEP = -4;
-                    RIGHT_MOVE_STEP = 4;
+                    LEFT_MOVE_STEP_SENSOR = -6;
+                    RIGHT_MOVE_STEP_SENSOR = 6;
+                    MOVE_STEP_TOUCH = 0.7f;
                 }
             }
         }
         private void resetSpeedEffect() {
             state = EffectState.NORMAL;
-            LEFT_MOVE_STEP = -7;
-            RIGHT_MOVE_STEP = 7;
+            LEFT_MOVE_STEP_SENSOR = -10;
+            RIGHT_MOVE_STEP_SENSOR = 10;
+            MOVE_STEP_TOUCH = 1;
         }
 
         /// <summary>
@@ -374,8 +384,8 @@ namespace CatcherGame.GameObjects
                 leftFireManWalkAnimation.UpdateFrame(base.gameState.GetTimeSpan());
                 //右邊
                 rightFireManWalkAnimation.UpdateFrame(base.gameState.GetTimeSpan());
-                //設定現在的圖片長寬為遊戲元件的長寬
             }
+            //設定現在的圖片長寬為遊戲元件的長寬
             //左邊 + 右邊的高除2(平均高)
             this.Height = (leftFireManWalkAnimation.GetCurrentFrameTexture().Height + rightFireManWalkAnimation.GetCurrentFrameTexture().Height) / 2;
             //寬 = 左消防員寬 + 網子寬 + 右邊消防員寬
@@ -390,12 +400,12 @@ namespace CatcherGame.GameObjects
                 }
             }
 
-           
+            savedNet.Update();
 
             if (willRemoveItemsId.Count > 0) {
                 RemoveEffectItemFromList();
             }
-            savedNet.Update();
+            
 
            
         }
@@ -421,31 +431,35 @@ namespace CatcherGame.GameObjects
         public void MoveLeft(float leftGameScreenBorder)
         {
             //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
-            if ((this.savedNet.X + LEFT_MOVE_STEP) >= leftGameScreenBorder)
+            if ((this.savedNet.X + LEFT_MOVE_STEP_SENSOR) >= leftGameScreenBorder)
             {
                 //Debug.WriteLine("Can Move Left Way");
-                this.x += LEFT_MOVE_STEP;
-                this.savedNet.X += LEFT_MOVE_STEP; //網子跟著移動
+                this.x += LEFT_MOVE_STEP_SENSOR;
+                this.savedNet.X += LEFT_MOVE_STEP_SENSOR; //網子跟著移動
                 isWalking = true;
                 
             }
         }
 
+        /// <summary>
+        /// 點擊拖拉移動
+        /// </summary>
+        /// <param name="vecX">移動X水平向量</param>
         public void MoveByTouch(float vecX) {
 
-            //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
-            if ((rightFiremanXPos + vecX + rightFiremanWidth) <= this.gameState.GetRightGameScreenBorder() && vecX > 0) //右邊
+            //檢查如果要移動是否會超處邊界(以又邊消防員為基準) 不會才給予下一步的移動座標
+            if ((rightFiremanXPos + (vecX * MOVE_STEP_TOUCH) + rightFiremanWidth) <= this.gameState.GetRightGameScreenBorder() && vecX > 0) //右邊
             {
-               
-                this.x += vecX;
-                this.savedNet.X += vecX ; //網子跟著移動
+
+                this.x += (vecX * MOVE_STEP_TOUCH);
+                this.savedNet.X += (vecX * MOVE_STEP_TOUCH); //網子跟著移動
                 isWalking = true;
 
             }
-            else if ((this.x + vecX) >= this.gameState.GetLeftGameScreenBorder() && vecX < 0) //左邊
+            else if ((this.x + (vecX * MOVE_STEP_TOUCH) ) >= this.gameState.GetLeftGameScreenBorder() && vecX < 0) //左邊
             {
-                this.x += vecX;
-                this.savedNet.X += vecX ; //網子跟著移動
+                this.x += (vecX * MOVE_STEP_TOUCH);
+                this.savedNet.X += (vecX * MOVE_STEP_TOUCH); //網子跟著移動
                 isWalking = true;
 
             }
@@ -460,19 +474,19 @@ namespace CatcherGame.GameObjects
             else
             {
                 //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
-                if ((this.savedNet.X + (accSpeed.Y * LEFT_MOVE_STEP)) >= leftGameScreenBorder)
+                if ((this.x + (accSpeed.Y * LEFT_MOVE_STEP_SENSOR)) >= leftGameScreenBorder)
                 {
                     //Debug.WriteLine("Can Move Left Way");
-                    this.x += (accSpeed.Y * LEFT_MOVE_STEP);
-                    this.savedNet.X += (accSpeed.Y * LEFT_MOVE_STEP); //網子跟著移動
+                    this.x += (accSpeed.Y * LEFT_MOVE_STEP_SENSOR);
+                    this.savedNet.X += (accSpeed.Y * LEFT_MOVE_STEP_SENSOR); //網子跟著移動
                     isWalking = true;
 
                 }
-                else if ((this.savedNet.X + this.savedNet.Width) + (accSpeed.Y * RIGHT_MOVE_STEP) <= rightGameScreenBorder)
+                else if ((rightFiremanXPos + rightFiremanWidth) + (accSpeed.Y * RIGHT_MOVE_STEP_SENSOR) <= rightGameScreenBorder)
                 {
                     //Debug.WriteLine("Can Move Right Way");
-                    this.x += (accSpeed.Y * RIGHT_MOVE_STEP);
-                    this.savedNet.X += (accSpeed.Y * RIGHT_MOVE_STEP); //網子跟著移動
+                    this.x += (accSpeed.Y * RIGHT_MOVE_STEP_SENSOR);
+                    this.savedNet.X += (accSpeed.Y * RIGHT_MOVE_STEP_SENSOR); //網子跟著移動
                     isWalking = true;
 
                 }
@@ -483,11 +497,11 @@ namespace CatcherGame.GameObjects
         public void MoveRight(float rightGameScreenBorder)
         {
             //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
-            if ((this.savedNet.X + this.savedNet.Width) + RIGHT_MOVE_STEP <= rightGameScreenBorder)
+            if ((this.savedNet.X + this.savedNet.Width) + RIGHT_MOVE_STEP_SENSOR <= rightGameScreenBorder)
             {
                 //Debug.WriteLine("Can Move Right Way");
-                this.x += RIGHT_MOVE_STEP;
-                this.savedNet.X += RIGHT_MOVE_STEP; //網子跟著移動
+                this.x += RIGHT_MOVE_STEP_SENSOR;
+                this.savedNet.X += RIGHT_MOVE_STEP_SENSOR; //網子跟著移動
                 isWalking = true;
                 
             }
@@ -514,7 +528,7 @@ namespace CatcherGame.GameObjects
         }
 
         /// <summary>
-        /// 真正將 DropObjects 刪除
+        /// 將 EffectItem 刪除(非真正移除,真正移除由PlayGameState)
         /// </summary>
         private void RemoveEffectItemFromList()
         {
