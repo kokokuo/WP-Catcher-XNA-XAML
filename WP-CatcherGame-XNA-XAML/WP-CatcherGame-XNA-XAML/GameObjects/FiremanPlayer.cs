@@ -31,7 +31,10 @@ namespace CatcherGame.GameObjects
         //移動步伐
         int LEFT_MOVE_STEP = -7;
         int RIGHT_MOVE_STEP = 7;
-        float rightFiremanXPos;
+       
+        float rightFiremanXPos; //又邊消防員的位置
+        float rightFiremanWidth;
+        float leftFiremanWidth;
         bool isWalking; //是否移動
         Net savedNet; //網子類別(Has)
         float init_x, init_y;
@@ -45,7 +48,8 @@ namespace CatcherGame.GameObjects
             : base(currentGameState, id, x, y)
         {
             //數值待解決(改為依裝置吃尺寸去調整)
-            savedNet = new Net(currentGameState, id, x + 73, y + 85, this);
+            float leftFireManWidth = this.gameState.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_LEFT)[0].Width;
+            savedNet = new Net(currentGameState, id, x + leftFireManWidth, y + 85, this);
             savedNet.AddSavedPerson += savedNet_AddSavedPerson;
             savedNet.CaughtEffectItems += savedNet_CaughtEffectItems;
             //網子資源
@@ -318,6 +322,7 @@ namespace CatcherGame.GameObjects
             SetTexture2DList(key);
         }
 
+
         /// <summary>
         /// 設定載入的圖片組,使用給予Key方式設定載入
         /// </summary>
@@ -331,6 +336,9 @@ namespace CatcherGame.GameObjects
                 this.Height = (leftFireManWalkAnimation.GetCurrentFrameTexture().Height + rightFireManWalkAnimation.GetCurrentFrameTexture().Height)/2;
                 //寬 = 左消防員寬 + 網子寬 + 右邊消防員寬
                 this.Width = leftFireManWalkAnimation.GetCurrentFrameTexture().Width + savedNet.Width + rightFireManWalkAnimation.GetCurrentFrameTexture().Width;
+
+                this.rightFiremanWidth = rightFireManWalkAnimation.GetCurrentFrameTexture().Width;
+                this.leftFiremanWidth = leftFireManWalkAnimation.GetCurrentFrameTexture().Width;
             }
             
         }
@@ -340,11 +348,26 @@ namespace CatcherGame.GameObjects
 
         public override void Update()
         {
-            this.rightFiremanXPos = savedNet.X + savedNet.Width;
-
+            
             //更新左邊右邊
-            leftFireManWalkAnimation.SetToLeftPos(this.x, this.y);
-            rightFireManWalkAnimation.SetToLeftPos(this.rightFiremanXPos, this.y);
+            //判斷往右後放大後會不會超過邊界
+            if (savedNet.X + savedNet.Width + rightFiremanWidth >= this.gameState.GetRightGameScreenBorder())
+            {
+                //左邊新的消防員位置 = 右邊消防員的位置座標 - 網子(可能是新的狀態) - 左邊消防員的寬度
+                this.x = this.rightFiremanXPos - savedNet.Width - leftFiremanWidth;
+                //更新網子座標
+                savedNet.X = this.rightFiremanXPos - savedNet.Width;
+                //更新左邊消防員位置座標
+                leftFireManWalkAnimation.SetToLeftPos(this.x, this.y);
+                rightFireManWalkAnimation.SetToLeftPos(this.rightFiremanXPos, this.y); //位置不變
+            }
+            else
+            {
+                this.rightFiremanXPos = savedNet.X + savedNet.Width; //新的位置
+
+                leftFireManWalkAnimation.SetToLeftPos(this.x, this.y);
+                rightFireManWalkAnimation.SetToLeftPos(this.rightFiremanXPos, this.y);
+            }
             //如果正在移動則更新圖像動畫
             if (isWalking){
                 //左邊
@@ -358,6 +381,9 @@ namespace CatcherGame.GameObjects
             //寬 = 左消防員寬 + 網子寬 + 右邊消防員寬
             this.Width = leftFireManWalkAnimation.GetCurrentFrameTexture().Width + savedNet.Width + rightFireManWalkAnimation.GetCurrentFrameTexture().Width;
 
+            this.rightFiremanWidth = rightFireManWalkAnimation.GetCurrentFrameTexture().Width;
+            this.leftFiremanWidth = leftFireManWalkAnimation.GetCurrentFrameTexture().Width;
+
             if(caughtEffectItem.Count > 0 ){
                 foreach (EffectItem item in caughtEffectItem){
                     item.Update();
@@ -370,6 +396,8 @@ namespace CatcherGame.GameObjects
                 RemoveEffectItemFromList();
             }
             savedNet.Update();
+
+           
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
@@ -403,8 +431,27 @@ namespace CatcherGame.GameObjects
             }
         }
 
+        public void MoveByTouch(float vecX) {
+
+            //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
+            if ((rightFiremanXPos + vecX + rightFiremanWidth) <= this.gameState.GetRightGameScreenBorder() && vecX > 0) //右邊
+            {
+               
+                this.x += vecX;
+                this.savedNet.X += vecX ; //網子跟著移動
+                isWalking = true;
+
+            }
+            else if ((this.x + vecX) >= this.gameState.GetLeftGameScreenBorder() && vecX < 0) //左邊
+            {
+                this.x += vecX;
+                this.savedNet.X += vecX ; //網子跟著移動
+                isWalking = true;
+
+            }
+        }
         //重力感測器移動
-        public void Move(float leftGameScreenBorder, float rightGameScreenBorder, Vector3 accSpeed) {
+        public void MoveByGSensor(float leftGameScreenBorder, float rightGameScreenBorder, Vector3 accSpeed) {
 
             if (accSpeed.Y == 0)
             {
@@ -489,6 +536,22 @@ namespace CatcherGame.GameObjects
             UpdateEffectFromBufferItem();
 
             willRemoveItemsId.Clear();
+        }
+
+        //
+        public bool IsBoundBoxClick(float x, float y) {
+            if (x >= this.X &&
+                x <= this.X + this.Width &&
+                y >= this.Y &&
+                y <= this.Y + this.Height)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        
         }
 
         protected override void Dispose(bool disposing)

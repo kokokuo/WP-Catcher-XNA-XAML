@@ -78,7 +78,9 @@ namespace CatcherGame.TextureManager
             LoadPlayDropItemSlowShoes();
             LoadPlayDropItemLifeHeart();
             LoadPlayDropItemNetExpander();
-            LoadPlayDropNetShrinker();
+            LoadPlayDropItemNetShrinker();
+            LoadPlayDropItemStrongSmoke();
+
             //載入遊戲中的暫停對話框
             LoadPauseDialogBackground();
             LoadPauseDialogExitButton();
@@ -307,6 +309,19 @@ namespace CatcherGame.TextureManager
             }
 
         }
+        //遊戲中的濃煙霧
+        private void LoadPlayGameStrongSmokePicture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_STRONG_SMOKE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/smoke_strong"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+
 
         //遊戲中的救援失敗剩餘次數圖示
         private void LoadPlayGameLifePicture()
@@ -458,7 +473,7 @@ namespace CatcherGame.TextureManager
         }
 
         //遊戲中掉落的縮小網子道具
-        private void LoadPlayDropNetShrinker()
+        private void LoadPlayDropItemNetShrinker()
         {
             TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_NET_SHRINKER;
 
@@ -500,6 +515,19 @@ namespace CatcherGame.TextureManager
             }
         }
 
+        //遊戲中的濃霧
+        private void LoadPlayDropItemStrongSmoke()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_STRONG_SMOKE;
+
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/Item/smoke"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/Item/disappear"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
 
         //遊戲中降速
         private void LoadPlayDropItemSlowShoes()

@@ -33,9 +33,11 @@ namespace CatcherGame.GameObjects
         }
         public override void SetCaught()
         {
-            base.isCaught = true;
-            base.isFalling = false;
-            
+            if (!isDead) //如果沒有死掉的話
+            {
+                base.isCaught = true;
+                base.isFalling = false;
+            }
         }
 
         protected override void Init()

@@ -74,12 +74,16 @@ namespace CatcherGame.TextureManager
         PLAY_ROXANNE_FALL,
         PLAY_ROXANNE_CAUGHT,
         PLAY_ROXANNE_WALK,
+
+        //SMOKE
+        PLAY_STRONG_SMOKE,
         //Item
         PLAY_ITEM_BOOSTING_SHOES,
         PLAY_ITEM_SLOW_SHOES,
         PLAY_ITEM_HEART,
         PLAY_ITEM_NET_SHRINKER,
         PLAY_ITEM_NET_EXPANDER,
+        PLAY_ITEM_STRONG_SMOKE,
         //PAUSE DIALOG------------------------------
         PAUSE_DIALOG_BACK,
         PAUSE_EXIT,

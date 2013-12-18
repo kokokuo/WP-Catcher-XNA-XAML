@@ -24,6 +24,7 @@ namespace CatcherGame.GameObjects
         ITEM_SLOW_SHOES,
         ITEM_HEART,
         ITEM_NET_EXPANDER,
-        ITEM_NET_SHRINKER
+        ITEM_NET_SHRINKER,
+        ITEM_STRONG_SMOKE,
     }
 }

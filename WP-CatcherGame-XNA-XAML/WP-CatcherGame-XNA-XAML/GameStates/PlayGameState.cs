@@ -19,8 +19,8 @@ namespace CatcherGame.GameStates
     {
         int FIREMAN_INIT_X ;
         int FIREMAN_INIT_Y ;
-        int RIGHT_MOVE_BUTTON_X_POS = 700;
-        int LEFT_MOVE_BUTTON_X_POS = 0;
+        int RIGHT_DROPITEM_X_BORDER;
+        int LEFT_DROPITEM_BORDER;
         int MOVE_BUTTON_Y_POS = 355;
         int LIFE_X = 710;
         int LIFE_Y = 20;
@@ -56,7 +56,8 @@ namespace CatcherGame.GameStates
        
         RandGenerateDropObjsSystem randSys;
         bool isOver,isWriteingFile;
-        
+
+        LinkedList<TouchLocation> moveLocationList;
         public PlayGameState(GamePage gMainGame) 
             :base(gMainGame)
         {
@@ -67,7 +68,7 @@ namespace CatcherGame.GameStates
             base.x = 0; base.y = 0;
             base.backgroundPos = new Vector2(base.x, base.y);
 
-           
+            moveLocationList = new LinkedList<TouchLocation>();
         }
 
         
@@ -80,8 +81,8 @@ namespace CatcherGame.GameStates
                 base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height / 2 -  ( base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_LEFT)[0].Height + base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_RIGHT)[0].Height)/2;
             FIREMAN_INIT_X = player_x;
             FIREMAN_INIT_Y = player_y;
-            RIGHT_MOVE_BUTTON_X_POS = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON)[0].Width; //-50;
-            LEFT_MOVE_BUTTON_X_POS = 10;
+            RIGHT_DROPITEM_X_BORDER = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_LIFE)[0].Width;
+            LEFT_DROPITEM_BORDER = base.GetTexture2DList(TexturesKeyEnum.PLAY_SCORE)[0].Width;
             MOVE_BUTTON_Y_POS = base.GetDeviceScreenHeightByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height / 2 -base.GetTexture2DList(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON)[0].Height;
             LIFE_X = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_LIFE)[0].Width -30; //- 70;
             LIFE_Y = 20;
@@ -90,20 +91,20 @@ namespace CatcherGame.GameStates
 
 
             //設定消防員的移動邊界(包含角色掉落的邊界也算在內)
-            base.rightGameScreenBorder = RIGHT_MOVE_BUTTON_X_POS;
-            base.leftGameScreenBorder = base.GetTexture2DList(TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON)[0].Width;
+            base.rightGameScreenBorder = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0].Width; ;
+            base.leftGameScreenBorder = 0;
             isOver = false;
             isWriteingFile = false;
             //初始化隨機角色產生系統
             randSys = new RandGenerateDropObjsSystem(this, 2,3, 3,3,5,2);
-            randSys.SetBorder(leftGameScreenBorder, rightGameScreenBorder);
+            randSys.SetBorder(LEFT_DROPITEM_BORDER, RIGHT_DROPITEM_X_BORDER);
 
             base.objIdCount = 0;
             lostPeopleNumber = 3;
             savedPeopleNumber = 0;
             pauseButton = new Button(this, objIdCount++, 0, 0);
-            leftMoveButton = new Button(this, objIdCount++, LEFT_MOVE_BUTTON_X_POS, MOVE_BUTTON_Y_POS);
-            rightMoveButton = new Button(this, objIdCount++, RIGHT_MOVE_BUTTON_X_POS, MOVE_BUTTON_Y_POS);
+            leftMoveButton = new Button(this, objIdCount++, LEFT_DROPITEM_BORDER, MOVE_BUTTON_Y_POS);
+            rightMoveButton = new Button(this, objIdCount++, RIGHT_DROPITEM_X_BORDER, MOVE_BUTTON_Y_POS);
 
             player = new FiremanPlayer(this, objIdCount++, FIREMAN_INIT_X, FIREMAN_INIT_Y);
             player.SaveNewPerson +=player_SaveNewPerson;
@@ -186,6 +187,7 @@ namespace CatcherGame.GameStates
             randSys.Dispose();
             randSys.GenerateDropObjs -= randSys_GenerateDropObjs;
             gameObjects.Clear();
+            moveLocationList.Clear();
             base.isInit  = false;
         }
 
@@ -314,10 +316,21 @@ namespace CatcherGame.GameStates
                             isMoveLeft = leftMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                         if (!isClickPause)
                             isClickPause = pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+
+                        if(player.IsBoundBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y)){
+                            if(touchLocation.State == TouchLocationState.Moved){
+                                moveLocationList.AddLast(touchLocation);
+                            }
+                            if (moveLocationList.Count > 2 ) {
+                                float vectorX = (moveLocationList.First.Next.Value.Position.X - moveLocationList.First.Value.Position.X);
+                                moveLocationList.RemoveFirst();
+                                player.MoveByTouch(vectorX);
+                            }
+                            
+                        }
                     }
 
-
-                    //遊戲邏輯判斷
+                                        //遊戲邏輯判斷
                     if (isMoveLeft && !isMoveRight)
                     {
                         //Debug.WriteLine("Click Left Button");
@@ -342,6 +355,7 @@ namespace CatcherGame.GameStates
                     player.SetStand(); //設定站立
                 }
                 //player.Move(leftGameScreenBorder, rightGameScreenBorder, mainGame.GetAccVector());
+
 
                 player.CheckIsCaught(fallingObjects);
 
