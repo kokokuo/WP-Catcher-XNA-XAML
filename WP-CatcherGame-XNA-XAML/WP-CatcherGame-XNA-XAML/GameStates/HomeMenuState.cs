@@ -104,9 +104,9 @@ namespace CatcherGame.GameStates
                     foreach (TouchLocation touchLocation in tc){
                         if (!isClickPlay)
                             isClickPlay = playButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        if (!isClickDictionary)
+                        if (!isClickDictionary )
                             isClickDictionary = collectionDictionaryButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        if (!isClickTopScore)
+                        if (!isClickTopScore )
                             isClickTopScore = topScoreButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                         if (!isClickHowToPlay)
                             isClickHowToPlay = howToPlayButtion.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);

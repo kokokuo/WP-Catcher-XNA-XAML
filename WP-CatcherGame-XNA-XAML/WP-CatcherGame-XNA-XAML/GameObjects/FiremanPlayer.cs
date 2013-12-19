@@ -37,6 +37,7 @@ namespace CatcherGame.GameObjects
         float rightFiremanXPos; //又邊消防員的位置
         float rightFiremanWidth;
         float leftFiremanWidth;
+
         bool isWalking; //是否移動
         Net savedNet; //網子類別(Has)
         float init_x, init_y;
@@ -164,9 +165,9 @@ namespace CatcherGame.GameObjects
 
             }
 
-            if (!isShoesEliminated || !isNetEliminated) //如果沒有被抵銷
+            if (!isShoesEliminated || !isNetEliminated) 　//若有其中一種被抵銷
             {
-                if (!isShoesEliminated && !isNetEliminated) {
+                if (!isShoesEliminated && !isNetEliminated) {　//如果都沒有被抵銷
                    if (caughtEffectItem.Count == 0) //第一個道具 加在最上面 位置對其在Life的下方
                     {
                         item.X = displayX;

@@ -15,6 +15,7 @@ namespace CatcherGame.GameObjects
 {
     public class Button : GameObject 
     {
+        bool isClick;
         private AnimationSprite buttonAnimation;
         private Texture2D currentTexture;
         public Button(GameState currentGameState, int id, float x, float y)
@@ -28,6 +29,7 @@ namespace CatcherGame.GameObjects
             this.x = x;
             this.y = y;
             buttonAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
+            isClick = false;
         }
 
         public override void LoadResource(TexturesKeyEnum key)
@@ -50,7 +52,13 @@ namespace CatcherGame.GameObjects
 
         public override void Update()
         {
-            buttonAnimation.UpdateFrame(base.gameState.GetTimeSpan());
+            if (isClick)
+            {
+                buttonAnimation.SetNextWantFrameIndex(1);
+            }
+            else {
+                buttonAnimation.SetNextWantFrameIndex(0);
+            }
             //加入圖片組後要馬上取得當前的圖片
             currentTexture = buttonAnimation.GetCurrentFrameTexture();
             //設定現在的圖片長寬為遊戲元件的長寬
@@ -86,6 +94,7 @@ namespace CatcherGame.GameObjects
         /// <returns></returns>
         public bool IsPixelClick(float x, float y)
         {
+            isClick = false;
             Color[] currtentTextureColor = new Color[currentTexture.Width * currentTexture.Height];
             currentTexture.GetData<Color>(currtentTextureColor);
             //偵測按下去的座標換算成圖片圖片的像素位置
@@ -96,12 +105,15 @@ namespace CatcherGame.GameObjects
             Color clickPoint = currtentTextureColor[pixelPos];
             if (clickPoint.A != 0)
             {
+                isClick = true;
                 return true;
+
             }
             else
             {
                 return false;
             }
+            
         }
 
         /// <summary>
@@ -112,11 +124,13 @@ namespace CatcherGame.GameObjects
         /// <returns></returns>
         public bool IsBoundingBoxClick(float x, float y)
         {
+            isClick = false;
             if (x >= this.X &&
                 x <= this.X + this.Width &&
                 y >= this.Y &&
                 y <= this.Y + this.Height)
             {
+                isClick = true;
                 return true;
             }
             else

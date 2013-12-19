@@ -119,7 +119,7 @@ namespace CatcherGame.TextureManager
 
             //載入HOWTOPLAY所用的圖像資源
             LoadHowtoplayDialogBackground();
-            LoadHowtoplayDialogCloseButton();
+            LoadHowToPlayDialogCloseButton();
             LoadHowtoplayDialogPage1();
             LoadHowtoplayDialogPage2();
             LoadHowtoplayDialogPage3();
@@ -165,6 +165,7 @@ namespace CatcherGame.TextureManager
              if (!_dictionary.ContainsKey(key)){
                  List<Texture2D> texture2Ds = new List<Texture2D>();
                  texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/start"));
+                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/start_touch"));
                  _dictionary.Add(key, texture2Ds);
              }
         }
@@ -176,6 +177,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/how"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/how_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -188,6 +190,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/top"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/top_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -199,6 +202,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/dictionary"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/dictionary_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -233,6 +237,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("close"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("close_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -243,7 +248,7 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("TopScore/top_score_back"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/TopScore/top_score_back"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -256,6 +261,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("close"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("close_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -809,6 +815,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Pause/exit"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Pause/exit_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -821,6 +828,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Pause/continue"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Pause/continue_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -844,6 +852,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_menu"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_menu_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -854,6 +863,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_again"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_again_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -952,6 +962,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("close"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("close_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -1124,13 +1135,14 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
-        private void LoadHowtoplayDialogCloseButton()
+        private void LoadHowToPlayDialogCloseButton()
         {
             TexturesKeyEnum key = TexturesKeyEnum.HOWTOPLAY_CLOSE_BUTTON;
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("close"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("close_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }

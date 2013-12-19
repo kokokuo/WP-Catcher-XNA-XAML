@@ -314,14 +314,18 @@ namespace CatcherGame.GameStates
                         //    isMoveRight = rightMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                         //if (!isMoveLeft)
                         //    isMoveLeft = leftMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        if (!isClickPause)
+                        if (!isClickPause　&& touchLocation.State == TouchLocationState.Released)
                             isClickPause = pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
 
                         if(player.IsBoundBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y)){
-                            if(touchLocation.State == TouchLocationState.Moved){
+                            if (touchLocation.State != TouchLocationState.Released)
+                            {
                                 moveLocationList.AddLast(touchLocation);
                             }
-                            if (moveLocationList.Count > 2 ) {
+                            else {　//如果是release要把之前的資料移除
+                                moveLocationList.Clear();
+                            }
+                            if (moveLocationList.Count >= 2 ) {
                                 float vectorX = (moveLocationList.First.Next.Value.Position.X - moveLocationList.First.Value.Position.X);
                                 moveLocationList.RemoveFirst();
                                 player.MoveByTouch(vectorX);
