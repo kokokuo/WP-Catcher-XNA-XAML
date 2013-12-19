@@ -182,21 +182,21 @@ namespace CatcherGame.GameStates.Dialog
                     {
 
                         //關閉按鈕
-                        if (closeButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                        if (closeButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
                         {
                             isDataRead = false;
                             base.CloseDialog();//透過父類別來關閉
                         }
 
                         //左邊按鈕
-                        if (leftButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                        if (leftButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
                         {
                             if ((int)gtCurrent > roleStart)
                                 gtCurrent--;//gtCurrent-1來切換目前的遊戲顯示物件
                         }
 
                         //右邊按鈕
-                        if (rightButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                        if (rightButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
                         {
                             //判斷
                             if ((int)gtCurrent < roleEnd)

@@ -63,9 +63,9 @@ namespace CatcherGame.GameStates
                 foreach (TouchLocation touchLocation in tc)
                 {
                     if (!isClickMenu)
-                        isClickMenu = menuButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        isClickMenu = menuButton.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                     if (!isClickAgain)
-                        isClickAgain = againButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        isClickAgain = againButton.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                 }
 
                 //遊戲邏輯判斷
@@ -83,7 +83,7 @@ namespace CatcherGame.GameStates
                 {
 
                     //關閉按鈕
-                    if ( menuButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                    if ( menuButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
                     {
                         
                         base.LoginFacebook();

@@ -15,7 +15,7 @@ namespace CatcherGame.GameObjects
 {
     public class Button : GameObject 
     {
-        bool isClick;
+        bool isClick,isPressed;
         private AnimationSprite buttonAnimation;
         private Texture2D currentTexture;
         public Button(GameState currentGameState, int id, float x, float y)
@@ -30,6 +30,7 @@ namespace CatcherGame.GameObjects
             this.y = y;
             buttonAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
             isClick = false;
+            isPressed = false;
         }
 
         public override void LoadResource(TexturesKeyEnum key)
@@ -52,12 +53,13 @@ namespace CatcherGame.GameObjects
 
         public override void Update()
         {
-            if (isClick)
+            if (isPressed)
             {
-                buttonAnimation.SetNextWantFrameIndex(1);
-            }
-            else {
-                buttonAnimation.SetNextWantFrameIndex(0);
+                buttonAnimation.UpdateFrame(this.gameState.GetTimeSpan());
+                if (buttonAnimation.GetIsRoundAnimation()) {
+                    isPressed = false;
+                    isClick = true;
+                }
             }
             //加入圖片組後要馬上取得當前的圖片
             currentTexture = buttonAnimation.GetCurrentFrameTexture();
@@ -83,18 +85,25 @@ namespace CatcherGame.GameObjects
             this.Height = buttonAnimation.GetCurrentFrameTexture().Height;
             this.Width = buttonAnimation.GetCurrentFrameTexture().Width;
         }
-        
-        
+
+        public bool CheckIsClick() {
+            if (isClick)
+            {
+                isClick = false;
+                return true;
+            }
+            return false;
+        }
        
         /// <summary>
-        /// 判斷有無點擊到Button(像素碰撞)
+        /// 判斷有無按壓到Button(像素碰撞)
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public bool IsPixelClick(float x, float y)
+        public bool IsPixelPressed(float x, float y)
         {
-            isClick = false;
+            
             Color[] currtentTextureColor = new Color[currentTexture.Width * currentTexture.Height];
             currentTexture.GetData<Color>(currtentTextureColor);
             //偵測按下去的座標換算成圖片圖片的像素位置
@@ -105,7 +114,7 @@ namespace CatcherGame.GameObjects
             Color clickPoint = currtentTextureColor[pixelPos];
             if (clickPoint.A != 0)
             {
-                isClick = true;
+                isPressed = true;
                 return true;
 
             }
@@ -117,20 +126,19 @@ namespace CatcherGame.GameObjects
         }
 
         /// <summary>
-        /// 判斷有無點擊到Button(區塊碰撞)
+        /// 判斷有無按壓到Button(區塊碰撞)
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public bool IsBoundingBoxClick(float x, float y)
+        public bool IsBoundingBoxPressed(float x, float y)
         {
-            isClick = false;
             if (x >= this.X &&
                 x <= this.X + this.Width &&
                 y >= this.Y &&
                 y <= this.Y + this.Height)
             {
-                isClick = true;
+                isPressed = true;
                 return true;
             }
             else

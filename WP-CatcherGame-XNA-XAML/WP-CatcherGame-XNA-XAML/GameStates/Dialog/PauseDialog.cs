@@ -58,9 +58,9 @@ namespace CatcherGame.GameStates.Dialog
                 foreach (TouchLocation touchLocation in tc)
                 {
                     if (!isClickClose)
-                        isClickClose = exitGameButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y);
+                        isClickClose = exitGameButton.IsPixelPressed(touchLocation.Position.X, touchLocation.Position.Y);
                     if (!isClickContinue)
-                        isClickContinue =  continueGameButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y);
+                        isClickContinue =  continueGameButton.IsPixelPressed(touchLocation.Position.X, touchLocation.Position.Y);
                 }
 
                 //遊戲邏輯判斷

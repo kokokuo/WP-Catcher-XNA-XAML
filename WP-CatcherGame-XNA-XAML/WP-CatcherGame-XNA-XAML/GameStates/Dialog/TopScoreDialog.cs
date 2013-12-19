@@ -64,14 +64,14 @@ namespace CatcherGame.GameStates.Dialog
                 //所有當下的觸控點去判斷有無點到按鈕
                 foreach (TouchLocation touchLocation in tc) {
                     if (!isClickClose)
-                        isClickClose = closeButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y);
+                        isClickClose = closeButton.IsPixelPressed(touchLocation.Position.X, touchLocation.Position.Y);
                 }
 
                 TouchLocation tL = base.currentState.GetTouchLocation();
                 if (tL.State == TouchLocationState.Released)
                 {
                     //關閉按鈕
-                    if (closeButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                    if (closeButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
                     {
                         base.CloseDialog();//透過父類別來關閉
                     }
