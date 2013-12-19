@@ -146,6 +146,10 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
+            bool isTouchReleased = false;
+            bool isClickCloseButton, isClickLeftButton, isClickRightButton;
+            isClickCloseButton = isClickRightButton = isClickLeftButton = false;
+
             if (!isDataRead)
             {
                 //
@@ -158,59 +162,61 @@ namespace CatcherGame.GameStates.Dialog
                     isDataRead = true;
                 }
             }
-           
             
-           
+            //指定當前頁面是DictionaryDialog頁面
+            stCurrent = DialogStateEnum.STATE_DICTIONARY;
 
-            if (!base.currentState.IsEmptyQueue())
+            //片段當前頁面是空值，就初始化給第一個角色
+            if (gtCurrent == DialogGameObjectEnum.EMPTY)
+                gtCurrent = DialogGameObjectEnum.DICTIONARY_FATDANCER;
+
+            TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
+
+            if (tc.Count > 0)
             {
-                //指定當前頁面是DictionaryDialog頁面
-                stCurrent = DialogStateEnum.STATE_DICTIONARY;
-
-                //片段當前頁面是空值，就初始化給第一個角色
-                if (gtCurrent == DialogGameObjectEnum.EMPTY)
-                    gtCurrent = DialogGameObjectEnum.DICTIONARY_FATDANCER;
-
-                TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
-
-                if (tc.Count > 0)
+                foreach (TouchLocation touchLocation in tc)
                 {
-
-                    //使用觸控單次點擊方式
-                    TouchLocation tL = base.currentState.GetTouchLocation();
-                    if (tL.State == TouchLocationState.Released)
+                    if (touchLocation.State == TouchLocationState.Released)
                     {
+                        isTouchReleased = true;
+                            
+                    }
+                    else
+                    {
+                        isTouchReleased = false;
+                    }
+                    isClickCloseButton = closeButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, isTouchReleased);
+                    isClickLeftButton = leftButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, isTouchReleased);
+                    isClickRightButton = rightButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, isTouchReleased);
+                }
 
-                        //關閉按鈕
-                        if (closeButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
-                        {
-                            isDataRead = false;
-                            base.CloseDialog();//透過父類別來關閉
-                        }
-
-                        //左邊按鈕
-                        if (leftButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
-                        {
-                            if ((int)gtCurrent > roleStart)
-                                gtCurrent--;//gtCurrent-1來切換目前的遊戲顯示物件
-                        }
-
-                        //右邊按鈕
-                        if (rightButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
-                        {
-                            //判斷
-                            if ((int)gtCurrent < roleEnd)
-                                gtCurrent++;//gtCurrent+1來切換目前的遊戲顯示物件
-                        }
+                //判斷有無點擊到按鈕並切換(沒有同時都點到)
+                if (!(isClickCloseButton && isClickLeftButton && isClickRightButton))
+                {
+                    //關閉按鈕
+                    if (isClickCloseButton && !isClickLeftButton && !isClickRightButton)
+                    {
+                        isDataRead = false;
+                        base.CloseDialog();//透過父類別來關閉
                     }
 
-                    //清除TouchQueue裡的觸控點，因為避免Dequeue時候並不在Dialog中，因此要清除TouchQueue。
-                    base.currentState.ClearTouchQueue();
+                    //左邊按鈕
+                    if (!isClickCloseButton && isClickLeftButton && !isClickRightButton)
+                    {
+                        if ((int)gtCurrent > roleStart)
+                            gtCurrent--;//gtCurrent-1來切換目前的遊戲顯示物件
+                    }
+
+                    //右邊按鈕
+                    if (!isClickCloseButton && !isClickLeftButton && isClickRightButton)
+                    {
+                        //判斷
+                        if ((int)gtCurrent < roleEnd)
+                            gtCurrent++;//gtCurrent+1來切換目前的遊戲顯示物件
+                    }
                 }
+                    
             }
-
-
-           
 
             base.Update(); //更新遊戲元件
         }

@@ -5,7 +5,6 @@ Content\Dialog\Dictionary\dictionary_fatdancer.xnb
 Content\Dialog\Dictionary\dictionary_fatdancer_intro.xnb
 Content\Dialog\Dictionary\dictionary_flyoldlady.xnb
 Content\Dialog\Dictionary\dictionary_flyoldlady_intro.xnb
-Content\Dialog\Dictionary\dictionary_leftButton.xnb
 Content\Dialog\Dictionary\dictionary_littlegirl.xnb
 Content\Dialog\Dictionary\dictionary_littlegirl_intro.xnb
 Content\Dialog\Dictionary\dictionary_manstubble.xnb
@@ -17,7 +16,6 @@ Content\Dialog\Dictionary\dictionary_nicole_intro.xnb
 Content\Dialog\Dictionary\dictionary_no.xnb
 Content\Dialog\Dictionary\dictionary_oldman.xnb
 Content\Dialog\Dictionary\dictionary_oldman_intro.xnb
-Content\Dialog\Dictionary\dictionary_rightButton.xnb
 Content\Dialog\Dictionary\dictionary_roxanne.xnb
 Content\Dialog\Dictionary\dictionary_roxanne_intro.xnb
 Content\Dialog\Howtoplay\howtoplay_back.xnb
@@ -140,6 +138,11 @@ Content\TopScoreFont.xnb
 Content\Menu\dictionary_touch.xnb
 Content\Menu\how_touch.xnb
 Content\Menu\top_touch.xnb
-Content\Dialog\Dictionary\dictionary_left_touch.xnb
-Content\Dialog\Dictionary\dictionary_right_touch.xnb
 Content\Menu\start_touch.xnb
+Content\Dialog\TopScore\dictionary_right_touch.xnb
+Content\Dialog\left_button_touch.xnb
+Content\Dialog\right_button_touch.xnb
+Content\Dialog\Dictionary\dictionary_left_button.xnb
+Content\Dialog\Dictionary\dictionary_right_button.xnb
+Content\Dialog\Dictionary\dictionary_left_button_touch.xnb
+Content\Dialog\Dictionary\dictionary_right_button_touch.xnb

@@ -314,9 +314,12 @@ namespace CatcherGame.GameStates
                         //    isMoveRight = rightMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                         //if (!isMoveLeft)
                         //    isMoveLeft = leftMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        if (!isClickPause　&& touchLocation.State == TouchLocationState.Released)
-                            isClickPause = pauseButton.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-
+                        if (touchLocation.State == TouchLocationState.Released)
+                            isClickPause = pauseButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, true);
+                        else {
+                            isClickPause = pauseButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, false);
+                        }
+                        
                         if(player.IsBoundBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y)){
                             if (touchLocation.State != TouchLocationState.Released)
                             {

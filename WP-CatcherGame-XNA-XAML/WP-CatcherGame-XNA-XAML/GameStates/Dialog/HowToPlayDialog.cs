@@ -68,47 +68,58 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
+            bool isTouchReleased = false;
+            bool isClickCloseButton, isClickLeftButton, isClickRightButton;
+            isClickCloseButton = isClickRightButton = isClickLeftButton = false;
+ 
+            TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
 
-            if (!base.currentState.IsEmptyQueue())
+            if (tc.Count > 0)
             {
                 stCurrent = DialogStateEnum.STATE_HOW_TO_PLAY;
                 if(gtCurrent==DialogGameObjectEnum.EMPTY)
-                gtCurrent = DialogGameObjectEnum.HOWTOPLAY_PAGE1;
+                    gtCurrent = DialogGameObjectEnum.HOWTOPLAY_PAGE1;
 
-                TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
-
-                if (tc.Count > 0)
+                foreach (TouchLocation touchLocation in tc)
                 {
-
-                    //使用觸控單次點擊方式
-                    TouchLocation tL = base.currentState.GetTouchLocation();
-                    if (tL.State == TouchLocationState.Released)
+                    if (touchLocation.State == TouchLocationState.Released)
                     {
-                        //關閉按鈕
-                        if (closeButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
-                        {
-                            base.CloseDialog();//透過父類別來關閉
-                        }
-                        //左邊按鈕
-                        if (leftButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
-                        {
-                            if ((int)gtCurrent > pageStart)
-                                gtCurrent--;
+                        isTouchReleased = true;
 
-                        }
+                    }
+                    else
+                    {
+                        isTouchReleased = false;
+                    }
+                    isClickCloseButton = closeButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, isTouchReleased);
+                    isClickLeftButton = leftButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, isTouchReleased);
+                    isClickRightButton = rightButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, isTouchReleased);
+                }
 
-                        //右邊按鈕
-                        if (rightButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
-                        {
-                            if ((int)gtCurrent < pageEnd)
-                                gtCurrent++;
-                        }
+                if (!(isClickCloseButton && isClickLeftButton && isClickRightButton))
+                {
+                    //關閉按鈕
+                    if (isClickCloseButton && !isClickLeftButton && !isClickRightButton)
+                    {
+                        base.CloseDialog();//透過父類別來關閉
+                    }
+                    //左邊按鈕
+                    if (!isClickCloseButton && isClickLeftButton && !isClickRightButton)
+                    {
+                        if ((int)gtCurrent > pageStart)
+                            gtCurrent--;
+
                     }
 
-                    //清除TouchQueue裡的觸控點，因為避免Dequeue時候並不在Dialog中，因此要清除TouchQueue。
-                    base.currentState.ClearTouchQueue();
-
+                    //右邊按鈕
+                    if (!isClickCloseButton && !isClickLeftButton && isClickRightButton)
+                    {
+                        if ((int)gtCurrent < pageEnd)
+                            gtCurrent++;
+                    }
                 }
+                   
+
             }
 
             base.Update(); //更新遊戲元件

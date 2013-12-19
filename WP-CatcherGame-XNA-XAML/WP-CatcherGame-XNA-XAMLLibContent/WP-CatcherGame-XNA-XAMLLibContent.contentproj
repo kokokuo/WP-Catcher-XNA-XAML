@@ -74,8 +74,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Dialog\Dictionary\dictionary_leftButton.png">
-      <Name>dictionary_leftButton</Name>
+    <Compile Include="Dialog\Dictionary\dictionary_left_button.png">
+      <Name>dictionary_left_button</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -134,8 +134,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Dialog\Dictionary\dictionary_rightButton.png">
-      <Name>dictionary_rightButton</Name>
+    <Compile Include="Dialog\Dictionary\dictionary_right_button.png">
+      <Name>dictionary_right_button</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -802,13 +802,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dialog\Dictionary\dictionary_left_touch.png">
-      <Name>dictionary_left_touch</Name>
+    <Compile Include="Dialog\Dictionary\dictionary_left_button_touch.png">
+      <Name>dictionary_left_button_touch</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Dialog\Dictionary\dictionary_right_touch.png">
+    <Compile Include="Dialog\Dictionary\dictionary_right_button_touch.png">
+      <Name>dictionary_right_button_touch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialog\TopScore\dictionary_right_touch.png">
       <Name>dictionary_right_touch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialog\left_button_touch.png">
+      <Name>left_button_touch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialog\right_button_touch.png">
+      <Name>right_button_touch</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -13,11 +13,14 @@ using CatcherGame.TextureManager;
 using System.Diagnostics;
 namespace CatcherGame.GameObjects
 {
+    enum CollisionType { PixelCollision = 0, BoundingBoxCollison }
+
     public class Button : GameObject 
     {
-        bool isClick,isPressed;
+        //isClick用來判斷真的有在按鈕點擊並放開, isPressed用來判斷有點及但是沒有放開(如此狀態不應該進入選項)
+        bool isClick,isPressed; 
         private AnimationSprite buttonAnimation;
-        private Texture2D currentTexture;
+        private Texture2D currentTexture; //用來取得目前圖片(Pixel碰撞用)
         public Button(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y)
         {
@@ -53,14 +56,14 @@ namespace CatcherGame.GameObjects
 
         public override void Update()
         {
-            if (isPressed)
+            if (isPressed) //如果有按壓,切換到按壓的圖片
             {
-                buttonAnimation.UpdateFrame(this.gameState.GetTimeSpan());
-                if (buttonAnimation.GetIsRoundAnimation()) {
-                    isPressed = false;
-                    isClick = true;
-                }
+                buttonAnimation.SetNextWantFrameIndex(1);
             }
+            else if(isClick || !isPressed){ //如果有點擊(按壓並放開)或是沒有按壓,切換到正常按鈕圖片
+                buttonAnimation.SetNextWantFrameIndex(0);
+            }
+            
             //加入圖片組後要馬上取得當前的圖片
             currentTexture = buttonAnimation.GetCurrentFrameTexture();
             //設定現在的圖片長寬為遊戲元件的長寬
@@ -86,41 +89,46 @@ namespace CatcherGame.GameObjects
             this.Width = buttonAnimation.GetCurrentFrameTexture().Width;
         }
 
-        public bool CheckIsClick() {
-            if (isClick)
-            {
-                isClick = false;
-                return true;
-            }
-            return false;
-        }
-       
         /// <summary>
         /// 判斷有無按壓到Button(像素碰撞)
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
+        /// <param name="isTouchReleased">送進來的點擊是否狀態是放開的,對的話請給true</param>
         /// <returns></returns>
-        public bool IsPixelPressed(float x, float y)
+        public bool IsPixelClicked(float x, float y,bool isTouchReleased)
         {
             
             Color[] currtentTextureColor = new Color[currentTexture.Width * currentTexture.Height];
             currentTexture.GetData<Color>(currtentTextureColor);
             //偵測按下去的座標換算成圖片圖片的像素位置
             int pixelPos = ((int)x - currentTexture.Bounds.Left) + (((int)y) - currentTexture.Bounds.Top) * currentTexture.Bounds.Width;
-            if(currtentTextureColor.Length < pixelPos)
+            if (currtentTextureColor.Length < pixelPos){
+                isPressed = false;
                 return false;
+            }
 
             Color clickPoint = currtentTextureColor[pixelPos];
             if (clickPoint.A != 0)
             {
-                isPressed = true;
-                return true;
+                if (isTouchReleased) //如果有放開並且有放開座標有在按鈕上
+                {
+                    isClick = true; //設定有按下
+                    isPressed = false;
+                    return true; //回傳真的有點擊
+                }
+                else {
+
+                    isPressed = true; //設定只是按壓沒有進入選項
+                    return false;
+                }
 
             }
             else
             {
-                return false;
+                if (isTouchReleased) //放開點擊,但是不在按鈕中
+                    isPressed = false; //按壓變回false表示圖片切回無按壓圖片
+                return false; //無真的點擊
             }
             
         }
@@ -131,18 +139,31 @@ namespace CatcherGame.GameObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public bool IsBoundingBoxPressed(float x, float y)
+        public bool IsBoundingBoxClicked(float x, float y, bool isTouchReleased)
         {
             if (x >= this.X &&
                 x <= this.X + this.Width &&
                 y >= this.Y &&
                 y <= this.Y + this.Height)
             {
-                isPressed = true;
-                return true;
+                if (isTouchReleased)
+                {
+                    isClick = true;
+                    isPressed = false;
+                    return true;
+                }
+                else
+                {
+                    
+                    isPressed = true;
+                    return false;
+                }
             }
             else
             {
+                
+                if (isTouchReleased)
+                    isPressed = false;
                 return false;
             }
         

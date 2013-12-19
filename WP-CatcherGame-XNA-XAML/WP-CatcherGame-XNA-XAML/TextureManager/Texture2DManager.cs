@@ -889,6 +889,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/left_button"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/left_button_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -901,6 +902,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/right_button"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/right_button_touch"));
                 _dictionary.Add(key, texture2Ds);
 
             }
@@ -939,7 +941,8 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_leftButton"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_left_button"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_left_button_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -950,7 +953,8 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_rightButton"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_right_button"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_right_button_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }

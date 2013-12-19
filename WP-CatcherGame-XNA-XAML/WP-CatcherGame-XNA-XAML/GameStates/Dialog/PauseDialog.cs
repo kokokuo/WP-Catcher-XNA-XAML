@@ -57,20 +57,29 @@ namespace CatcherGame.GameStates.Dialog
                 //所有當下的觸控點去判斷有無點到按鈕
                 foreach (TouchLocation touchLocation in tc)
                 {
-                    if (!isClickClose)
-                        isClickClose = exitGameButton.IsPixelPressed(touchLocation.Position.X, touchLocation.Position.Y);
-                    if (!isClickContinue)
-                        isClickContinue =  continueGameButton.IsPixelPressed(touchLocation.Position.X, touchLocation.Position.Y);
+                    if (touchLocation.State == TouchLocationState.Released)
+                    {
+                        isClickContinue =  continueGameButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y,true);
+                        isClickClose = exitGameButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, true);
+                    }
+                    else
+                    {
+                        isClickContinue = continueGameButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, false);
+                        isClickClose = exitGameButton.IsPixelClicked(touchLocation.Position.X, touchLocation.Position.Y, false);
+                    }
+                        
                 }
 
                 //遊戲邏輯判斷
-                if ( !(isClickClose && isClickContinue) ) { 
-                    if(isClickClose){
+                if ( !(isClickClose && isClickContinue) ) {
+                    if (isClickClose && !isClickContinue)
+                    {
                         base.CloseDialog(); //透過父類別來關閉視窗
                         ((PlayGameState)base.currentState).Release(); //釋放遊戲元件資源
                         base.currentState.SetNextGameSateByMain(GameStateEnum.STATE_MENU); //切換回選單
                     }
-                    else if (isClickContinue) {
+                    else if (!isClickClose && isClickContinue)
+                    {
                         base.CloseDialog(); //透過父類別來關閉
                     }
 

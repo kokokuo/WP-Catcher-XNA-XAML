@@ -20,7 +20,7 @@ namespace CatcherGame.GameStates
         Button collectionDictionaryButton;
         Button howToPlayButtion;
         TextureLayer menuSide;
-        bool isClickPlay, isClickDictionary, isClickTopScore, isClickHowToPlay;
+       
         
 
         public HomeMenuState(GamePage gMainGame)
@@ -65,7 +65,6 @@ namespace CatcherGame.GameStates
         public override void BeginInit()
         {
             base.objIdCount = 0;
-            isClickHowToPlay = isClickPlay = isClickDictionary = isClickTopScore = false;
 
             playButton = new Button(this, objIdCount++,0,0);
             
@@ -100,24 +99,23 @@ namespace CatcherGame.GameStates
             if (!base.hasDialogShow)
             {
                 TouchCollection tc = base.GetCurrentFrameTouchCollection();
-                
+                bool isTouchReleased = false;
+                bool isClickPlay, isClickDictionary, isClickTopScore, isClickHowToPlay;
                 isClickHowToPlay = isClickPlay = isClickDictionary = isClickTopScore = false;
                 if (tc.Count > 0){
                     //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
-                    foreach (TouchLocation touchLocation in tc){ 
-     
-                        playButton.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        collectionDictionaryButton.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        topScoreButton.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        howToPlayButtion.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-
-                        if (touchLocation.State == TouchLocationState.Released) {
-                            isClickPlay = playButton.CheckIsClick();
-                            isClickDictionary = collectionDictionaryButton.CheckIsClick();
-                            isClickTopScore = topScoreButton.CheckIsClick();
-                            isClickHowToPlay = howToPlayButtion.CheckIsClick();
-                        
+                    foreach (TouchLocation touchLocation in tc){
+                        //有按壓並釋放
+                        if (touchLocation.State == TouchLocationState.Released){
+                            isTouchReleased = true;
                         }
+                        else {
+                            isTouchReleased = false;
+                        }
+                        isClickPlay = playButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, isTouchReleased);
+                        isClickDictionary = collectionDictionaryButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, isTouchReleased);
+                        isClickTopScore = topScoreButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, isTouchReleased);
+                        isClickHowToPlay = howToPlayButtion.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, isTouchReleased);
                     }
 
                    

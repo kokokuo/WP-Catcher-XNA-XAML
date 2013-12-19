@@ -62,10 +62,16 @@ namespace CatcherGame.GameStates
                 //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
                 foreach (TouchLocation touchLocation in tc)
                 {
-                    if (!isClickMenu)
-                        isClickMenu = menuButton.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                    if (!isClickAgain)
-                        isClickAgain = againButton.IsPixelPressed((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                    if (touchLocation.State == TouchLocationState.Released)
+                    {
+                        isClickAgain = againButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,true);
+                        isClickMenu = menuButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,true);
+                    }
+                    else { 
+                        isClickAgain = againButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,false);
+                        isClickMenu = menuButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,false);
+                    }
+                    
                 }
 
                 //遊戲邏輯判斷
@@ -76,14 +82,7 @@ namespace CatcherGame.GameStates
                         Debug.WriteLine("CLICK!! STATE_COMIC");
                         SetNextGameSateByMain(GameStateEnum.STATE_START_COMIC);
                     }
-                }
-                 //使用觸控單次點擊方式
-                TouchLocation tL = base.GetTouchLocation();
-                if (tL.State == TouchLocationState.Released)
-                {
-
-                    //關閉按鈕
-                    if ( menuButton.IsPixelPressed(tL.Position.X, tL.Position.Y))
+                    else if ( !isClickMenu && isClickAgain)
                     {
                         
                         base.LoginFacebook();
@@ -91,9 +90,24 @@ namespace CatcherGame.GameStates
                         //SetNextGameSateByMain(GameStateEnum.STATE_MENU);
                     }
                 }
+               
+                // //使用觸控單次點擊方式
+                //TouchLocation tL = base.GetTouchLocation();
+                //if (tL.State == TouchLocationState.Released)
+                //{
+
+                //    //關閉按鈕
+                //    if ( menuButton.IsPixelClicked(tL.Position.X, tL.Position.Y))
+                //    {
+                        
+                //        base.LoginFacebook();
+                //        //Debug.WriteLine("CLICK!! STATE_MENU");
+                //        //SetNextGameSateByMain(GameStateEnum.STATE_MENU);
+                //    }
+                //}
 
                 //清除TouchQueue裡的觸控點，因為避免Dequeue時候並不在Dialog中，因此要清除TouchQueue。
-                base.ClearTouchQueue();
+                //base.ClearTouchQueue();
                
             
             }
