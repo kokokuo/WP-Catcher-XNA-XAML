@@ -46,8 +46,6 @@ namespace CatcherGame.GameStates.Dialog
         GameRecordData readData;
         List<DropObjectsKeyEnum> caughtObjects;
 
-        //判斷是否已經讀取記錄檔
-        bool isDataRead;
 
         public DictionaryDialog(GameState pCurrentState)
             : base(pCurrentState)
@@ -56,15 +54,6 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void BeginInit()
         {
-            //讀取記錄檔
-            readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
-            if (readData != null && readData.CaughtDropObjects.ToList() != null)
-            {
-                caughtObjects = readData.CaughtDropObjects.ToList();
-            }
-
-            //初始化讀取記錄檔
-            isDataRead = false;
 
             caughtObjects = new List<DropObjectsKeyEnum>();
 
@@ -149,18 +138,13 @@ namespace CatcherGame.GameStates.Dialog
             bool isTouchReleased = false;
             bool isClickCloseButton, isClickLeftButton, isClickRightButton;
             isClickCloseButton = isClickRightButton = isClickLeftButton = false;
-
-            if (!isDataRead)
+            
+            ReleaseGameObject();
+            //讀取紀錄檔
+            readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
+            if (readData != null && readData.CaughtDropObjects.ToList() != null)
             {
-                //
-                ReleaseGameObject();
-                //讀取紀錄檔
-                readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
-                if (readData != null && readData.CaughtDropObjects.ToList() != null && isDataRead == false)
-                {
-                    caughtObjects = readData.CaughtDropObjects.ToList();
-                    isDataRead = true;
-                }
+                caughtObjects = readData.CaughtDropObjects.ToList();
             }
             
             //指定當前頁面是DictionaryDialog頁面
@@ -196,7 +180,6 @@ namespace CatcherGame.GameStates.Dialog
                     //關閉按鈕
                     if (isClickCloseButton && !isClickLeftButton && !isClickRightButton)
                     {
-                        isDataRead = false;
                         base.CloseDialog();//透過父類別來關閉
                     }
 
