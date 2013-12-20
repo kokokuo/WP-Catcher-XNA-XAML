@@ -362,7 +362,8 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/pause_bigger"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/pause_button"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/pause_button_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
 

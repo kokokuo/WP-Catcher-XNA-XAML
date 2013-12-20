@@ -404,8 +404,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Play\pause_bigger.png">
-      <Name>pause_bigger</Name>
+    <Compile Include="Play\pause_button.png">
+      <Name>pause_button</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -830,6 +830,13 @@
   <ItemGroup>
     <Compile Include="Dialog\right_button_touch.png">
       <Name>right_button_touch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Play\pause_button_touch.png">
+      <Name>pause_button_touch</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

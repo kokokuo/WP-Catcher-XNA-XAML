@@ -61,7 +61,6 @@ Content\Play\life_fix.xnb
 Content\Play\net1.xnb
 Content\Play\net2.xnb
 Content\Play\pause.xnb
-Content\Play\pause_bigger.xnb
 Content\Play\play_back.xnb
 Content\Play\right_button.xnb
 Content\Play\score.xnb
@@ -146,3 +145,5 @@ Content\Dialog\Dictionary\dictionary_left_button.xnb
 Content\Dialog\Dictionary\dictionary_right_button.xnb
 Content\Dialog\Dictionary\dictionary_left_button_touch.xnb
 Content\Dialog\Dictionary\dictionary_right_button_touch.xnb
+Content\Play\pause_button.xnb
+Content\Play\pause_button_touch.xnb
