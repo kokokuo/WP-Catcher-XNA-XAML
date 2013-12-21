@@ -75,6 +75,10 @@ namespace CatcherGame.TextureManager
         PLAY_ROXANNE_CAUGHT,
         PLAY_ROXANNE_WALK,
 
+        PLAY_NICOLE_FALL,
+        PLAY_NICOLE_CAUGHT,
+        PLAY_NICOLE_WALK,
+
         //SMOKE
         PLAY_STRONG_SMOKE,
         //Item

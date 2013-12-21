@@ -64,7 +64,7 @@ namespace CatcherGame.TextureManager
             LoadPlayNetNormal();
             LoadPlayNetSmall();
             LoadPlayNetLarge();
-            
+            //掉落腳色
             LoadPlayDie();
             LoadPlayFlyOldLady();
             LoadPlayFatDance();
@@ -73,6 +73,7 @@ namespace CatcherGame.TextureManager
             LoadPlayNaughtyBoy();
             LoadPlayOldMan();
             LoadPlayRoxanne();
+            LoadPlayNicole();
             //道具
             LoadPlayDropItemBoostingShoes();
             LoadPlayDropItemSlowShoes();
@@ -759,7 +760,40 @@ namespace CatcherGame.TextureManager
             }
         }
 
-        //遊戲中的老人
+        //遊戲中的Nicole
+        private void LoadPlayNicole()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_NICOLE_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/nicole/nicole_fall1"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/nicole/nicole_fall2"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_NICOLE_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/nicole/nicole_caught"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/nicole/nicole_floor"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_NICOLE_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/nicole/nicole_run1"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/nicole/nicole_run2"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/nicole/nicole_run3"));
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
+
+        //遊戲中的Roxanne
         private void LoadPlayRoxanne()
         {
             TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_ROXANNE_FALL;
