@@ -18,7 +18,7 @@ namespace CatcherGame.GameObjects
         PERSON_NAUGHTY_BOY,
         PERSON_OLD_MAN,
         PERSON_ROXANNE,
-
+        PERSON_NICOLE,
         //ITEM
         ITEM_BOOSTING_SHOES,
         ITEM_SLOW_SHOES,

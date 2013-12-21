@@ -32,8 +32,8 @@ namespace CatcherGame.GameObjects
         int LEFT_MOVE_STEP_SENSOR = -10;
         int RIGHT_MOVE_STEP_SENSOR = 10;
         //觸控拖拉
-        float MOVE_STEP_TOUCH = 1;
-
+        float MOVE_STEP_TOUCH = 0.7f;
+        bool isTouched;
         float rightFiremanXPos; //又邊消防員的位置
         float rightFiremanWidth;
         float leftFiremanWidth;
@@ -222,14 +222,14 @@ namespace CatcherGame.GameObjects
                     state = EffectState.SPEED_UP;
                     LEFT_MOVE_STEP_SENSOR = -14;
                     RIGHT_MOVE_STEP_SENSOR = 14;
-                    MOVE_STEP_TOUCH = 1.5f;
+                    MOVE_STEP_TOUCH = 1.2f;
                 }
                 else if (key == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
                 {
                     state = EffectState.SLOW;
                     LEFT_MOVE_STEP_SENSOR = -6;
                     RIGHT_MOVE_STEP_SENSOR = 6;
-                    MOVE_STEP_TOUCH = 0.7f;
+                    MOVE_STEP_TOUCH = 0.2f;
                 }
             }
         }
@@ -237,7 +237,7 @@ namespace CatcherGame.GameObjects
             state = EffectState.NORMAL;
             LEFT_MOVE_STEP_SENSOR = -10;
             RIGHT_MOVE_STEP_SENSOR = 10;
-            MOVE_STEP_TOUCH = 1;
+            MOVE_STEP_TOUCH = 0.7f;
         }
 
         /// <summary>
@@ -553,20 +553,35 @@ namespace CatcherGame.GameObjects
             willRemoveItemsId.Clear();
         }
 
-        //
-        public bool IsBoundBoxClick(float x, float y) {
+        public bool GetBeTouched()
+        {
+            return isTouched;
+        }
+        public bool IsBoundBoxClick(float x, float y,bool isTouchReleased)
+        {
             if (x >= this.X &&
                 x <= this.X + this.Width &&
                 y >= this.Y &&
                 y <= this.Y + this.Height)
             {
+                if (!isTouchReleased)
+                {
+                    isTouched = true;
+                }
+                else {
+                    isTouched = false;
+                }
                 return true;
             }
             else
             {
+                if (isTouchReleased)
+                {
+                    isTouched = false;
+                }
                 return false;
             }
-        
+
         }
 
         protected override void Dispose(bool disposing)

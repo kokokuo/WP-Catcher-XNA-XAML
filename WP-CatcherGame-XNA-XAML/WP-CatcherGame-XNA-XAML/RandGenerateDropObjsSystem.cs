@@ -128,6 +128,12 @@ namespace CatcherGame
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ROXANNE_WALK);
             generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_ROXANNE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_ROXANNE, 0.3f, loadTexureKeys, 5f, 0f, 6f, 1));
 
+            loadTexureKeys = new List<TexturesKeyEnum>();
+            loadTexureKeys.Add(TexturesKeyEnum.PLAY_NICOLE_FALL);
+            loadTexureKeys.Add(TexturesKeyEnum.PLAY_NICOLE_CAUGHT);
+            loadTexureKeys.Add(TexturesKeyEnum.PLAY_NICOLE_WALK);
+            generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_NICOLE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_NICOLE, 0.5f, loadTexureKeys, 5f, 0f, 3f, 0));
+
             //道具
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ITEM_BOOSTING_SHOES);
@@ -143,11 +149,11 @@ namespace CatcherGame
             //網子
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ITEM_NET_EXPANDER);
-            generaterEffectItemReocrd.Add(DropObjectsKeyEnum.ITEM_NET_EXPANDER, new EffectItemDataRecord(DropObjectsKeyEnum.ITEM_NET_EXPANDER, 0.2f, loadTexureKeys, 3f, 0f, 5f));
+            generaterEffectItemReocrd.Add(DropObjectsKeyEnum.ITEM_NET_EXPANDER, new EffectItemDataRecord(DropObjectsKeyEnum.ITEM_NET_EXPANDER, 0.2f, loadTexureKeys, 3f, 0f, 8f));
 
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ITEM_NET_SHRINKER);
-            generaterEffectItemReocrd.Add(DropObjectsKeyEnum.ITEM_NET_SHRINKER, new EffectItemDataRecord(DropObjectsKeyEnum.ITEM_NET_SHRINKER, 0.2f, loadTexureKeys, 3f, 0f, 5f));
+            generaterEffectItemReocrd.Add(DropObjectsKeyEnum.ITEM_NET_SHRINKER, new EffectItemDataRecord(DropObjectsKeyEnum.ITEM_NET_SHRINKER, 0.2f, loadTexureKeys, 3f, 0f, 8f));
         }
 
         //計算掉落物產生的機率值 並且是否有滿足條件設定的機率(產生的機率值小於設定的機率)

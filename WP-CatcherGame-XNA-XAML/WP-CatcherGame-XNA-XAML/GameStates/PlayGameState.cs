@@ -218,8 +218,7 @@ namespace CatcherGame.GameStates
             //載入圖片
             base.background = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0];
             pauseButton.LoadResource(TexturesKeyEnum.PLAY_PAUSE_BUTTON);
-            //leftMoveButton.LoadResource(TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON);
-            //rightMoveButton.LoadResource(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON);
+            
             player.LoadResource(TexturesKeyEnum.PLAY_FIREMAN);
             
 
@@ -310,48 +309,40 @@ namespace CatcherGame.GameStates
                 if (tc.Count > 0)  {
                     //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
                     foreach (TouchLocation touchLocation in tc) {
-                        //if (!isMoveRight)
-                        //    isMoveRight = rightMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        //if (!isMoveLeft)
-                        //    isMoveLeft = leftMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        
                         if (touchLocation.State == TouchLocationState.Released)
                             isClickPause = pauseButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, true);
                         else {
                             isClickPause = pauseButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, false);
                         }
-                        
-                        if(player.IsBoundBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y)){
-                            if (touchLocation.State != TouchLocationState.Released)
+                        if (touchLocation.State == TouchLocationState.Pressed)
+                        {
+                            if (moveLocationList.Count == 0)
                             {
-                                moveLocationList.AddLast(touchLocation);
+                                if (!player.GetBeTouched() && player.IsBoundBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y,false))
+                                {
+                                    moveLocationList.AddLast(touchLocation);
+                                }
                             }
-                            else {　//如果是release要把之前的資料移除
-                                moveLocationList.Clear();
-                            }
-                            if (moveLocationList.Count >= 2 ) {
-                                float vectorX = (moveLocationList.First.Next.Value.Position.X - moveLocationList.First.Value.Position.X);
-                                moveLocationList.RemoveFirst();
-                                player.MoveByTouch(vectorX);
-                            }
-                            
+                        }
+                        else if (touchLocation.State == TouchLocationState.Moved && player.GetBeTouched())
+                        {
+                             moveLocationList.AddLast(touchLocation);
+                        }
+                        else if(touchLocation.State == TouchLocationState.Released)
+                        {　//如果是release要把之前的資料移除
+                            moveLocationList.Clear();
+                            player.IsBoundBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y, true);
+                        }
+                        if (moveLocationList.Count >= 2 && player.GetBeTouched())
+                        {
+                            float vectorX = (moveLocationList.First.Next.Value.Position.X - moveLocationList.First.Value.Position.X);
+                            moveLocationList.RemoveFirst();
+                            player.MoveByTouch(vectorX);
                         }
                     }
 
-                                        //遊戲邏輯判斷
-                    //if (isMoveLeft && !isMoveRight)
-                    //{
-                    //    //Debug.WriteLine("Click Left Button");
-                    //    player.MoveLeft(leftGameScreenBorder);
-                    //}
-                    //else if (!isMoveLeft && isMoveRight)
-                    //{
-                    //    //Debug.WriteLine("Click Right Button");
-                    //    player.MoveRight(rightGameScreenBorder);
-                    //}
-                    //else if (!isMoveLeft && !isMoveRight)
-                    //{
-                    //    player.SetStand(); //設定站立
-                    //}
+                   
                     if(isClickPause){
                         this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
                     }
