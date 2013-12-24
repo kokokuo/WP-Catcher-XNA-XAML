@@ -266,7 +266,7 @@ namespace CatcherGame.GameStates.Dialog
             if (caughtObjects.Contains(DropObjectsKeyEnum.PERSON_ROXANNE))
                 AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { roxanneTexture, roxanneIntroTexture, leftButton,rightButton });
             else
-                AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { noTexture, leftButton });
+                AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { noTexture,rightButton, leftButton });
 
             //Nicole
             if (caughtObjects.Contains(DropObjectsKeyEnum.PERSON_NICOLE))

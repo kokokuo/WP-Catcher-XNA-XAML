@@ -45,7 +45,7 @@ namespace CatcherGame.GameStates.Dialog
             gtCurrent = DialogGameObjectEnum.HOWTOPLAY_PAGE1;
 
             AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE1,new GameObject []{page1Texture,rightButton});
-            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE2, new GameObject[] { page2Texture,leftButton,rightButton });
+            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE2, new GameObject[] { page2Texture,leftButton });
 
             AddObjectTable(DialogStateEnum.STATE_HOW_TO_PLAY, GetDialogGameObject);
 
