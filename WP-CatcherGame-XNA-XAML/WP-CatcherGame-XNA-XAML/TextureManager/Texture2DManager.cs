@@ -117,6 +117,8 @@ namespace CatcherGame.TextureManager
             LoadDictionaryDialogOldManIntroTexture();
             LoadDictionaryDialogRoxanneTexture();
             LoadDictionaryDialogRoxanneIntroTexture();
+            LoadDictionaryDialogNicoleTexture();
+            LoadDictionaryDialogNicoleIntroTexture();
 
             //載入HOWTOPLAY所用的圖像資源
             LoadHowtoplayDialogBackground();
@@ -1084,6 +1086,17 @@ namespace CatcherGame.TextureManager
 
             }
         }
+        private void LoadDictionaryDialogNicoleIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_NICOLE_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_nicole_intro"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
         //字典人物
         private void LoadDictionaryDialogLittleGirlTexture()
         {
@@ -1162,7 +1175,17 @@ namespace CatcherGame.TextureManager
 
             }
         }
+        private void LoadDictionaryDialogNicoleTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_NICOLE_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_nicole"));
+                _dictionary.Add(key, texture2Ds);
 
+            }
+        }
         //HOWTOPLAY元件--------------------------------------
         private void LoadHowtoplayDialogBackground()
         {

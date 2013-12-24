@@ -36,6 +36,8 @@ namespace CatcherGame.GameStates.Dialog
         TextureLayer oldmanIntroTexture;
         TextureLayer roxanneTexture;
         TextureLayer roxanneIntroTexture;
+        TextureLayer nicoleTexture;
+        TextureLayer nicoleIntroTexture;
         TextureLayer noTexture;
 
         //人物表參考DialogGameObjectEnum
@@ -59,7 +61,7 @@ namespace CatcherGame.GameStates.Dialog
 
             //設定人物起始直參考DialogGameObjectEnum數值
             roleStart = 1;
-            roleEnd = 7;
+            roleEnd = 8;
 
             //初始化按鈕、圖片位置
             backgroundPos = new Vector2(0, 0);
@@ -81,6 +83,8 @@ namespace CatcherGame.GameStates.Dialog
             oldmanIntroTexture = new TextureLayer(base.currentState, base.countId++, 0, 0);
             roxanneTexture = new TextureLayer(base.currentState, base.countId++, 0, 0);
             roxanneIntroTexture = new TextureLayer(base.currentState, base.countId++, 0, 0);
+            nicoleTexture = new TextureLayer(base.currentState, base.countId++, 0, 0);
+            nicoleIntroTexture = new TextureLayer(base.currentState, base.countId++, 0, 0);
             noTexture = new TextureLayer(base.currentState, base.countId++, 0, 0);
 
             //設定目前Dialog狀態
@@ -96,7 +100,8 @@ namespace CatcherGame.GameStates.Dialog
             AddgameObject(DialogGameObjectEnum.DICTIONARY_MANSTUBBLE, new GameObject[] { manstubbleTexture, manstubbleIntroTexture, leftButton, rightButton });
             AddgameObject(DialogGameObjectEnum.DICTIONARY_NAUGHTYBOY, new GameObject[] { naughtyboyTexture, naughtyboyIntroTexture, leftButton, rightButton });
             AddgameObject(DialogGameObjectEnum.DICTIONARY_OLDMAN, new GameObject[] { oldmanTexture, oldmanIntroTexture, leftButton, rightButton });
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { roxanneTexture, roxanneIntroTexture, leftButton });
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { roxanneTexture, roxanneIntroTexture, leftButton,rightButton });
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_NICOLE, new GameObject[] { nicoleTexture, nicoleIntroTexture, leftButton });
 
             //把gameObject放到ObjectTable集合裡面
             AddObjectTable(DialogStateEnum.STATE_DICTIONARY, GetDialogGameObject);
@@ -128,6 +133,8 @@ namespace CatcherGame.GameStates.Dialog
             oldmanIntroTexture.LoadResource(TexturesKeyEnum.DICTIONARY_OLDMAN_INTRO_TEXTURE);
             roxanneTexture.LoadResource(TexturesKeyEnum.DICTIONARY_ROXANNE_TEXTURE);
             roxanneIntroTexture.LoadResource(TexturesKeyEnum.DICTIONARY_ROXANNE_INTRO_TEXTURE);
+            nicoleTexture.LoadResource(TexturesKeyEnum.DICTIONARY_NICOLE_TEXTURE);
+            nicoleIntroTexture.LoadResource(TexturesKeyEnum.DICTIONARY_NICOLE_INTRO_TEXTURE);
             closeButton.LoadResource(TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
             noTexture.LoadResource(TexturesKeyEnum.DICTIONARY_NO);
 
@@ -257,9 +264,15 @@ namespace CatcherGame.GameStates.Dialog
 
             //Roxanne
             if (caughtObjects.Contains(DropObjectsKeyEnum.PERSON_ROXANNE))
-                AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { roxanneTexture, roxanneIntroTexture, leftButton });
+                AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { roxanneTexture, roxanneIntroTexture, leftButton,rightButton });
             else
                 AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { noTexture, leftButton });
+
+            //Nicole
+            if (caughtObjects.Contains(DropObjectsKeyEnum.PERSON_NICOLE))
+                AddgameObject(DialogGameObjectEnum.DICTIONARY_NICOLE, new GameObject[] { nicoleTexture, nicoleIntroTexture, leftButton });
+            else
+                AddgameObject(DialogGameObjectEnum.DICTIONARY_NICOLE, new GameObject[] { noTexture, leftButton });
 
         }
     }
