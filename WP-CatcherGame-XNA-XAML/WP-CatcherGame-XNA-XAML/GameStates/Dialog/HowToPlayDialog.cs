@@ -19,7 +19,7 @@ namespace CatcherGame.GameStates.Dialog
         //頁面
         TextureLayer page1Texture;
         TextureLayer page2Texture;
-        TextureLayer page3Texture;
+
 
         int pageStart;
         int pageEnd;
@@ -31,7 +31,7 @@ namespace CatcherGame.GameStates.Dialog
         public override void BeginInit()
         {
             pageStart = 9;
-            pageEnd = 11;
+            pageEnd = 10;
             backgroundPos = new Vector2(0, 0);
             closeButton = new Button(base.currentState, base.countId++, 0,0);
             leftButton = new Button(base.currentState, base.countId++, 0, 0);
@@ -39,14 +39,13 @@ namespace CatcherGame.GameStates.Dialog
 
             page1Texture = new TextureLayer(base.currentState, base.countId++, 0,0);
             page2Texture = new TextureLayer(base.currentState, base.countId++, 0, 0);
-            page3Texture= new TextureLayer(base.currentState, base.countId++, 0, 0);
+
 
             stCurrent = DialogStateEnum.STATE_HOW_TO_PLAY;
             gtCurrent = DialogGameObjectEnum.HOWTOPLAY_PAGE1;
 
             AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE1,new GameObject []{page1Texture,rightButton});
             AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE2, new GameObject[] { page2Texture,leftButton,rightButton });
-            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE3, new GameObject[] { page3Texture,leftButton });
 
             AddObjectTable(DialogStateEnum.STATE_HOW_TO_PLAY, GetDialogGameObject);
 
@@ -62,7 +61,6 @@ namespace CatcherGame.GameStates.Dialog
             rightButton.LoadResource(TexturesKeyEnum.DIALOG_RIGHT_BUTTON);
             page1Texture.LoadResource(TexturesKeyEnum.HOWTOPLAY_PAGE1);
             page2Texture.LoadResource(TexturesKeyEnum.HOWTOPLAY_PAGE2);
-            page3Texture.LoadResource(TexturesKeyEnum.HOWTOPLAY_PAGE3);
             closeButton.LoadResource(TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
             base.LoadResource();
         }

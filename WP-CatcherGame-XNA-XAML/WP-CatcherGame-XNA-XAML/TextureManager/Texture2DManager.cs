@@ -125,7 +125,6 @@ namespace CatcherGame.TextureManager
             LoadHowToPlayDialogCloseButton();
             LoadHowtoplayDialogPage1();
             LoadHowtoplayDialogPage2();
-            LoadHowtoplayDialogPage3();
 
             Debug.WriteLine("Load Texture2Ds Done ");
         }
@@ -1229,15 +1228,6 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
-        private void LoadHowtoplayDialogPage3()
-        {
-            TexturesKeyEnum key = TexturesKeyEnum.HOWTOPLAY_PAGE3;
-            if (!_dictionary.ContainsKey(key))
-            {
-                List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Howtoplay/howtoplay_page3"));
-                _dictionary.Add(key, texture2Ds);
-            }
-        }
+       
     }
 }

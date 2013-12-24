@@ -127,7 +127,6 @@ namespace CatcherGame.TextureManager
         HOWTOPLAY_BACKGROUND,
         HOWTOPLAY_CLOSE_BUTTON,
         HOWTOPLAY_PAGE1,
-        HOWTOPLAY_PAGE2,
-        HOWTOPLAY_PAGE3
+        HOWTOPLAY_PAGE2
     }
 }

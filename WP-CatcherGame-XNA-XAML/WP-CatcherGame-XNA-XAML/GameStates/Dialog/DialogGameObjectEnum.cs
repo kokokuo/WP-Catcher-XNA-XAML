@@ -27,7 +27,6 @@ namespace CatcherGame.GameStates.Dialog
 
         //HOWTOPLAY-----------------------------
         HOWTOPLAY_PAGE1,
-        HOWTOPLAY_PAGE2,
-        HOWTOPLAY_PAGE3
+        HOWTOPLAY_PAGE2
     }
 }
