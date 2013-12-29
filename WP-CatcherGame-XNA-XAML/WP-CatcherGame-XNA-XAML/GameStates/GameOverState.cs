@@ -49,10 +49,34 @@ namespace CatcherGame.GameStates
             AddGameObject(menuButton);
             AddGameObject(againButton);
             AddGameObject(characterForeground);
+
+            //讀取紀錄檔
+            readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
+            if (readData != null) //有讀到檔案
+            {
+                currentSavedPeoepleNumber = readData.CurrentSavePeopleNumber.ToString();
+            }
+            base.isInit = true;
         }
+        //釋放遊戲中的所有資料
+        public void Release()
+        {
+           
+            currentSavedPeoepleNumber = "";
+            //指向NULL
+            readData = null;
+            currentSavedPeopleNumberFont = null;
+            foreach (GameObject obj in gameObjects)
+            {
+                obj.Dispose();
+            }
+            gameObjects.Clear();
+            base.isInit = false;
+        }
+
         public override void Update()
         {
-          
+
             TouchCollection tc = base.GetCurrentFrameTouchCollection();
             bool isClickMenu, isClickAgain;
             isClickMenu = isClickAgain = false;
@@ -62,6 +86,7 @@ namespace CatcherGame.GameStates
                 //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
                 foreach (TouchLocation touchLocation in tc)
                 {
+                    //新的點擊方式,判斷有無按壓後再放開的點擊
                     if (touchLocation.State == TouchLocationState.Released)
                     {
                         isClickAgain = againButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,true);
@@ -80,6 +105,7 @@ namespace CatcherGame.GameStates
                      if (isClickAgain && !isClickMenu)
                     {
                         Debug.WriteLine("CLICK!! STATE_COMIC");
+                        this.Release(); //釋放資料
                         SetNextGameSateByMain(GameStateEnum.STATE_START_COMIC);
                     }
                     else if ( !isClickMenu && isClickAgain)
@@ -91,25 +117,6 @@ namespace CatcherGame.GameStates
                     }
                 }
                
-                // //使用觸控單次點擊方式
-                //TouchLocation tL = base.GetTouchLocation();
-                //if (tL.State == TouchLocationState.Released)
-                //{
-
-                //    //關閉按鈕
-                //    if ( menuButton.IsPixelClicked(tL.Position.X, tL.Position.Y))
-                //    {
-                        
-                //        base.LoginFacebook();
-                //        //Debug.WriteLine("CLICK!! STATE_MENU");
-                //        //SetNextGameSateByMain(GameStateEnum.STATE_MENU);
-                //    }
-                //}
-
-                //清除TouchQueue裡的觸控點，因為避免Dequeue時候並不在Dialog中，因此要清除TouchQueue。
-                //base.ClearTouchQueue();
-               
-            
             }
 
 
@@ -118,7 +125,9 @@ namespace CatcherGame.GameStates
         public override void Draw()
         {
             gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
-            gameSateSpriteBatch.DrawString(currentSavedPeopleNumberFont, currentSavedPeoepleNumber.ToString(), new Vector2(723,515), Color.Black);
+            //顯示數字的位置
+            gameSateSpriteBatch.DrawString(currentSavedPeopleNumberFont, currentSavedPeoepleNumber.ToString(), new Vector2(background.Width / 2 - 100
+                , background.Height / 2), Color.Black);
             base.Draw(); //會把　AddGameObject方法中加入的物件作繪製
         }
 

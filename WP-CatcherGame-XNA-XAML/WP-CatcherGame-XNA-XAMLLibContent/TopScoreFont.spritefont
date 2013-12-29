@@ -11,13 +11,13 @@ Framework 內容管線讀取。請遵循註解來自訂遊戲中字型
     <!--
     修改此字串以變更將匯入的字型。
     -->
-    <FontName>Segoe UI Mono</FontName>
+    <FontName>Andy</FontName>
 
     <!--
     大小是以點來測量的浮點值，修改此值即可變更
     字型的大小。
     -->
-    <Size>30</Size>
+    <Size>60</Size>
 
     <!--
     間距是以像素來測量的浮點值，修改此值即可變更
@@ -35,7 +35,7 @@ Framework 內容管線讀取。請遵循註解來自訂遊戲中字型
     Style 可控制字型的樣式。有效的輸入項目為「Regular」、「Bold」、「Italic」，
     而「Bold」、「Italic」有區分大小寫。
     -->
-    <Style>Regular</Style>
+    <Style>Bold</Style>
 
     <!--
     如果您取消註解此行，當您繪製或測量文字而該文字沒有包含此字型時，
