@@ -142,6 +142,10 @@ Content\Dialog\TopScore\dictionary_right_touch.xnb
 Content\Dialog\left_button_touch.xnb
 Content\Dialog\right_button_touch.xnb
 Content\Play\pause_button_touch.xnb
+Content\CurrentScoreFont.xnb
+Content\LostPeopleFont.xnb
+Content\SavedPeopleFont.xnb
+Content\TopScoreFont.xnb
 Content\Play\nicole\nicole_caught.xnb
 Content\Play\nicole\nicole_fall1.xnb
 Content\Play\nicole\nicole_fall2.xnb
@@ -149,7 +153,3 @@ Content\Play\nicole\nicole_floor.xnb
 Content\Play\nicole\nicole_run1.xnb
 Content\Play\nicole\nicole_run2.xnb
 Content\Play\nicole\nicole_run3.xnb
-Content\CurrentScoreFont.xnb
-Content\LostPeopleFont.xnb
-Content\SavedPeopleFont.xnb
-Content\TopScoreFont.xnb

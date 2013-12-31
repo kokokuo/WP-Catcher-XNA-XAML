@@ -61,9 +61,7 @@ namespace CatcherGame.GameObjects
             savedNet.LoadResource(TexturesKeyEnum.PLAY_NET_LARGE);
 
             Init();
-            
-
-            
+                
         }
         protected override void Init()
         {

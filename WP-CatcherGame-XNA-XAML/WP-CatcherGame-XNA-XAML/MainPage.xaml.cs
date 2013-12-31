@@ -19,10 +19,18 @@ namespace WP_CatcherGame_XNA_XAML
         public MainPage()
         {
             InitializeComponent();
+           
+            // Can only access the NavigationService when the page has been loaded 
+            this.Loaded += new RoutedEventHandler(NavigationPage_Loaded);
+           
         }
-
-        // 簡單按鈕，按一下事件處理常式，把我們帶到第二頁
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void NavigationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            logo.Begin();
+        }
+      
+        //當動畫播完後會進入此事件，導向遊戲選單
+        private void DoubleAnimationUsingKeyFrames_Completed(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
         }

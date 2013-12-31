@@ -157,7 +157,16 @@ namespace WP_CatcherGame_XNA_XAML
         {
             // TODO: 在此處加入更新邏輯
             // 允許遊戲結束 預設方法
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+
+            //移除放在堆疊區的前面頁面，用來直接跳回手機畫面
+            if (NavigationService.CanGoBack)
+            {
+                while (NavigationService.RemoveBackEntry() != null)
+                {
+                    NavigationService.RemoveBackEntry();
+                }
+            }
+                
                 
             TouchCollection tc = TouchPanel.GetState();
             currtenTouchCollection = tc;

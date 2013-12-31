@@ -15,24 +15,25 @@
 
     <!--LayoutRoot 是放置所有頁面的根資料格-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <!--播放Logo動畫-->
+    	<VisualStateManager.VisualStateGroups>
+    		<VisualStateGroup x:Name="FadeInFadOutVisualStateGroup">
+    			<VisualStateGroup.Transitions>
+    				<VisualTransition GeneratedDuration="0">
+                        <Storyboard x:Name="logo"> 
+    						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="strongBerryLogo" Completed="DoubleAnimationUsingKeyFrames_Completed">
+    							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+    							<EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="1"/>
+    							<EasingDoubleKeyFrame KeyTime="0:0:3" Value="0"/>
+    						</DoubleAnimationUsingKeyFrames>
+    					</Storyboard>
+    				</VisualTransition>
+    			</VisualStateGroup.Transitions>
+    		</VisualStateGroup>
+    	</VisualStateManager.VisualStateGroups>
+        
+        <Image Name="strongBerryLogo" HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="480" Source="lab_logo_800.png"/>
 
-        <!--TitlePanel 包含應用程式的名稱和頁面標題-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
-
-        <!--ContentPanel - 其他內容置於此-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            
-            <!--建立一個按鈕，以巡覽到用 XNA Framework 轉譯的第二頁-->
-            <Button Height="100" Content="Change to game page" Click="Button_Click" />
-            
-        </Grid>
     </Grid>
  
 </phone:PhoneApplicationPage>
