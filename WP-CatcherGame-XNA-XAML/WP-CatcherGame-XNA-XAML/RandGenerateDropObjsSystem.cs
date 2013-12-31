@@ -134,6 +134,11 @@ namespace CatcherGame
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_NICOLE_WALK);
             generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_NICOLE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_NICOLE, 0.5f, loadTexureKeys, 5f, 0f, 3f, 0));
 
+            loadTexureKeys = new List<TexturesKeyEnum>();
+            loadTexureKeys.Add(TexturesKeyEnum.PLAY_JASON_FALL);
+            loadTexureKeys.Add(TexturesKeyEnum.PLAY_JASON_CAUGHT);
+            loadTexureKeys.Add(TexturesKeyEnum.PLAY_JASON_WALK);
+            generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_JASON, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_JASON, 0.3f, loadTexureKeys, 6f, 0f, 3f, 1));
             //道具
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ITEM_BOOSTING_SHOES);

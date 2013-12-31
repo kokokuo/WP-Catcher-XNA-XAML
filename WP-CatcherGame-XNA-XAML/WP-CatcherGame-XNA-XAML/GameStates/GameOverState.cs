@@ -17,6 +17,7 @@ namespace CatcherGame.GameStates
     {
         Button menuButton;
         Button againButton;
+        Button fbShareButton;
 
         GameRecordData readData;
         string currentSavedPeoepleNumber;
@@ -35,7 +36,7 @@ namespace CatcherGame.GameStates
             currentSavedPeopleNumberFont = base.GetSpriteFontFromKeyByGameState(FontManager.SpriteFontKeyEnum.GAME_VOER_CURRENT_SAVED_PEOPLE_FONT);
             menuButton.LoadResource(TexturesKeyEnum.GAMEOVER_MENU_BUTTON);
             againButton.LoadResource(TexturesKeyEnum.GAMEOVER_AGAIN_BUTTON);
-
+            fbShareButton.LoadResource(TexturesKeyEnum.GAMEOVER_FACEBOOK_SHARE_BUTTON);
         }
 
         public override void BeginInit()
@@ -43,13 +44,15 @@ namespace CatcherGame.GameStates
             base.objIdCount = 0;
             menuButton = new Button(this, objIdCount++, 0, 0);
             againButton = new Button(this, objIdCount++, 0, 0);
+            fbShareButton = new Button(this, objIdCount++, 0, 0);
             characterForeground = new TextureLayer(this, objIdCount++, 0, 0);
             currentSavedPeoepleNumber = "";
 
             AddGameObject(menuButton);
             AddGameObject(againButton);
+            AddGameObject(fbShareButton);
             AddGameObject(characterForeground);
-
+            
             //讀取紀錄檔
             readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
             if (readData != null) //有讀到檔案
@@ -78,8 +81,8 @@ namespace CatcherGame.GameStates
         {
 
             TouchCollection tc = base.GetCurrentFrameTouchCollection();
-            bool isClickMenu, isClickAgain;
-            isClickMenu = isClickAgain = false;
+            bool isClickMenu, isClickAgain, isClickFBShare;
+            isClickMenu = isClickAgain = isClickFBShare = false;
 
             if (tc.Count > 0)
             {
@@ -89,10 +92,12 @@ namespace CatcherGame.GameStates
                     //新的點擊方式,判斷有無按壓後再放開的點擊
                     if (touchLocation.State == TouchLocationState.Released)
                     {
+                        isClickFBShare = fbShareButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, true);
                         isClickAgain = againButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,true);
                         isClickMenu = menuButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,true);
                     }
-                    else { 
+                    else {
+                        isClickFBShare = fbShareButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, false);
                         isClickAgain = againButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,false);
                         isClickMenu = menuButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,false);
                     }
@@ -100,20 +105,25 @@ namespace CatcherGame.GameStates
                 }
 
                 //遊戲邏輯判斷
-                if (!( isClickMenu && isClickAgain))
+                if (!( isClickMenu && isClickAgain && isClickFBShare))
                 {
-                     if (isClickAgain && !isClickMenu)
+                    if (isClickAgain && !isClickMenu && !isClickFBShare)
                     {
                         Debug.WriteLine("CLICK!! STATE_COMIC");
                         this.Release(); //釋放資料
                         SetNextGameSateByMain(GameStateEnum.STATE_START_COMIC);
                     }
-                    else if ( !isClickMenu && isClickAgain)
+                    else if ( isClickMenu && !isClickAgain && !isClickFBShare)
                     {
-                        
+                        Debug.WriteLine("CLICK!! STATE_MENU");
+                        this.Release(); //釋放資料
+                        SetNextGameSateByMain(GameStateEnum.STATE_MENU);
+                    }
+                    else if (!isClickMenu && !isClickAgain && isClickFBShare ) //釋放資料)
+                    {
+
                         base.LoginFacebook();
-                        //Debug.WriteLine("CLICK!! STATE_MENU");
-                        //SetNextGameSateByMain(GameStateEnum.STATE_MENU);
+                        Debug.WriteLine("CLICK!! SHARE_FACEBOOK");
                     }
                 }
                

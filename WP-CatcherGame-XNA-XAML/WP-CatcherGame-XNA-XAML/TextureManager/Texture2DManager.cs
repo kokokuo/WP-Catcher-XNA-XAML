@@ -74,6 +74,8 @@ namespace CatcherGame.TextureManager
             LoadPlayOldMan();
             LoadPlayRoxanne();
             LoadPlayNicole();
+            LoadPlayJason();
+
             //道具
             LoadPlayDropItemBoostingShoes();
             LoadPlayDropItemSlowShoes();
@@ -92,6 +94,7 @@ namespace CatcherGame.TextureManager
             LoadGameOverMenuButton();
             LoadGameOverAgainButton();
             LoadGameOverCharacterShow();
+            LoadGameFacebookShareButton();
 
             //載入Dialog中共用元件
             LoadDialogLeftButton();
@@ -828,6 +831,37 @@ namespace CatcherGame.TextureManager
             }
         }
 
+        //遊戲中的Jason
+        private void LoadPlayJason()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_JASON_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/jason/jason_fall1"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/jason/jason_fall2"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_JASON_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/jason/jason_caught"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/jason/jason_floor"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_JASON_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/jason/jason_run1"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Play/jason/jason_run2"));
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
 
         //暫停對話框---------------------------------------------------------------------------
 
@@ -900,6 +934,16 @@ namespace CatcherGame.TextureManager
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_again"));
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_again_touch"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+        private void LoadGameFacebookShareButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.GAMEOVER_FACEBOOK_SHARE_BUTTON;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_fb_share"));
                 _dictionary.Add(key, texture2Ds);
             }
         }

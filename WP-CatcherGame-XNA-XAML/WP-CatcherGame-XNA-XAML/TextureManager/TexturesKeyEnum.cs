@@ -79,6 +79,10 @@ namespace CatcherGame.TextureManager
         PLAY_NICOLE_CAUGHT,
         PLAY_NICOLE_WALK,
 
+        PLAY_JASON_FALL,
+        PLAY_JASON_CAUGHT,
+        PLAY_JASON_WALK,
+
         //SMOKE
         PLAY_STRONG_SMOKE,
         //Item
@@ -98,6 +102,7 @@ namespace CatcherGame.TextureManager
         GAMEOVER_MENU_BUTTON,
         GAMEOVER_AGAIN_BUTTON,
         GAMEOVER_CHARACTER_SHOW_FOREGROUND,
+        GAMEOVER_FACEBOOK_SHARE_BUTTON,
 
         //DICTIONARY---------------------
         DICTIONARY_BACKGROUND,
