@@ -48,10 +48,10 @@ namespace WP_CatcherGame_XNA_XAML
                 readData = CatcherGame.FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
                 if (readData != null && readData.HistoryTopSavedNumber != 0)
                 { //分數不為零
-                    topSavedPeoepleNumber = "You have saved\""+ readData.HistoryTopSavedNumber.ToString() + "\" people\nTry it better!";
+                    topSavedPeoepleNumber = "You saved\n\""+ readData.HistoryTopSavedNumber.ToString() + "\" people\nTry it better!";
                 }
                 else { 
-                    topSavedPeoepleNumber = "You haven't saved Any people\n Hurry up!";
+                    topSavedPeoepleNumber = "No Any people Saved\n Hurry up!";
                 }
                 // set the properties to update for the Application Tile
                 // Empty strings for the text values and URIs will result in the property being cleared.
