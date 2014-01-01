@@ -944,6 +944,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_fb_share"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_fb_share_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
