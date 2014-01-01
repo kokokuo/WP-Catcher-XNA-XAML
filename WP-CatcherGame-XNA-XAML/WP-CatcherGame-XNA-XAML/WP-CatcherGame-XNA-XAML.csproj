@@ -162,6 +162,7 @@
     </Content>
     <Content Include="gamelogo_173.png" />
     <Content Include="gamelogo_62.png" />
+    <Content Include="gamelogo_back2_173.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>

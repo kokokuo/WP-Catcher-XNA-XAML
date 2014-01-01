@@ -27,8 +27,53 @@ using CatcherGame.FontManager;
 using System.Diagnostics;
 using Facebook.Client;
 using System.Threading.Tasks;
+using Microsoft.Phone.Shell; //客製化Tile用
+using CatcherGame.FileStorageHelper;
+
 namespace WP_CatcherGame_XNA_XAML
 {
+    //處理顯示動態磚的類別
+    public class ApplicationTileHandler{
+        GameRecordData readData;
+        string topSavedPeoepleNumber = "";
+
+        public void GetNewCatcherRecord() {
+            // Application Tile is always the first Tile, even if it is not pinned to Start.
+            ShellTile AppTile = ShellTile.ActiveTiles.First();
+           
+            // Application should always be found
+            if (AppTile != null)
+            {
+                //取得資料
+                readData = CatcherGame.FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
+                if (readData != null && readData.HistoryTopSavedNumber != 0)
+                { //分數不為零
+                    topSavedPeoepleNumber = "You have saved\""+ readData.HistoryTopSavedNumber.ToString() + "\" people\nTry it better!";
+                }
+                else { 
+                    topSavedPeoepleNumber = "You haven't saved Any people\n Hurry up!";
+                }
+                // set the properties to update for the Application Tile
+                // Empty strings for the text values and URIs will result in the property being cleared.
+                StandardTileData NewTileData = new StandardTileData
+                {
+                    Title = "CatcherGame",
+                    BackgroundImage = new Uri("gamelogo_173.png", UriKind.Relative),
+                    BackTitle = "CatcherGame",
+                    BackBackgroundImage = new Uri("gamelogo_back2_173.png", UriKind.Relative),
+                    BackContent = topSavedPeoepleNumber
+                };
+
+                // Update the Application Tile
+                AppTile.Update(NewTileData);
+            }
+
+        
+        }
+    }
+
+
+
     public partial class GamePage : PhoneApplicationPage
     {
         private FacebookSession session;
@@ -54,9 +99,13 @@ namespace WP_CatcherGame_XNA_XAML
 
         Accelerometer acc; //三軸加速器
         Vector3 accVector; //紀錄三軸加速器資料
+        ApplicationTileHandler catcherTile;
         public GamePage()
         {
             InitializeComponent();
+            //Tile
+            catcherTile = new ApplicationTileHandler();
+
             this.SupportedOrientations = SupportedPageOrientation.Landscape; //設定可支援方位
             this.Orientation = PageOrientation.LandscapeLeft; //設定方位
             // 從應用程式取得內容管理員
@@ -166,7 +215,7 @@ namespace WP_CatcherGame_XNA_XAML
                     NavigationService.RemoveBackEntry();
                 }
             }
-                
+            catcherTile.GetNewCatcherRecord();    
                 
             TouchCollection tc = TouchPanel.GetState();
             currtenTouchCollection = tc;
