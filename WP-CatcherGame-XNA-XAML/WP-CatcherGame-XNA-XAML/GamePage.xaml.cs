@@ -51,7 +51,7 @@ namespace WP_CatcherGame_XNA_XAML
                     topSavedPeoepleNumber = "You saved\n\""+ readData.HistoryTopSavedNumber.ToString() + "\" people\nTry it better!";
                 }
                 else { 
-                    topSavedPeoepleNumber = "No Any people Saved\n Hurry up!";
+                    topSavedPeoepleNumber = "Not Anyone be Saved\n Hurry up!";
                 }
                 // set the properties to update for the Application Tile
                 // Empty strings for the text values and URIs will result in the property being cleared.

@@ -149,10 +149,6 @@ Content\Play\nicole\nicole_floor.xnb
 Content\Play\nicole\nicole_run1.xnb
 Content\Play\nicole\nicole_run2.xnb
 Content\Play\nicole\nicole_run3.xnb
-Content\CurrentScoreFont.xnb
-Content\LostPeopleFont.xnb
-Content\SavedPeopleFont.xnb
-Content\TopScoreFont.xnb
 Content\Play\jason\jason_caught.xnb
 Content\Dialog\Dictionary\jason_dictionary.xnb
 Content\Play\jason\jason_fall1.xnb
@@ -162,3 +158,7 @@ Content\Play\jason\jason_run1.xnb
 Content\Play\jason\jason_run2.xnb
 Content\GameOver\gameover_fb_share.xnb
 Content\GameOver\gameover_fb_share_touch.xnb
+Content\CurrentScoreFont.xnb
+Content\LostPeopleFont.xnb
+Content\SavedPeopleFont.xnb
+Content\TopScoreFont.xnb

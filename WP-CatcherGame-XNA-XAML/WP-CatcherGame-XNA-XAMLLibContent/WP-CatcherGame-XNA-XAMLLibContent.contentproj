@@ -916,8 +916,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="GameOver\gameover_fb_share_touch.png">
       <Name>gameover_fb_share_touch</Name>
       <Importer>TextureImporter</Importer>
