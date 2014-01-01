@@ -132,7 +132,6 @@
     <Compile Include="Sprite\AnimationSprite.cs" />
     <Compile Include="TextureManager\Texture2DManager.cs" />
     <Compile Include="TextureManager\TexturesKeyEnum.cs" />
-    <Compile Include="TouchPanelInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
