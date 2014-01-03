@@ -125,7 +125,8 @@ namespace CatcherGame.TextureManager
         DICTIONARY_ROXANNE_INTRO_TEXTURE,
         DICTIONARY_NICOLE_TEXTURE,
         DICTIONARY_NICOLE_INTRO_TEXTURE,
-
+        DICTIONARY_JASON_TEXTURE,
+        DICTIONARY_JASON_INTRO_TEXTURE,
         DICTIONARY_NO,
 
         //HOWTOPLAY------------------------

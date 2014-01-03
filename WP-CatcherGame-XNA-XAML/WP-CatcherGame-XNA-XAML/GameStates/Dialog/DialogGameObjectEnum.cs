@@ -24,7 +24,7 @@ namespace CatcherGame.GameStates.Dialog
         DICTIONARY_OLDMAN,
         DICTIONARY_ROXANNE,
         DICTIONARY_NICOLE,
-
+        DICTIONARY_JASON,
         //HOWTOPLAY-----------------------------
         HOWTOPLAY_PAGE1,
         HOWTOPLAY_PAGE2

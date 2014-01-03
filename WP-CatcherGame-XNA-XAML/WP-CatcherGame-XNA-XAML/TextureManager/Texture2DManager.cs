@@ -122,6 +122,8 @@ namespace CatcherGame.TextureManager
             LoadDictionaryDialogRoxanneIntroTexture();
             LoadDictionaryDialogNicoleTexture();
             LoadDictionaryDialogNicoleIntroTexture();
+            LoadDictionaryDialogJasonTexture();
+            LoadDictionaryDialogJasonIntroTexture();
 
             //載入HOWTOPLAY所用的圖像資源
             LoadHowtoplayDialogBackground();
@@ -955,7 +957,10 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_character_0"));
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_character_1"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_character_2"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("GameOver/gameover_character_3"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -1141,6 +1146,18 @@ namespace CatcherGame.TextureManager
 
             }
         }
+
+        private void LoadDictionaryDialogJasonIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_JASON_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_jason_intro"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
         //字典人物
         private void LoadDictionaryDialogLittleGirlTexture()
         {
@@ -1226,6 +1243,18 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_nicole"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+
+        private void LoadDictionaryDialogJasonTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_JASON_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Dictionary/dictionary_jason"));
                 _dictionary.Add(key, texture2Ds);
 
             }

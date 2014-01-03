@@ -879,8 +879,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Dialog\Dictionary\jason_dictionary.png">
-      <Name>jason_dictionary</Name>
+    <Compile Include="Dialog\Dictionary\dictionary_jason.png">
+      <Name>dictionary_jason</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -918,6 +918,30 @@
     </Compile>
     <Compile Include="GameOver\gameover_fb_share_touch.png">
       <Name>gameover_fb_share_touch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialog\Dictionary\dictionary_jason_intro.png">
+      <Name>dictionary_jason_intro</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameOver\gameover_character_0.png">
+      <Name>gameover_character_0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GameOver\gameover_character_2.png">
+      <Name>gameover_character_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GameOver\gameover_character_3.png">
+      <Name>gameover_character_3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

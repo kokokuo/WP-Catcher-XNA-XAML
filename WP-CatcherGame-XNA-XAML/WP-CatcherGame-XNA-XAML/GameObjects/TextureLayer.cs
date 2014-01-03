@@ -19,6 +19,7 @@ namespace CatcherGame.GameObjects
     {
         AnimationSprite layer;
         Rectangle bounds;
+        bool isAutoUpdate;
         public TextureLayer(GameState currentGameState, int objId, float x, float y)
             : base(currentGameState, objId, x, y)
         {
@@ -29,7 +30,7 @@ namespace CatcherGame.GameObjects
         protected override void Init()
         {
             layer = new AnimationSprite(new Vector2(base.x,base.y), 300);
-           
+            isAutoUpdate = true;
         }
 
         public override void LoadResource(TexturesKeyEnum key)
@@ -43,11 +44,32 @@ namespace CatcherGame.GameObjects
         {
             layer.Draw(spriteBatch);
         }
-
-        public override void Update() {
-            layer.UpdateFrame(base.gameState.GetTimeSpan());
+        /// <summary>
+        /// 設定是否要自動撥放圖片組為動畫
+        /// </summary>
+        /// <param name="decision"></param>
+        public void SetAnimationAutoUpdate(bool decision) {
+            isAutoUpdate = decision;
         }
+        public override void Update() {
+            if (isAutoUpdate)
+            {
+                layer.UpdateFrame(base.gameState.GetTimeSpan());
+            }
 
+            this.Height = layer.GetCurrentFrameTexture().Height;
+            this.Width = layer.GetCurrentFrameTexture().Width;
+        }
+        /// <summary>
+        /// 手動設定下一個要撥放的圖片
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetNextPlayFrameIndex(int index) {
+            layer.SetNextWantFrameIndex(index);
+            this.Height = layer.GetCurrentFrameTexture().Height;
+            this.Width = layer.GetCurrentFrameTexture().Width;
+        
+        }
         protected override void Dispose(bool disposing)
         {
             if (!base.disposed)

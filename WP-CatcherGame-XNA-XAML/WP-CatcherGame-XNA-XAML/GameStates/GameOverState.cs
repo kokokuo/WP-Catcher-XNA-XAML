@@ -37,6 +37,8 @@ namespace CatcherGame.GameStates
             menuButton.LoadResource(TexturesKeyEnum.GAMEOVER_MENU_BUTTON);
             againButton.LoadResource(TexturesKeyEnum.GAMEOVER_AGAIN_BUTTON);
             fbShareButton.LoadResource(TexturesKeyEnum.GAMEOVER_FACEBOOK_SHARE_BUTTON);
+
+            GetCurrentSavedPeopleAndSetCharacter();
         }
 
         public override void BeginInit()
@@ -46,6 +48,8 @@ namespace CatcherGame.GameStates
             againButton = new Button(this, objIdCount++, 0, 0);
             fbShareButton = new Button(this, objIdCount++, 0, 0);
             characterForeground = new TextureLayer(this, objIdCount++, 0, 0);
+            //設定手動撥放
+            characterForeground.SetAnimationAutoUpdate(false);
             currentSavedPeoepleNumber = "";
 
             AddGameObject(menuButton);
@@ -59,6 +63,8 @@ namespace CatcherGame.GameStates
             {
                 currentSavedPeoepleNumber = readData.CurrentSavePeopleNumber.ToString();
             }
+
+            
             base.isInit = true;
         }
         //釋放遊戲中的所有資料
@@ -77,9 +83,31 @@ namespace CatcherGame.GameStates
             base.isInit = false;
         }
 
+        private void GetCurrentSavedPeopleAndSetCharacter() {
+            //依據分數切換前景圖片
+            if (readData != null && readData.CurrentSavePeopleNumber >= 0) //有讀到檔案
+            {
+                if (readData.CurrentSavePeopleNumber <= 20)
+                {
+                    characterForeground.SetNextPlayFrameIndex(0);
+                }
+                else if (readData.CurrentSavePeopleNumber <= 35)
+                {
+                    characterForeground.SetNextPlayFrameIndex(1);
+                }
+                else if (readData.CurrentSavePeopleNumber <= 50)
+                {
+                    characterForeground.SetNextPlayFrameIndex(2);
+                }
+                else if (readData.CurrentSavePeopleNumber > 50)
+                {
+                    characterForeground.SetNextPlayFrameIndex(3);
+                }
+            }
+        }
         public override void Update()
         {
-
+            
             TouchCollection tc = base.GetCurrentFrameTouchCollection();
             bool isClickMenu, isClickAgain, isClickFBShare;
             isClickMenu = isClickAgain = isClickFBShare = false;
