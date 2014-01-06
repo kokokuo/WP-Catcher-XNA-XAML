@@ -8,7 +8,7 @@ using System.Diagnostics;
 using CatcherGame;
 using CatcherGame.Sprite;
 using CatcherGame.GameStates;
-
+using Microsoft.Xna.Framework.Audio;
 using CatcherGame.TextureManager;
 
 namespace CatcherGame.GameObjects
@@ -21,7 +21,7 @@ namespace CatcherGame.GameObjects
         List<AnimationSprite> animationList;
         AnimationSprite pCurrentAnimation;
         bool isSaved;
-        
+        SoundEffect caughtSound; //目前音效皆一致,所以寫死在LoadResource
        
         float savedWalkSpeed; //被接住後離開畫面移動的速度
         const int FALLING_KEY = 0, CAUGHT_KEY = 1, WALK_KEY = 2,DIE_KEY = 3;
@@ -89,6 +89,8 @@ namespace CatcherGame.GameObjects
             base.isFalling = false;
             //切換圖片組
             pCurrentAnimation = animationList[CAUGHT_KEY];
+            //播放接到音效
+            caughtSound.Play();
         }
         public override void LoadResource(TexturesKeyEnum key)
         {
@@ -100,7 +102,12 @@ namespace CatcherGame.GameObjects
                 SetTexture2DList(TexturesKeyEnum.PLAY_DIE);
                 //設定目前的圖片組是"掉下來"
                 pCurrentAnimation = animationList[FALLING_KEY];
+
+                //載入音效
+                caughtSound = base.gameState.GetSoundEffectManagerByMainGame(SoundManager.SoundEffectKeyEnum.CAUGHT_SOUND);
             }
+
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -222,6 +229,7 @@ namespace CatcherGame.GameObjects
                         }
                         animationList.Clear();
                         pCurrentAnimation = null;
+                        caughtSound = null; 
                     }
                     
                     Debug.WriteLine("FirePlayer disposed.");
