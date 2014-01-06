@@ -13,6 +13,7 @@ using CatcherGame.GameStates.Dialog;
 using CatcherGame.FontManager;
 using CatcherGame.FileStorageHelper;
 using WP_CatcherGame_XNA_XAML;
+using Microsoft.Xna.Framework.Audio;
 namespace CatcherGame.GameStates
 {
     public class PlayGameState  :GameState
@@ -32,8 +33,7 @@ namespace CatcherGame.GameStates
         float lifefontX;
         float lifefontY;
         Button pauseButton;
-        Button leftMoveButton;
-        Button rightMoveButton;
+        SoundEffect clickSound;
 
         List<int> willRemoveObjectId;
 
@@ -176,6 +176,8 @@ namespace CatcherGame.GameStates
             scoreTexture.Dispose();
             floorTexture.Dispose();
             willRemoveObjectId.Clear();
+            //音效 音樂
+            base.clickSound = null;
             //指向NULL
             savedPeopleNumberFont = null;
             lostPeopleNumberFont = null;
@@ -212,8 +214,8 @@ namespace CatcherGame.GameStates
         public override void LoadResource()
         {
             //載入文字
-            savedPeopleNumberFont = base.GetSpriteFontFromKeyByGameState(SpriteFontKeyEnum.PLAY_SAVED_PEOPLE_FONT);
-            lostPeopleNumberFont = base.GetSpriteFontFromKeyByGameState(SpriteFontKeyEnum.PLAT_LOST_PEOPLE_FONT);
+            savedPeopleNumberFont = base.GetSpriteFontFromKeyByMainGame(SpriteFontKeyEnum.PLAY_SAVED_PEOPLE_FONT);
+            lostPeopleNumberFont = base.GetSpriteFontFromKeyByMainGame(SpriteFontKeyEnum.PLAT_LOST_PEOPLE_FONT);
 
             //載入圖片
             base.background = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0];
@@ -238,6 +240,9 @@ namespace CatcherGame.GameStates
                     dialog.Value.LoadResource();
                 }
             }
+
+            //載入音效
+            base.clickSound = base.mainGame.GetSoundEffectManagerByKey(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
         }
 
         void randSys_GenerateDropObjs(List<DropObjects> objs)
@@ -304,8 +309,8 @@ namespace CatcherGame.GameStates
                 randSys.UpdateTime(this.GetTimeSpan());　//隨機系統更新時間
 
                 TouchCollection tc = base.GetCurrentFrameTouchCollection();
-                bool isMoveRight,isMoveLeft,isClickPause;
-                isClickPause = isMoveLeft = isMoveRight = false;
+                bool isClickPause;
+                isClickPause = false;
                 if (tc.Count > 0)  {
                     //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
                     foreach (TouchLocation touchLocation in tc) {
@@ -344,6 +349,7 @@ namespace CatcherGame.GameStates
 
                    
                     if(isClickPause){
+                        base.clickSound.Play();
                         this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
                     }
 

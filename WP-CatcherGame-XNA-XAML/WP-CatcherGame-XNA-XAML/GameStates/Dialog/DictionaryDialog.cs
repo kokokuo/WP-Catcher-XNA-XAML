@@ -117,9 +117,7 @@ namespace CatcherGame.GameStates.Dialog
             base.isInit = true;
         }
         public override void LoadResource()
-        {
-            
-            
+        {   
 
             //載入字典遊戲物件資源檔
             background = currentState.GetTexture2DList(TextureManager.TexturesKeyEnum.DICTIONARY_BACKGROUND)[0];
@@ -146,8 +144,8 @@ namespace CatcherGame.GameStates.Dialog
 
             closeButton.LoadResource(TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
             noTexture.LoadResource(TexturesKeyEnum.DICTIONARY_NO);
-
-            base.LoadResource();
+            //音效
+            base.clickSound = currentState.GetSoundEffectManagerByMainGame(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
         }
         public override void Update()
         {
@@ -196,12 +194,14 @@ namespace CatcherGame.GameStates.Dialog
                     //關閉按鈕
                     if (isClickCloseButton && !isClickLeftButton && !isClickRightButton)
                     {
+                        clickSound.Play();
                         base.CloseDialog();//透過父類別來關閉
                     }
 
                     //左邊按鈕
                     if (!isClickCloseButton && isClickLeftButton && !isClickRightButton)
                     {
+                        clickSound.Play();
                         if ((int)gtCurrent > roleStart)
                             gtCurrent--;//gtCurrent-1來切換目前的遊戲顯示物件
                     }
@@ -209,6 +209,7 @@ namespace CatcherGame.GameStates.Dialog
                     //右邊按鈕
                     if (!isClickCloseButton && !isClickLeftButton && isClickRightButton)
                     {
+                        clickSound.Play();
                         //判斷
                         if ((int)gtCurrent < roleEnd)
                             gtCurrent++;//gtCurrent+1來切換目前的遊戲顯示物件

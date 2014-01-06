@@ -11,18 +11,24 @@ using CatcherGame.TextureManager;
 using CatcherGame.FileStorageHelper;
 using System.Diagnostics;
 using WP_CatcherGame_XNA_XAML;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
+
 namespace CatcherGame.GameStates
 {
     public class GameOverState : GameState
     {
         Button menuButton;
         Button againButton;
-        Button fbShareButton;
+        //Button fbShareButton; //此版不使用
 
         GameRecordData readData;
         string currentSavedPeoepleNumber;
         SpriteFont currentSavedPeopleNumberFont;
         TextureLayer characterForeground; //前景角色圖(依照分數高低會放不同的圖片)
+        
+        Song backgroundSong;
+        
         public GameOverState(GamePage gMainGame)
             : base(gMainGame)
         {
@@ -33,12 +39,18 @@ namespace CatcherGame.GameStates
         {
             base.background = base.GetTexture2DList(TexturesKeyEnum.GAMEOVER_BACKGROUND)[0];
             characterForeground.LoadResource(TexturesKeyEnum.GAMEOVER_CHARACTER_SHOW_FOREGROUND);
-            currentSavedPeopleNumberFont = base.GetSpriteFontFromKeyByGameState(FontManager.SpriteFontKeyEnum.GAME_VOER_CURRENT_SAVED_PEOPLE_FONT);
+            currentSavedPeopleNumberFont = base.GetSpriteFontFromKeyByMainGame(FontManager.SpriteFontKeyEnum.GAME_VOER_CURRENT_SAVED_PEOPLE_FONT);
             menuButton.LoadResource(TexturesKeyEnum.GAMEOVER_MENU_BUTTON);
             againButton.LoadResource(TexturesKeyEnum.GAMEOVER_AGAIN_BUTTON);
-            fbShareButton.LoadResource(TexturesKeyEnum.GAMEOVER_FACEBOOK_SHARE_BUTTON);
+            //fbShareButton.LoadResource(TexturesKeyEnum.GAMEOVER_FACEBOOK_SHARE_BUTTON);
 
             GetCurrentSavedPeopleAndSetCharacter();
+
+            //載入音效
+            base.clickSound = base.mainGame.GetSoundEffectManagerByKey(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
+            //音樂
+            backgroundSong = base.mainGame.GetGameSongManagerByKey(SongManager.GameSongKeyEnum.MENU_BACKGOUND_SONG);
+            MediaPlayer.IsRepeating = true; //設定要重複撥放
         }
 
         public override void BeginInit()
@@ -46,7 +58,7 @@ namespace CatcherGame.GameStates
             base.objIdCount = 0;
             menuButton = new Button(this, objIdCount++, 0, 0);
             againButton = new Button(this, objIdCount++, 0, 0);
-            fbShareButton = new Button(this, objIdCount++, 0, 0);
+            //fbShareButton = new Button(this, objIdCount++, 0, 0);
             characterForeground = new TextureLayer(this, objIdCount++, 0, 0);
             //設定手動撥放
             characterForeground.SetAnimationAutoUpdate(false);
@@ -54,7 +66,7 @@ namespace CatcherGame.GameStates
 
             AddGameObject(menuButton);
             AddGameObject(againButton);
-            AddGameObject(fbShareButton);
+            //AddGameObject(fbShareButton);
             AddGameObject(characterForeground);
             
             //讀取紀錄檔
@@ -70,7 +82,12 @@ namespace CatcherGame.GameStates
         //釋放遊戲中的所有資料
         public void Release()
         {
-           
+            //停止音樂
+            isPlayedBackgroundSong = false;
+            backgroundSong = null;
+            base.clickSound = null;
+            MediaPlayer.Stop();
+
             currentSavedPeoepleNumber = "";
             //指向NULL
             readData = null;
@@ -107,7 +124,13 @@ namespace CatcherGame.GameStates
         }
         public override void Update()
         {
-            
+
+            if (!isPlayedBackgroundSong)
+            {
+                MediaPlayer.Play(backgroundSong);
+                isPlayedBackgroundSong = true;
+            }
+
             TouchCollection tc = base.GetCurrentFrameTouchCollection();
             bool isClickMenu, isClickAgain, isClickFBShare;
             isClickMenu = isClickAgain = isClickFBShare = false;
@@ -120,12 +143,12 @@ namespace CatcherGame.GameStates
                     //新的點擊方式,判斷有無按壓後再放開的點擊
                     if (touchLocation.State == TouchLocationState.Released)
                     {
-                        isClickFBShare = fbShareButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, true);
+                        //isClickFBShare = fbShareButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, true);
                         isClickAgain = againButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,true);
                         isClickMenu = menuButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,true);
                     }
                     else {
-                        isClickFBShare = fbShareButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, false);
+                        //isClickFBShare = fbShareButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, false);
                         isClickAgain = againButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,false);
                         isClickMenu = menuButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y,false);
                     }
@@ -137,22 +160,25 @@ namespace CatcherGame.GameStates
                 {
                     if (isClickAgain && !isClickMenu && !isClickFBShare)
                     {
+                        
                         Debug.WriteLine("CLICK!! STATE_COMIC");
+                        base.clickSound.Play();
                         this.Release(); //釋放資料
                         SetNextGameSateByMain(GameStateEnum.STATE_START_COMIC);
                     }
                     else if ( isClickMenu && !isClickAgain && !isClickFBShare)
                     {
                         Debug.WriteLine("CLICK!! STATE_MENU");
+                        base.clickSound.Play();
                         this.Release(); //釋放資料
                         SetNextGameSateByMain(GameStateEnum.STATE_MENU);
                     }
-                    else if (!isClickMenu && !isClickAgain && isClickFBShare ) //釋放資料)
-                    {
+                    //else if (!isClickMenu && !isClickAgain && isClickFBShare )
+                    //{
 
-                        base.LoginFacebook();
-                        Debug.WriteLine("CLICK!! SHARE_FACEBOOK");
-                    }
+                    //    base.LoginFacebook();
+                    //    Debug.WriteLine("CLICK!! SHARE_FACEBOOK");
+                    //}
                 }
                
             }

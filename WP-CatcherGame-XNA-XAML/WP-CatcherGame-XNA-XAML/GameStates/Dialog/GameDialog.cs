@@ -10,8 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
-
-
+using Microsoft.Xna.Framework.Audio;
 using CatcherGame.GameObjects;
 using CatcherGame.GameStates;
 
@@ -33,6 +32,8 @@ namespace CatcherGame.GameStates.Dialog
         protected Dictionary<DialogGameObjectEnum, GameObject[]> dgameObject;
         protected bool isInit;
         protected bool isLoadContent;
+        protected SoundEffect clickSound; //播放click音效的元件
+
         public GameDialog(GameState pCurrentState)
         {
             gameObjects = new List<GameObject>();
@@ -57,6 +58,7 @@ namespace CatcherGame.GameStates.Dialog
             //暫時先這樣解決，等郭董起床再問他!!!!><''
             //因此暫時註解掉這行，
             //closeButton.LoadResource(TextureManager.TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
+
         }
         /// <summary>
         /// 關閉Dialog,子類別Dialgo可以透過此來關閉

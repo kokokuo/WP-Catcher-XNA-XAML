@@ -29,6 +29,8 @@ using Facebook.Client;
 using System.Threading.Tasks;
 using Microsoft.Phone.Shell; //客製化Tile用
 using CatcherGame.FileStorageHelper;
+using CatcherGame.SongManager;
+using CatcherGame.SoundManager;
 
 namespace WP_CatcherGame_XNA_XAML
 {
@@ -81,7 +83,8 @@ namespace WP_CatcherGame_XNA_XAML
         ContentManager contentManager;
         GameTimer timer;
         SpriteBatch spriteBatch;
-
+        GameSongManager songManager;
+        SoundEffectManager soundManager;
         Queue<TouchLocation> touchQueue;
 
         //遊戲狀態表
@@ -165,6 +168,9 @@ namespace WP_CatcherGame_XNA_XAML
         private void Init() {
             fontManager = new SpriteFontManager(this);
             texture2DManager = new Texture2DManager(this);
+            songManager = new GameSongManager(this);
+            soundManager = new SoundEffectManager(this);
+
             pCurrentScreenState = gameStateTable[GameStateEnum.STATE_MENU];
             pCurrentScreenState.BeginInit();
         }
@@ -193,7 +199,7 @@ namespace WP_CatcherGame_XNA_XAML
             // 停止計時器
             timer.Stop();
 
-            // 設定圖形裝置的共用模式，以關閉 XNA 呈現
+            // 設定圖形裝置的共用模式，以關閉 XNA 呈現 (NavigatedFrom先 -> init)
             SharedGraphicsDeviceManager.Current.GraphicsDevice.SetSharingMode(false);
 
             base.OnNavigatedFrom(e);
@@ -215,7 +221,7 @@ namespace WP_CatcherGame_XNA_XAML
                     NavigationService.RemoveBackEntry();
                 }
             }
-            catcherTile.GetNewCatcherRecord();    
+            catcherTile.GetNewCatcherRecord();     //取得新的紀錄到Tile中
                 
             TouchCollection tc = TouchPanel.GetState();
             currtenTouchCollection = tc;
@@ -291,11 +297,12 @@ namespace WP_CatcherGame_XNA_XAML
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public SpriteFont GetSpriteFontFromKeyByMainGame(SpriteFontKeyEnum key)
+        public SpriteFont GetSpriteFontFromKey(SpriteFontKeyEnum key)
         {
 
             return fontManager.GetSpriteFontFromKey(key);
         }
+
 
 
 
@@ -329,7 +336,19 @@ namespace WP_CatcherGame_XNA_XAML
         public ContentManager GetContentManager{
             get { return this.contentManager; }
         }
-
+        /// <summary>
+        /// 取得遊戲音樂管理器
+        /// </summary>
+        /// <returns></returns>
+        public Song GetGameSongManagerByKey(GameSongKeyEnum key) {
+            return this.songManager.GetGameBackgrounSongFromKey(key);
+        }
+        /// <summary>
+        /// 取得遊戲音效管理器
+        /// </summary>
+        public SoundEffect GetSoundEffectManagerByKey(SoundEffectKeyEnum key) {
+            return this.soundManager.GetSoundEffectFromKey(key);
+        }
 
         public async void LoginFacebook()
         {

@@ -42,9 +42,10 @@ namespace CatcherGame.GameStates.Dialog
         public override void LoadResource()
         {
             background = currentState.GetTexture2DList(TextureManager.TexturesKeyEnum.TOP_SCORE_DIALOG_BACK)[0];
-            topSavedPeopleNumberFont = currentState.GetSpriteFontFromKeyByGameState(SpriteFontKeyEnum.TOP_SCORE_FONT);
+            topSavedPeopleNumberFont = currentState.GetSpriteFontFromKeyByMainGame(SpriteFontKeyEnum.TOP_SCORE_FONT);
             closeButton.LoadResource(TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
-            base.LoadResource(); //載入CloseButton 圖片資源
+            //音效
+            clickSound = currentState.GetSoundEffectManagerByMainGame(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
             base.isLoadContent = true;
         }
         public override void Update()
@@ -71,6 +72,7 @@ namespace CatcherGame.GameStates.Dialog
                 //關閉按鈕
                 if (isClickClose)
                 {
+                    clickSound.Play();
                     base.CloseDialog();//透過父類別來關閉
                 }
             }

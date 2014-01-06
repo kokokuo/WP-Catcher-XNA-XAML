@@ -129,6 +129,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppServiceProvider.cs" />
     <Compile Include="RandGenerateDropObjsSystem.cs" />
+    <Compile Include="SongManager\GameSongKeyEnum.cs" />
+    <Compile Include="SongManager\GameSongManager.cs" />
+    <Compile Include="SoundManager\SoundEffectKeyEnum.cs" />
+    <Compile Include="SoundManager\SoundEffectManager.cs" />
     <Compile Include="Sprite\AnimationSprite.cs" />
     <Compile Include="TextureManager\Texture2DManager.cs" />
     <Compile Include="TextureManager\TexturesKeyEnum.cs" />
@@ -169,6 +173,7 @@
   <ItemGroup>
     <Resource Include="lab_logo_800.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

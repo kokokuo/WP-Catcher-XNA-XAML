@@ -11,6 +11,8 @@ using CatcherGame.GameObjects;
 using CatcherGame.TextureManager;
 using CatcherGame.GameStates.Dialog;
 using WP_CatcherGame_XNA_XAML;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 namespace CatcherGame.GameStates
 {
     public class HomeMenuState : GameState
@@ -20,9 +22,9 @@ namespace CatcherGame.GameStates
         Button collectionDictionaryButton;
         Button howToPlayButtion;
         TextureLayer menuSide;
-       
-        
 
+        Song backgroundSong;
+        
         public HomeMenuState(GamePage gMainGame)
             : base(gMainGame) {
                 //建立好要在Menu的Dialog
@@ -60,14 +62,18 @@ namespace CatcherGame.GameStates
                     dialog.Value.LoadResource();
                 }
             }
+
+            //載入音效
+            base.clickSound = base.mainGame.GetSoundEffectManagerByKey(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
+            //音樂
+            backgroundSong = base.mainGame.GetGameSongManagerByKey(SongManager.GameSongKeyEnum.MENU_BACKGOUND_SONG);
+            MediaPlayer.IsRepeating = true; //設定要重複撥放
         }
 
         public override void BeginInit()
         {
-            base.objIdCount = 0;
-
+            base.objIdCount = 0; 
             playButton = new Button(this, objIdCount++,0,0);
-            
             topScoreButton = new Button(this, objIdCount++, 0, 0);
             collectionDictionaryButton = new Button(this, objIdCount++, 0, 0);
             howToPlayButtion = new Button(this, objIdCount++, 0, 0);
@@ -95,6 +101,11 @@ namespace CatcherGame.GameStates
         }
         public override void Update()
         {
+            if (!isPlayedBackgroundSong) {
+                MediaPlayer.Play(backgroundSong);
+                isPlayedBackgroundSong = true;
+            }
+
             //如果沒有要顯示Dialog的話,則進入選單中的按鈕判斷
             if (!base.hasDialogShow)
             {
@@ -129,23 +140,32 @@ namespace CatcherGame.GameStates
                     if (isClickPlay && !(isClickDictionary || isClickTopScore || isClickHowToPlay))
                     {
                         Debug.WriteLine("CLICK!! STATE_START_COMIC");
+                        base.clickSound.Play();
+                        
+                        //停止音樂
+                        isPlayedBackgroundSong = false;
+                        MediaPlayer.Stop();
+
                         SetNextGameSateByMain(GameStateEnum.STATE_START_COMIC);
                     }
                     else if (isClickDictionary && !(isClickPlay || isClickTopScore || isClickHowToPlay))
                     {
                         Debug.WriteLine("CLICK!! STATE_DICTIONARY");
+                        base.clickSound.Play();
                         //設定彈出DictionaryDialog
                         base.SetPopGameDialog(DialogStateEnum.STATE_DICTIONARY);
                     }
                     else if (isClickTopScore && !(isClickPlay || isClickDictionary || isClickHowToPlay))
                     {
                         Debug.WriteLine("CLICK!! STATE_TOPSCORE");
+                        base.clickSound.Play();
                         //設定彈出GameDialog
                         base.SetPopGameDialog(DialogStateEnum.STATE_TOPSCORE);
                     }
                     else if (isClickHowToPlay && !(isClickPlay || isClickTopScore || isClickDictionary))
                     {
                         base.SetPopGameDialog(DialogStateEnum.STATE_HOW_TO_PLAY);
+                        base.clickSound.Play();
                         Debug.WriteLine("CLICK!! STATE_HOW_TO_PLAY");
                     }
                 }

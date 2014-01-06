@@ -30,8 +30,8 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void BeginInit()
         {
-            pageStart = 9;
-            pageEnd = 10;
+            pageStart = 10;
+            pageEnd = 11;
             backgroundPos = new Vector2(0, 0);
             closeButton = new Button(base.currentState, base.countId++, 0,0);
             leftButton = new Button(base.currentState, base.countId++, 0, 0);
@@ -62,7 +62,8 @@ namespace CatcherGame.GameStates.Dialog
             page1Texture.LoadResource(TexturesKeyEnum.HOWTOPLAY_PAGE1);
             page2Texture.LoadResource(TexturesKeyEnum.HOWTOPLAY_PAGE2);
             closeButton.LoadResource(TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
-            base.LoadResource();
+            //音效
+            base.clickSound = currentState.GetSoundEffectManagerByMainGame(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
         }
         public override void Update()
         {
@@ -99,11 +100,13 @@ namespace CatcherGame.GameStates.Dialog
                     //關閉按鈕
                     if (isClickCloseButton && !isClickLeftButton && !isClickRightButton)
                     {
+                        clickSound.Play();
                         base.CloseDialog();//透過父類別來關閉
                     }
                     //左邊按鈕
                     if (!isClickCloseButton && isClickLeftButton && !isClickRightButton)
                     {
+                        clickSound.Play();
                         if ((int)gtCurrent > pageStart)
                             gtCurrent--;
 
@@ -112,6 +115,7 @@ namespace CatcherGame.GameStates.Dialog
                     //右邊按鈕
                     if (!isClickCloseButton && !isClickLeftButton && isClickRightButton)
                     {
+                        clickSound.Play();
                         if ((int)gtCurrent < pageEnd)
                             gtCurrent++;
                     }

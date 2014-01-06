@@ -45,7 +45,10 @@ namespace CatcherGame.GameStates.Dialog
             exitGameButton.LoadResource(TextureManager.TexturesKeyEnum.PAUSE_EXIT);
             //在Pause Dialog中沒有使用到close按鈕 所以註解掉!
             //base.LoadResource(); //載入CloseButton 圖片資源
+            //音效
+            clickSound = currentState.GetSoundEffectManagerByMainGame(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
             base.isLoadContent = true;
+        
         }
         public override void Update()
         {
@@ -74,12 +77,14 @@ namespace CatcherGame.GameStates.Dialog
                 if ( !(isClickClose && isClickContinue) ) {
                     if (isClickClose && !isClickContinue)
                     {
+                        clickSound.Play();
                         base.CloseDialog(); //透過父類別來關閉視窗
                         ((PlayGameState)base.currentState).Release(); //釋放遊戲元件資源
                         base.currentState.SetNextGameSateByMain(GameStateEnum.STATE_MENU); //切換回選單
                     }
                     else if (!isClickClose && isClickContinue)
                     {
+                        clickSound.Play();
                         base.CloseDialog(); //透過父類別來關閉
                     }
 

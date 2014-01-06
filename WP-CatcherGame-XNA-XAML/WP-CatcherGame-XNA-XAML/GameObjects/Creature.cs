@@ -27,7 +27,7 @@ namespace CatcherGame.GameObjects
         const int FALLING_KEY = 0, CAUGHT_KEY = 1, WALK_KEY = 2,DIE_KEY = 3;
         const float DEAD_FLY_UP_SPEED = 10; //死掉飛上去的速度
         int walkOrienation;
-       
+        
         /// <summary>
         /// 
         /// </summary>

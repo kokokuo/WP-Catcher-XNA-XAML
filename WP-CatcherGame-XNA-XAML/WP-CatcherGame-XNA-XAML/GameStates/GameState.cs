@@ -11,12 +11,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
-
+using Microsoft.Xna.Framework.Audio;
 using CatcherGame.GameObjects;
 using CatcherGame.GameStates.Dialog;
 using CatcherGame.TextureManager;
 using CatcherGame.FontManager;
 using WP_CatcherGame_XNA_XAML;
+using CatcherGame.SongManager;
+using CatcherGame.SoundManager;
 
 namespace CatcherGame.GameStates
 {
@@ -37,11 +39,63 @@ namespace CatcherGame.GameStates
         protected Vector2 backgroundPos;
         protected float leftGameScreenBorder,rightGameScreenBorder; //遊戲狀態的左右邊界
         protected int objIdCount;
+        protected bool isPlayedBackgroundSong; //是否播放背景音樂
+        protected SoundEffect clickSound;
+        public GameState(GamePage mainGamePointer)
+        {
+            gameObjects = new List<GameObject>();
+            this.mainGame = mainGamePointer;
+            
+            isInit = false;
+            width = mainGame.GetDeviceScreenWidth();
+            height = mainGame.GetDeviceScreenHeight() ;
+            hasDialogShow = false;
+            isPlayedBackgroundSong = false;
+        }
+        
+        public abstract void LoadResource();
+        
+        public abstract void BeginInit();
+        /// <summary>
+        /// 如果有顯示對話框則更新對話框並停止遊戲物件更新,否則只會更新目前狀態中的遊戲物件
+        /// </summary>
+        public virtual void Update()
+        {
+            //如果有顯示對話框,則更新對話框的物件
+            if (hasDialogShow)
+            {
+                //更新目前的對話框狀態
+                pCurrentDialog.Update();
+            }
+            else
+            {
+                foreach (GameObject gameObject in gameObjects)
+                {
+                    gameObject.Update();
+                }
+            }
+        }
+        /// <summary>
+        /// 繪製遊戲狀態中物件,但是如果有要顯示對話框,則也會一併繪製對話框
+        /// </summary>
+        public virtual void Draw()
+        {
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.Draw(gameSateSpriteBatch);
+            }
+            //如果有要顯示對話框,繪製對話框
+            if (hasDialogShow)
+            {
+                pCurrentDialog.Draw();
+            }
+        }
         /// <summary>
         /// 取得背景圖
         /// </summary>
         /// <returns></returns>
-        public Texture2D GetBackgroundTexture() {
+        public Texture2D GetBackgroundTexture()
+        {
             return this.background;
         }
 
@@ -56,14 +110,16 @@ namespace CatcherGame.GameStates
         /// <summary>
         /// 累加ID
         /// </summary>
-        public void AddObjId() {
+        public void AddObjId()
+        {
             this.objIdCount++;
         }
         /// <summary>
         /// 取得遊戲螢幕的左邊邊框值
         /// </summary>
         /// <returns></returns>
-        public float GetLeftGameScreenBorder() {
+        public float GetLeftGameScreenBorder()
+        {
             return this.leftGameScreenBorder;
         }
 
@@ -76,19 +132,7 @@ namespace CatcherGame.GameStates
             return this.rightGameScreenBorder;
         }
 
-        public GameState(GamePage mainGamePointer)
-        {
-            gameObjects = new List<GameObject>();
-            this.mainGame = mainGamePointer;
-            
-            isInit = false;
-            width = mainGame.GetDeviceScreenWidth();
-            height = mainGame.GetDeviceScreenHeight() ;
-            hasDialogShow = false;
-        }
-        
-        public abstract void LoadResource();
-        public abstract void BeginInit();
+
 
         public bool IsEmptyQueue()
         {
@@ -112,39 +156,7 @@ namespace CatcherGame.GameStates
         {
             return mainGame.GetCurrentFrameTouchCollection();
         }
-        /// <summary>
-        /// 如果有顯示對話框則更新對話框並停止遊戲物件更新,否則只會更新目前狀態中的遊戲物件
-        /// </summary>
-        public virtual void Update()
-        {
-            //如果有顯示對話框,則更新對話框的物件
-            if (hasDialogShow)
-            {
-                //更新目前的對話框狀態
-                pCurrentDialog.Update();
-            }
-            else {
-                foreach (GameObject gameObject in gameObjects)
-                {
-                    gameObject.Update();
-                }
-            }
-        }
-        /// <summary>
-        /// 繪製遊戲狀態中物件,但是如果有要顯示對話框,則也會一併繪製對話框
-        /// </summary>
-        public virtual void Draw()
-        {
-            foreach (GameObject gameObject in gameObjects)
-            {
-                gameObject.Draw(gameSateSpriteBatch);
-            }
-            //如果有要顯示對話框,繪製對話框
-            if (hasDialogShow)
-            {
-                pCurrentDialog.Draw();
-            }
-        }
+       
         /// <summary>
         /// 加入遊戲物件至此State
         /// </summary>
@@ -271,12 +283,15 @@ namespace CatcherGame.GameStates
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public SpriteFont GetSpriteFontFromKeyByGameState(SpriteFontKeyEnum key)
+        public SpriteFont GetSpriteFontFromKeyByMainGame(SpriteFontKeyEnum key)
         {
 
-            return mainGame.GetSpriteFontFromKeyByMainGame(key);
+            return mainGame.GetSpriteFontFromKey(key);
         }
+        public SoundEffect GetSoundEffectManagerByMainGame(SoundEffectKeyEnum key) {
 
+            return mainGame.GetSoundEffectManagerByKey(key);
+        }
 
         /// <summary>
         /// 透過mainGame清除TouchQueue裡面的所有狀態
