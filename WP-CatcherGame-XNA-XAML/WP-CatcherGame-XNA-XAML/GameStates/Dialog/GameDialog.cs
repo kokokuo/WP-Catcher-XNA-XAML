@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Audio;
 using CatcherGame.GameObjects;
 using CatcherGame.GameStates;
 
@@ -26,14 +25,12 @@ namespace CatcherGame.GameStates.Dialog
         protected int countId;
         protected DialogGameObjectEnum gtCurrent;
         protected DialogStateEnum stCurrent;
-        protected SpriteBatch gameSateSpriteBatch;
         protected List<GameObject> gameObjects;
         protected Dictionary<DialogStateEnum, Dictionary<DialogGameObjectEnum, GameObject[]>> objectTable;
         protected Dictionary<DialogGameObjectEnum, GameObject[]> dgameObject;
         protected bool isInit;
         protected bool isLoadContent;
         protected SoundEffect clickSound; //播放click音效的元件
-
         public GameDialog(GameState pCurrentState)
         {
             gameObjects = new List<GameObject>();
@@ -92,10 +89,11 @@ namespace CatcherGame.GameStates.Dialog
             }
         }
 
-        public virtual void Draw () {
+        public virtual void Draw(SpriteBatch gSpriteBatch)
+        {
             foreach (GameObject gameObject in gameObjects)
             {
-                gameObject.Draw(gameSateSpriteBatch);
+                gameObject.Draw(gSpriteBatch);
             }
 
             if (stCurrent != DialogStateEnum.EMPTY)
@@ -105,21 +103,12 @@ namespace CatcherGame.GameStates.Dialog
 
                 foreach (GameObject gameObject in _dgameObject[gtCurrent])
                 {
-                    gameObject.Draw(gameSateSpriteBatch);
+                    gameObject.Draw(gSpriteBatch);
                 }
                
 
             }
         }
-        /// <summary>
-        /// 設定主遊戲中的SpriteBatch元件到GameDialog ,以協助繪製
-        /// </summary>
-        /// <param name="gSpriteBatch"></param>
-        public void SetSpriteBatch(SpriteBatch gSpriteBatch)
-        {
-            this.gameSateSpriteBatch = gSpriteBatch;
-        }
-
         /// <summary>
         /// 加入遊戲物件至此State
         /// </summary>

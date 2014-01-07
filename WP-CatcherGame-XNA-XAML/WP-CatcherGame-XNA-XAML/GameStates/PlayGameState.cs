@@ -33,7 +33,6 @@ namespace CatcherGame.GameStates
         float lifefontX;
         float lifefontY;
         Button pauseButton;
-        SoundEffect clickSound;
 
         List<int> willRemoveObjectId;
 
@@ -234,15 +233,14 @@ namespace CatcherGame.GameStates
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
             {
                 if (!dialog.Value.GetGameDialogHasLoadContent)
-                {
-                    //把繪製的元件 gameSateSpriteBatch 傳入進去,讓對話框可以透過此 gameSateSpriteBatch 來繪製
-                    dialog.Value.SetSpriteBatch(this.gameSateSpriteBatch);
+                {   
                     dialog.Value.LoadResource();
                 }
             }
 
             //載入音效
             base.clickSound = base.mainGame.GetSoundEffectManagerByKey(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
+            
         }
 
         void randSys_GenerateDropObjs(List<DropObjects> objs)
@@ -379,15 +377,15 @@ namespace CatcherGame.GameStates
             }
             base.Update();
         }
-        public override void Draw()
+        public override void Draw(SpriteBatch gSpriteBatch)
         {
             // 繪製主頁背景
-            gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
-            floorTexture.Draw(this.GetSpriteBatch());
-            base.Draw();
-            smokeTexture.Draw(this.GetSpriteBatch());
-            lifeTexture.Draw(this.GetSpriteBatch());
-            scoreTexture.Draw(this.GetSpriteBatch());
+            gSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
+            floorTexture.Draw(gSpriteBatch);
+            base.Draw(gSpriteBatch);
+            smokeTexture.Draw(gSpriteBatch);
+            lifeTexture.Draw(gSpriteBatch);
+            scoreTexture.Draw(gSpriteBatch);
             //繪製文字資源
             //座標位置以調整為依照圖片之間的位置距離去設定,帶有待調整
             //
@@ -395,8 +393,8 @@ namespace CatcherGame.GameStates
             savedPeoplefontY = ((SCORE_Y + scoreTexture.Height)/2) + savedPeopleNumberFont.MeasureString(savedPeopleNumber.ToString()).Y/2 - 10;
             lifefontX = LIFE_X + lifeTexture.Width -5;
             lifefontY = LIFE_Y - 10; //微修正
-            gameSateSpriteBatch.DrawString(savedPeopleNumberFont, savedPeopleNumber.ToString(), new Vector2(savedPeoplefontX, savedPeoplefontY), Color.White);
-            gameSateSpriteBatch.DrawString(lostPeopleNumberFont, lostPeopleNumber.ToString(), new Vector2(lifefontX, lifefontY), Color.White);
+            gSpriteBatch.DrawString(savedPeopleNumberFont, savedPeopleNumber.ToString(), new Vector2(savedPeoplefontX, savedPeoplefontY), Color.White);
+            gSpriteBatch.DrawString(lostPeopleNumberFont, lostPeopleNumber.ToString(), new Vector2(lifefontX, lifefontY), Color.White);
 
           
         }
@@ -449,5 +447,7 @@ namespace CatcherGame.GameStates
         {
             return scoreTexture;
         }
+
+       
     }
 }

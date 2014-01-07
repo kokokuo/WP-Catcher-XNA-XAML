@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Audio;
 using CatcherGame.GameObjects;
 using CatcherGame.GameStates.Dialog;
 using CatcherGame.TextureManager;
@@ -19,12 +18,12 @@ using CatcherGame.FontManager;
 using WP_CatcherGame_XNA_XAML;
 using CatcherGame.SongManager;
 using CatcherGame.SoundManager;
+using System.Runtime.Serialization; 
 
 namespace CatcherGame.GameStates
 {
     public abstract class GameState
     {
-        protected SpriteBatch gameSateSpriteBatch;
         protected List<GameObject> gameObjects;
         protected int x;
         protected int y;
@@ -41,11 +40,11 @@ namespace CatcherGame.GameStates
         protected int objIdCount;
         protected bool isPlayedBackgroundSong; //是否播放背景音樂
         protected SoundEffect clickSound;
+        protected SaveTemporaryGameStateInfo temporaryGameInfo;
         public GameState(GamePage mainGamePointer)
         {
             gameObjects = new List<GameObject>();
             this.mainGame = mainGamePointer;
-            
             isInit = false;
             width = mainGame.GetDeviceScreenWidth();
             height = mainGame.GetDeviceScreenHeight() ;
@@ -54,7 +53,9 @@ namespace CatcherGame.GameStates
         }
         
         public abstract void LoadResource();
-        
+
+        //protected abstract void SetTemporayInfo();
+
         public abstract void BeginInit();
         /// <summary>
         /// 如果有顯示對話框則更新對話框並停止遊戲物件更新,否則只會更新目前狀態中的遊戲物件
@@ -78,16 +79,16 @@ namespace CatcherGame.GameStates
         /// <summary>
         /// 繪製遊戲狀態中物件,但是如果有要顯示對話框,則也會一併繪製對話框
         /// </summary>
-        public virtual void Draw()
+        public virtual void Draw(SpriteBatch gSpriteBatch)
         {
             foreach (GameObject gameObject in gameObjects)
             {
-                gameObject.Draw(gameSateSpriteBatch);
+                gameObject.Draw(gSpriteBatch);
             }
             //如果有要顯示對話框,繪製對話框
             if (hasDialogShow)
             {
-                pCurrentDialog.Draw();
+                pCurrentDialog.Draw(gSpriteBatch);
             }
         }
         /// <summary>
@@ -216,17 +217,6 @@ namespace CatcherGame.GameStates
             get { return isInit; }
         }
 
-
-        /// <summary>
-        /// 設定主遊戲中的SpriteBatch元件到 gameState 以協助繪製
-        /// </summary>
-        /// <param name="gSpriteBatch"></param>
-        public void SetSpriteBatch(SpriteBatch gSpriteBatch)
-        {
-            this.gameSateSpriteBatch = gSpriteBatch;
-        }
-        
-
         /// <summary>
         /// 透過mainGame取得 已經載入好的 Texture2DList
         /// </summary>
@@ -260,14 +250,7 @@ namespace CatcherGame.GameStates
         {
             return mainGame.GetTimeSpan;
         }
-        /// <summary>
-        /// 取得SpriteBatch繪製圖像
-        /// </summary>
-        /// <returns></returns>
-        public SpriteBatch GetSpriteBatch()
-        {
-            return gameSateSpriteBatch;
-        }
+     
 
         /// <summary>
         /// 設定切換至下一個的遊戲狀態
@@ -314,5 +297,35 @@ namespace CatcherGame.GameStates
         {
             mainGame.LoginFacebook();
         }
+        
+    }
+
+    //尚未使用
+    [DataContract]
+    public class SaveTemporaryGameStateInfo
+    {
+        //共通資訊
+        [DataMember]
+        public List<GameObject> GameObjects;
+        [DataMember]
+        public GameStateEnum CurrentDialogKey;
+        [DataMember]
+        public bool HasDialogShow;
+        [DataMember]
+        public int ObjIdCount;
+
+        //HomeMenu
+
+        //PlayGame
+        [DataMember]
+        public int LostPeopleNumber;
+        [DataMember]
+        public int SavedPeopleNumber;
+        [DataMember]
+        List<int> WillRemoveObjectId;
+        [DataMember]
+        public bool IsOver;
+        [DataMember]
+        public bool IsWriteingFile;
     }
 }

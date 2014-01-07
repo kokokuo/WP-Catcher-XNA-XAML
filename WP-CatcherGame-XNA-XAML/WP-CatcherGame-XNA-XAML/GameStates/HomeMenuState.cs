@@ -55,10 +55,7 @@ namespace CatcherGame.GameStates
             //載入對話框的圖片資源
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
             {
-                if (!dialog.Value.GetGameDialogHasLoadContent)
-                {
-                    //把繪製的元件 gameSateSpriteBatch 傳入進去,讓對話框可以透過此 gameSateSpriteBatch 來繪製
-                    dialog.Value.SetSpriteBatch(this.gameSateSpriteBatch);
+                if (!dialog.Value.GetGameDialogHasLoadContent){
                     dialog.Value.LoadResource();
                 }
             }
@@ -175,15 +172,14 @@ namespace CatcherGame.GameStates
             base.Update();
         }
 
-        public override void Draw()
+        public override void Draw(SpriteBatch gSpriteBatch)
         {
             // 繪製主頁背景
-            gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
+            gSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
             //繪製遊戲元件
-            base.Draw();
+            base.Draw(gSpriteBatch);
             
         }
-
        
     }
 }

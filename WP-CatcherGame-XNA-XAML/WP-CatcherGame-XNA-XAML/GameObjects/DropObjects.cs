@@ -77,5 +77,7 @@ namespace CatcherGame.GameObjects
         public float GetNextFallingY() {
             return y + fallingSpeed;
         }
+
+
     }
 }

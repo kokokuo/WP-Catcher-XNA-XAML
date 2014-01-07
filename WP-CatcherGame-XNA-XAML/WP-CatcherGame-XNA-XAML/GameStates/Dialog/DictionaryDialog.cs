@@ -146,6 +146,7 @@ namespace CatcherGame.GameStates.Dialog
             noTexture.LoadResource(TexturesKeyEnum.DICTIONARY_NO);
             //音效
             base.clickSound = currentState.GetSoundEffectManagerByMainGame(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
+            base.isLoadContent = true;
         }
         public override void Update()
         {
@@ -220,11 +221,11 @@ namespace CatcherGame.GameStates.Dialog
 
             base.Update(); //更新遊戲元件
         }
-        public override void Draw()
+        public override void Draw(SpriteBatch gSpriteBatch)
         {
 
-            gameSateSpriteBatch.Draw(background, backgroundPos, Color.White);
-            base.Draw(); //繪製遊戲元件
+            gSpriteBatch.Draw(background, backgroundPos, Color.White);
+            base.Draw(gSpriteBatch); //繪製遊戲元件
         }
 
         /// <summary>
@@ -233,8 +234,6 @@ namespace CatcherGame.GameStates.Dialog
         public void ReleaseGameObject()
         {
             objectTable[DialogStateEnum.STATE_DICTIONARY].Clear();
-
-            
 
             //FatDancer
             if (caughtObjects.Contains(DropObjectsKeyEnum.PERSON_FAT_DANCE))

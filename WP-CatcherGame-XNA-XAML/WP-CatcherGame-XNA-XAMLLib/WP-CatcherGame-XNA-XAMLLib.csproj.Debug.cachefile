@@ -166,11 +166,11 @@ Content\CurrentScoreFont.xnb
 Content\LostPeopleFont.xnb
 Content\SavedPeopleFont.xnb
 Content\TopScoreFont.xnb
-Content\Song\drum_mp3.xnb
-Content\Song\drum_wav.xnb
 Content\Sound\caught-1.xnb
 Content\Sound\click-3.xnb
 Content\Sound\click-2.xnb
 Content\Sound\caught-2.xnb
 Content\Sound\click-1.xnb
+Content\Song\drum_wav.xnb
+Content\Song\drum_mp3.xnb
 Content\Song\drum_mp3.wma

@@ -50,7 +50,7 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
-            
+            base.stCurrent = DialogStateEnum.STATE_TOPSCORE;
             //讀取紀錄檔
             readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
             if (readData != null && readData.HistoryTopSavedNumber != 0)
@@ -79,11 +79,11 @@ namespace CatcherGame.GameStates.Dialog
 
             base.Update(); //更新遊戲元件
         }
-        public override void Draw()
+        public override void Draw(SpriteBatch gSpriteBatch)
         {
-            gameSateSpriteBatch.Draw(background, backgroundPos, Color.White);
-            gameSateSpriteBatch.DrawString(topSavedPeopleNumberFont, topSavedPeoepleNumber.ToString(), new Vector2(background.Width / 2, background.Height / 2 - topSavedPeopleNumberFont.MeasureString(topSavedPeoepleNumber.ToString()).Y / 2), Color.Black);
-            base.Draw(); //繪製遊戲元件
+            gSpriteBatch.Draw(background, backgroundPos, Color.White);
+            gSpriteBatch.DrawString(topSavedPeopleNumberFont, topSavedPeoepleNumber.ToString(), new Vector2(background.Width / 2, background.Height / 2 - topSavedPeopleNumberFont.MeasureString(topSavedPeoepleNumber.ToString()).Y / 2), Color.Black);
+            base.Draw(gSpriteBatch); //繪製遊戲元件
         }
 
       

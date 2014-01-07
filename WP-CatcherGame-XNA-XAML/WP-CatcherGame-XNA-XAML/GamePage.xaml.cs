@@ -31,6 +31,7 @@ using Microsoft.Phone.Shell; //客製化Tile用
 using CatcherGame.FileStorageHelper;
 using CatcherGame.SongManager;
 using CatcherGame.SoundManager;
+using System.IO.IsolatedStorage;
 
 namespace WP_CatcherGame_XNA_XAML
 {
@@ -79,7 +80,7 @@ namespace WP_CatcherGame_XNA_XAML
     public partial class GamePage : PhoneApplicationPage
     {
         private FacebookSession session;
-
+        bool isGameFirstEnter = true; //用來判斷應用程式是否第一次進入
         ContentManager contentManager;
         GameTimer timer;
         SpriteBatch spriteBatch;
@@ -103,6 +104,13 @@ namespace WP_CatcherGame_XNA_XAML
         Accelerometer acc; //三軸加速器
         Vector3 accVector; //紀錄三軸加速器資料
         ApplicationTileHandler catcherTile;
+
+        IsolatedStorageSettings settings;
+        /*
+         * 從MainPage進入到GamePage 會先進到建構子,再到NavigateTo,如果在遊戲中(選單或是遊戲進行狀態中)點擊Home或BingSearch後再回到遊戲
+         * 會直接進到NavigateTo,因為目前在NavigateTo都會呼叫Init,所以要在這邊判斷
+         */
+
         public GamePage()
         {
             InitializeComponent();
@@ -113,6 +121,8 @@ namespace WP_CatcherGame_XNA_XAML
             this.Orientation = PageOrientation.LandscapeLeft; //設定方位
             // 從應用程式取得內容管理員
             contentManager = (Application.Current as App).Content;
+
+           
 
             // 為這個頁面建立計時器
             timer = new GameTimer();
@@ -139,7 +149,7 @@ namespace WP_CatcherGame_XNA_XAML
             //三軸加速器
             accVector = new Vector3();
             acc = new Accelerometer();
-            
+           
           
             acc.CurrentValueChanged += new EventHandler<SensorReadingEventArgs<AccelerometerReading>>(acc_CurrentValueChanged);
 
@@ -165,42 +175,76 @@ namespace WP_CatcherGame_XNA_XAML
         }
 
 
-        private void Init() {
+        private void InitResourceManager() {
             fontManager = new SpriteFontManager(this);
             texture2DManager = new Texture2DManager(this);
             songManager = new GameSongManager(this);
             soundManager = new SoundEffectManager(this);
+        }
 
+        private void InitState()
+        {
             pCurrentScreenState = gameStateTable[GameStateEnum.STATE_MENU];
             pCurrentScreenState.BeginInit();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+
             // 設定圖形裝置的共用模式，以開啟 XNA 呈現
             SharedGraphicsDeviceManager.Current.GraphicsDevice.SetSharingMode(true);
 
             // 建立可用來繪製紋理的新 SpriteBatch。
             spriteBatch = new SpriteBatch(SharedGraphicsDeviceManager.Current.GraphicsDevice);
 
-            // TODO: 在此處使用 this.content 載入遊戲內容
-            Init();
+            if (isGameFirstEnter)
+            {
+                //初始化各個資源管理器(需要設定SetSharingMode後才能使用)
+                InitResourceManager();
+                // TODO: 在此處使用 this.content 載入遊戲內容
+                InitState();
+              
 
-            pCurrentScreenState.SetSpriteBatch(spriteBatch);
-            pCurrentScreenState.LoadResource();
+                isGameFirstEnter = false;
+                pCurrentScreenState.LoadResource();
+            }
+            else {
+                //gameStateTable.Clear();
+                //gameStateTable.Add(GameStateEnum.STATE_MENU, ((Dictionary<GameStateEnum, GameState>)settings["gameStateTable"])[GameStateEnum.STATE_MENU]);
+                //gameStateTable.Add(GameStateEnum.STATE_START_COMIC, ((Dictionary<GameStateEnum, GameState>)settings["gameStateTable"])[GameStateEnum.STATE_START_COMIC]);
+                //gameStateTable.Add(GameStateEnum.STATE_PLAYGAME, ((Dictionary<GameStateEnum, GameState>)settings["gameStateTable"])[GameStateEnum.STATE_PLAYGAME]);
+                //gameStateTable.Add(GameStateEnum.STATE_GAME_OVER, ((Dictionary<GameStateEnum, GameState>)settings["gameStateTable"])[GameStateEnum.STATE_GAME_OVER]);
+            }
+            
+
             // 啟動計時器
             timer.Start();
 
             base.OnNavigatedTo(e);
         }
 
+        //
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             // 停止計時器
             timer.Stop();
 
-            // 設定圖形裝置的共用模式，以關閉 XNA 呈現 (NavigatedFrom先 -> init)
+            // 設定圖形裝置的共用模式，以關閉 XNA 呈現 
             SharedGraphicsDeviceManager.Current.GraphicsDevice.SetSharingMode(false);
+            
+            
+            // txtInput is a TextBox defined in XAML.
+            //if (!settings.Contains("GameTable"))
+            //{
+                
+            //    settings.Add("GameTable", gameStateTable);
+            //}
+            //else
+            //{
+            //    settings["GameTable"] = gameStateTable;
+            //}
+            //settings.Save();
+            
 
             base.OnNavigatedFrom(e);
         }
@@ -243,7 +287,7 @@ namespace WP_CatcherGame_XNA_XAML
            
             spriteBatch.Begin();
             //繪製現在的狀態
-            pCurrentScreenState.Draw();
+            pCurrentScreenState.Draw(this.spriteBatch);
             spriteBatch.End();
         }
 
@@ -315,7 +359,6 @@ namespace WP_CatcherGame_XNA_XAML
                 //進入新狀態所做的初始化
                 pCurrentScreenState.BeginInit();
                 //載入資源
-                pCurrentScreenState.SetSpriteBatch(spriteBatch);
                 pCurrentScreenState.LoadResource();
             }
 

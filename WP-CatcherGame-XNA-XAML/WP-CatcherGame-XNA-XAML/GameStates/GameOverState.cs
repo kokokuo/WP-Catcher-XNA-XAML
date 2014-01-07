@@ -186,16 +186,14 @@ namespace CatcherGame.GameStates
 
             base.Update(); //會把　AddGameObject方法中加入的物件作更新
         }
-        public override void Draw()
+        public override void Draw(SpriteBatch gSpriteBatch)
         {
-            gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
+            gSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
             //顯示數字的位置
-            gameSateSpriteBatch.DrawString(currentSavedPeopleNumberFont, currentSavedPeoepleNumber.ToString(), new Vector2(background.Width / 2 - 100
+            gSpriteBatch.DrawString(currentSavedPeopleNumberFont, currentSavedPeoepleNumber.ToString(), new Vector2(background.Width / 2 - 100
                 , background.Height / 2), Color.Black);
-            base.Draw(); //會把　AddGameObject方法中加入的物件作繪製
+            base.Draw(gSpriteBatch); //會把　AddGameObject方法中加入的物件作繪製
         }
 
-
-     
     }
 }

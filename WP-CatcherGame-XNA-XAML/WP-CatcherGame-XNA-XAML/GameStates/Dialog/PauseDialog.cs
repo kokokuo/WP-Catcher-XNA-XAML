@@ -52,6 +52,8 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
+            base.stCurrent = DialogStateEnum.STATE_PAUSE;
+
             TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
             bool isClickClose, isClickContinue;
             isClickClose = isClickContinue = false;
@@ -94,10 +96,10 @@ namespace CatcherGame.GameStates.Dialog
 
             base.Update(); //更新遊戲元件
         }
-        public override void Draw()
+        public override void Draw(SpriteBatch gSpriteBatch)
         {
-            gameSateSpriteBatch.Draw(background, backgroundPos, Color.White);
-            base.Draw(); //繪製遊戲元件
+            gSpriteBatch.Draw(background, backgroundPos, Color.White);
+            base.Draw(gSpriteBatch); //繪製遊戲元件
         }
     }
 }

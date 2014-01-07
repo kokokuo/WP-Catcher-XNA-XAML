@@ -64,9 +64,12 @@ namespace CatcherGame.GameStates.Dialog
             closeButton.LoadResource(TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
             //音效
             base.clickSound = currentState.GetSoundEffectManagerByMainGame(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
+            base.isLoadContent = true;
         }
         public override void Update()
         {
+            base.stCurrent = DialogStateEnum.STATE_HOW_TO_PLAY;
+
             bool isTouchReleased = false;
             bool isClickCloseButton, isClickLeftButton, isClickRightButton;
             isClickCloseButton = isClickRightButton = isClickLeftButton = false;
@@ -126,10 +129,10 @@ namespace CatcherGame.GameStates.Dialog
 
             base.Update(); //更新遊戲元件
         }
-        public override void Draw()
+        public override void Draw(SpriteBatch gSpriteBatch)
         {
-            gameSateSpriteBatch.Draw(background, backgroundPos, Color.Wheat);
-            base.Draw();
+            gSpriteBatch.Draw(background, backgroundPos, Color.Wheat);
+            base.Draw(gSpriteBatch);
         }
     }
 }

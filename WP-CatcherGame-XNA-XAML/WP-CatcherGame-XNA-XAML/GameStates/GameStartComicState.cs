@@ -45,10 +45,12 @@ namespace CatcherGame.GameStates
             base.Update();
         }
 
-        public override void Draw()
+        public override void Draw(SpriteBatch gSpriteBatch)
         {
-            gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
-            base.Draw();
+            gSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
+            base.Draw(gSpriteBatch);
         }
+
+        
     }
 }
