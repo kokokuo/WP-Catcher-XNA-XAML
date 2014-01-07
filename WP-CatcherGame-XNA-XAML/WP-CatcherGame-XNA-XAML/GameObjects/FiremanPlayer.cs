@@ -29,8 +29,8 @@ namespace CatcherGame.GameObjects
         AnimationSprite leftFireManWalkAnimation; //左邊的消防員
         AnimationSprite rightFireManWalkAnimation; //右邊的消防員
         //G-Sensor
-        int LEFT_MOVE_STEP_SENSOR = -10;
-        int RIGHT_MOVE_STEP_SENSOR = 10;
+        int LEFT_MOVE_STEP_SENSOR = -15;
+        int RIGHT_MOVE_STEP_SENSOR = 15;
         //觸控拖拉
         float MOVE_STEP_TOUCH = 0.7f;
         bool isTouched;
@@ -218,23 +218,23 @@ namespace CatcherGame.GameObjects
                 if (key == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES)
                 {
                     state = EffectState.SPEED_UP;
-                    LEFT_MOVE_STEP_SENSOR = -14;
-                    RIGHT_MOVE_STEP_SENSOR = 14;
+                    LEFT_MOVE_STEP_SENSOR = -18;
+                    RIGHT_MOVE_STEP_SENSOR = 18;
                     MOVE_STEP_TOUCH = 1.2f;
                 }
                 else if (key == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
                 {
                     state = EffectState.SLOW;
-                    LEFT_MOVE_STEP_SENSOR = -6;
-                    RIGHT_MOVE_STEP_SENSOR = 6;
+                    LEFT_MOVE_STEP_SENSOR = -8;
+                    RIGHT_MOVE_STEP_SENSOR = 8;
                     MOVE_STEP_TOUCH = 0.2f;
                 }
             }
         }
         private void resetSpeedEffect() {
             state = EffectState.NORMAL;
-            LEFT_MOVE_STEP_SENSOR = -10;
-            RIGHT_MOVE_STEP_SENSOR = 10;
+            LEFT_MOVE_STEP_SENSOR = -15;
+            RIGHT_MOVE_STEP_SENSOR = 15;
             MOVE_STEP_TOUCH = 0.7f;
         }
 

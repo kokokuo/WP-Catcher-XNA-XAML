@@ -68,7 +68,7 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
-            base.stCurrent = DialogStateEnum.STATE_HOW_TO_PLAY;
+            //base.stCurrent = DialogStateEnum.STATE_HOW_TO_PLAY;
 
             bool isTouchReleased = false;
             bool isClickCloseButton, isClickLeftButton, isClickRightButton;

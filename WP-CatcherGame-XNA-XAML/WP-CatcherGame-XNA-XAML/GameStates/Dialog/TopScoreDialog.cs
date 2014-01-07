@@ -50,7 +50,7 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
-            base.stCurrent = DialogStateEnum.STATE_TOPSCORE;
+            //base.stCurrent = DialogStateEnum.STATE_TOPSCORE;
             //讀取紀錄檔
             readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
             if (readData != null && readData.HistoryTopSavedNumber != 0)

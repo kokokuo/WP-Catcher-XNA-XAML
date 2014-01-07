@@ -95,7 +95,7 @@ namespace CatcherGame
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_FATDANCE_FALL);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_FATDANCE_CAUGHT);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_FATDANCE_WALK);
-            generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_FAT_DANCE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_FAT_DANCE, 0.5f, loadTexureKeys, 2f, 0f, 3f, 0));
+            generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_FAT_DANCE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_FAT_DANCE, 0.5f, loadTexureKeys, 6f, 0f, 3f, 0));
 
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_LITTLEGIRL_FALL);
@@ -126,7 +126,7 @@ namespace CatcherGame
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ROXANNE_FALL);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ROXANNE_CAUGHT);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ROXANNE_WALK);
-            generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_ROXANNE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_ROXANNE, 0.3f, loadTexureKeys, 5f, 0f, 6f, 1));
+            generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_ROXANNE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_ROXANNE, 0.3f, loadTexureKeys, 7f, 0f, 6f, 1));
 
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_NICOLE_FALL);
@@ -139,7 +139,9 @@ namespace CatcherGame
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_JASON_CAUGHT);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_JASON_WALK);
             generaterCreatureReocrd.Add(DropObjectsKeyEnum.PERSON_JASON, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_JASON, 0.3f, loadTexureKeys, 6f, 0f, 3f, 1));
-            //道具
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //道具 
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ITEM_BOOSTING_SHOES);
             generaterEffectItemReocrd.Add(DropObjectsKeyEnum.ITEM_BOOSTING_SHOES, new EffectItemDataRecord(DropObjectsKeyEnum.ITEM_BOOSTING_SHOES, 0.3f, loadTexureKeys, 3f, 0f, 8f));

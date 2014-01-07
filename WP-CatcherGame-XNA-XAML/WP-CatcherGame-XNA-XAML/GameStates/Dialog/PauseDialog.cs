@@ -52,7 +52,7 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
-            base.stCurrent = DialogStateEnum.STATE_PAUSE;
+            //base.stCurrent = DialogStateEnum.STATE_PAUSE;
 
             TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
             bool isClickClose, isClickContinue;
