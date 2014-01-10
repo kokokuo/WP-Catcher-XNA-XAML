@@ -51,6 +51,12 @@ namespace CatcherGame.GameStates
             base.Draw(gSpriteBatch);
         }
 
-        
+        /// <summary>
+        /// 返回選單
+        /// </summary>
+        public override void HandleBackButtonPressed()
+        {
+            mainGame.SetNextGameState(GameStateEnum.STATE_MENU);
+        }
     }
 }

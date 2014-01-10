@@ -101,5 +101,16 @@ namespace CatcherGame.GameStates.Dialog
             gSpriteBatch.Draw(background, backgroundPos, Color.White);
             base.Draw(gSpriteBatch); //繪製遊戲元件
         }
+
+        /// <summary>
+        /// 覆寫關閉視窗,返回遊戲
+        /// </summary>
+        public override void HandleBackButtonPressed()
+        {
+            //關閉視窗,返回遊戲
+            base.CloseDialog(); //透過父類別來關閉視窗
+            ((PlayGameState)base.currentState).Release(); //釋放遊戲元件資源
+            base.currentState.SetNextGameSateByMain(GameStateEnum.STATE_MENU); //切換回選單
+        }
     }
 }

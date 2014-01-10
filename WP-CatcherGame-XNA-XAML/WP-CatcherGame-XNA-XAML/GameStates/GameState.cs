@@ -41,6 +41,7 @@ namespace CatcherGame.GameStates
         protected bool isPlayedBackgroundSong; //是否播放背景音樂
         protected SoundEffect clickSound;
         protected SaveTemporaryGameStateInfo temporaryGameInfo;
+       
         public GameState(GamePage mainGamePointer)
         {
             gameObjects = new List<GameObject>();
@@ -49,7 +50,7 @@ namespace CatcherGame.GameStates
             width = mainGame.GetDeviceScreenWidth();
             height = mainGame.GetDeviceScreenHeight() ;
             hasDialogShow = false;
-            isPlayedBackgroundSong = false;
+            
         }
         
         public abstract void LoadResource();
@@ -91,6 +92,11 @@ namespace CatcherGame.GameStates
                 pCurrentDialog.Draw(gSpriteBatch);
             }
         }
+
+        /// <summary>
+        /// 處理返回鍵被按壓
+        /// </summary>
+        public abstract void HandleBackButtonPressed();
         /// <summary>
         /// 取得背景圖
         /// </summary>
@@ -167,7 +173,13 @@ namespace CatcherGame.GameStates
             gameObjects.Add(gameObject);
         }
 
-
+        /// <summary>
+        /// 取得視窗是否關閉或是開啟
+        /// </summary>
+        /// <returns></returns>
+        public bool GetGameStateHasShowDialog() {
+            return this.hasDialogShow;
+        }
         /// <summary>
         /// 設定或取得遊戲狀態左上角x
         /// </summary>

@@ -32,9 +32,10 @@ using CatcherGame.FileStorageHelper;
 using CatcherGame.SongManager;
 using CatcherGame.SoundManager;
 using System.IO.IsolatedStorage;
-
 namespace WP_CatcherGame_XNA_XAML
 {
+
+
     //處理顯示動態磚的類別
     public class ApplicationTileHandler{
         GameRecordData readData;
@@ -43,14 +44,16 @@ namespace WP_CatcherGame_XNA_XAML
         public void GetNewCatcherRecord() {
             // Application Tile is always the first Tile, even if it is not pinned to Start.
             ShellTile AppTile = ShellTile.ActiveTiles.First();
-           
+            
             // Application should always be found
             if (AppTile != null)
             {
+                
                 //取得資料
                 readData = CatcherGame.FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
                 if (readData != null && readData.HistoryTopSavedNumber != 0)
                 { //分數不為零
+                    
                     topSavedPeoepleNumber = "You saved\n\""+ readData.HistoryTopSavedNumber.ToString() + "\" people\nTry it better!";
                 }
                 else { 
@@ -117,7 +120,6 @@ namespace WP_CatcherGame_XNA_XAML
             //Tile
             catcherTile = new ApplicationTileHandler();
 
-            this.SupportedOrientations = SupportedPageOrientation.Landscape; //設定可支援方位
             this.Orientation = PageOrientation.LandscapeLeft; //設定方位
             // 從應用程式取得內容管理員
             contentManager = (Application.Current as App).Content;
@@ -256,7 +258,7 @@ namespace WP_CatcherGame_XNA_XAML
         {
             // TODO: 在此處加入更新邏輯
             // 允許遊戲結束 預設方法
-
+            
             //移除放在堆疊區的前面頁面，用來直接跳回手機畫面
             if (NavigationService.CanGoBack)
             {
@@ -293,10 +295,15 @@ namespace WP_CatcherGame_XNA_XAML
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
-            if (! (pCurrentScreenState is HomeMenuState) ){
+
+            if (((pCurrentScreenState is HomeMenuState) && pCurrentScreenState.GetGameStateHasShowDialog())
+                || !(pCurrentScreenState is HomeMenuState))
+            {
                 e.Cancel = true;
             }
             
+            //處理每一個狀態下觸發返回鍵時的相對處理
+            pCurrentScreenState.HandleBackButtonPressed();
             base.OnBackKeyPress(e);
         }
         /// <summary>

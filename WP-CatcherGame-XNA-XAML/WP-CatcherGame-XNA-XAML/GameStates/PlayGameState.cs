@@ -448,6 +448,17 @@ namespace CatcherGame.GameStates
             return scoreTexture;
         }
 
-       
+        public override void HandleBackButtonPressed()
+        {
+            //如果有在顯示Dialog =>關閉Dialog
+            if (hasDialogShow)
+            {
+                this.pCurrentDialog.HandleBackButtonPressed();
+            }
+            else {
+                //顯示暫停Page
+                this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
+            }
+        }
     }
 }

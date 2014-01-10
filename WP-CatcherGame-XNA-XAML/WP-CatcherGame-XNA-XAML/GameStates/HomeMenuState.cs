@@ -171,6 +171,15 @@ namespace CatcherGame.GameStates
            
             base.Update();
         }
+        /// <summary>
+        /// 複寫處理
+        /// </summary>
+        public override void HandleBackButtonPressed() {
+            //如果有在顯示Dialog =>關閉Dialog
+            if (hasDialogShow){
+                this.pCurrentDialog.HandleBackButtonPressed();
+            }
+        }
 
         public override void Draw(SpriteBatch gSpriteBatch)
         {

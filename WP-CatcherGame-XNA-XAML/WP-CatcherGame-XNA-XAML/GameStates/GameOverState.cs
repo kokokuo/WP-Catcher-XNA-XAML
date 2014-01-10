@@ -194,6 +194,13 @@ namespace CatcherGame.GameStates
                 , background.Height / 2), Color.Black);
             base.Draw(gSpriteBatch); //會把　AddGameObject方法中加入的物件作繪製
         }
-
+        /// <summary>
+        /// 返回選單
+        /// </summary>
+        public override void HandleBackButtonPressed()
+        {
+            this.Release(); //釋放資料
+            mainGame.SetNextGameState(GameStateEnum.STATE_MENU);
+        }
     }
 }

@@ -67,7 +67,12 @@ namespace CatcherGame.GameStates.Dialog
 
         }
 
-        
+        /// <summary>
+        /// 當返回鍵按下時,處理返回鍵,預設是關閉Dialog
+        /// </summary>
+        public virtual void HandleBackButtonPressed() {
+            CloseDialog();
+        }
 
         //更新在Dialog中的所有遊戲物件
         public virtual void Update()
