@@ -1,22 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{d8d03476-016b-471d-bd1c-de81d8402a13}" Title="CatcherGame" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WP_CatcherGame_XNA_XAML author" Description="Sample description" Publisher="WP_CatcherGame_XNA_XAML">
+  <App xmlns="" ProductID="{d8d03476-016b-471d-bd1c-de81d8402a13}" Title="Catcher" RuntimeType="Silverlight" Version="1.0.1.0" Genre="apps.normal" Author="WP_CatcherGame_XNA_XAML author" Description="In the proposed game, the player will be operating a firefighter horizontally in order to undertake the assigned rescue missions. Moreover, a life net will be provided as the primary rescue equipment to secure the targeted individuals falling from the apar" Publisher="WP_CatcherGame_XNA_XAML">
     <IconPath IsRelative="true" IsResource="false">gamelogo_62.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
-      <Capability Name="ID_CAP_IDENTITY_DEVICE" />
-      <Capability Name="ID_CAP_IDENTITY_USER" />
-      <Capability Name="ID_CAP_LOCATION" />
       <Capability Name="ID_CAP_MEDIALIB" />
-      <Capability Name="ID_CAP_MICROPHONE" />
-      <Capability Name="ID_CAP_NETWORKING" />
-      <Capability Name="ID_CAP_PHONEDIALER" />
-      <Capability Name="ID_CAP_PUSH_NOTIFICATION" />
       <Capability Name="ID_CAP_SENSORS" />
-      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
-      <Capability Name="ID_CAP_ISV_CAMERA" />
-      <Capability Name="ID_CAP_CONTACTS" />
-      <Capability Name="ID_CAP_APPOINTMENTS" />
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />

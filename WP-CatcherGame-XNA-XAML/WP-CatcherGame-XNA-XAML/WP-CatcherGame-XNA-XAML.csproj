@@ -16,10 +16,10 @@
     <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures>en</SupportedCultures>
+    <SupportedCultures>zh-Hant</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>WP_CatcherGame_XNA_XAML_1.0.0.xap</XapFilename>
+    <XapFilename>WP_CatcherGame_XNA_XAML_1.0.1.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>WP_CatcherGame_XNA_XAML.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
