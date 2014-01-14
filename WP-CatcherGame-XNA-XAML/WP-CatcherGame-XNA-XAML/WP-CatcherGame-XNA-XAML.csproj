@@ -115,6 +115,7 @@
     <Compile Include="GameStates\Dialog\GameDialog.cs" />
     <Compile Include="GameStates\Dialog\HowToPlayDialog.cs" />
     <Compile Include="GameStates\Dialog\PauseDialog.cs" />
+    <Compile Include="GameStates\Dialog\SettingDialog.cs" />
     <Compile Include="GameStates\Dialog\TopScoreDialog.cs" />
     <Compile Include="GameStates\GameOverState.cs" />
     <Compile Include="GameStates\GameStartComicState.cs" />

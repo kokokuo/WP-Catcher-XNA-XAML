@@ -13,6 +13,7 @@ using CatcherGame.GameStates.Dialog;
 using WP_CatcherGame_XNA_XAML;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
+using WP_CatcherGame_XNA_XAML.GameStates.Dialog;
 namespace CatcherGame.GameStates
 {
     public class HomeMenuState : GameState
@@ -33,7 +34,7 @@ namespace CatcherGame.GameStates
                 dialogTable.Add(DialogStateEnum.STATE_DICTIONARY, new DictionaryDialog(this));
                 dialogTable.Add(DialogStateEnum.STATE_TOPSCORE, new TopScoreDialog(this));
                 dialogTable.Add(DialogStateEnum.STATE_HOW_TO_PLAY, new HowToPlayDialog(this));
-                //dialogTable.Add(DialogStateEnum.STATE_SETTING, new SettingDialog(this));
+                dialogTable.Add(DialogStateEnum.STATE_SETTING, new SettingDialog(this));
 
                 base.x = 0; base.y = 0;
                 base.backgroundPos = new Vector2(base.x, base.y);
@@ -113,8 +114,8 @@ namespace CatcherGame.GameStates
             {
                 TouchCollection tc = base.GetCurrentFrameTouchCollection();
                 bool isTouchReleased = false;
-                bool isClickPlay, isClickDictionary, isClickTopScore, isClickHowToPlay;
-                isClickHowToPlay = isClickPlay = isClickDictionary = isClickTopScore = false;
+                bool isClickPlay, isClickDictionary, isClickTopScore, isClickHowToPlay,isClickSetting;
+                isClickHowToPlay = isClickPlay = isClickDictionary = isClickTopScore=isClickSetting = false;
                 if (tc.Count > 0){
                     //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
                     foreach (TouchLocation touchLocation in tc){
@@ -129,6 +130,7 @@ namespace CatcherGame.GameStates
                         isClickDictionary = collectionDictionaryButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, isTouchReleased);
                         isClickTopScore = topScoreButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, isTouchReleased);
                         isClickHowToPlay = howToPlayButtion.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, isTouchReleased);
+                        isClickSetting = settingButton.IsPixelClicked((int)touchLocation.Position.X, (int)touchLocation.Position.Y, isTouchReleased);
                     }
 
                    
@@ -150,25 +152,31 @@ namespace CatcherGame.GameStates
 
                         SetNextGameSateByMain(GameStateEnum.STATE_START_COMIC);
                     }
-                    else if (isClickDictionary && !(isClickPlay || isClickTopScore || isClickHowToPlay))
+                    else if (isClickDictionary && !(isClickPlay || isClickTopScore || isClickHowToPlay||isClickSetting))
                     {
                         Debug.WriteLine("CLICK!! STATE_DICTIONARY");
                         base.clickSound.Play();
                         //設定彈出DictionaryDialog
                         base.SetPopGameDialog(DialogStateEnum.STATE_DICTIONARY);
                     }
-                    else if (isClickTopScore && !(isClickPlay || isClickDictionary || isClickHowToPlay))
+                    else if (isClickTopScore && !(isClickPlay || isClickDictionary || isClickHowToPlay || isClickSetting))
                     {
                         Debug.WriteLine("CLICK!! STATE_TOPSCORE");
                         base.clickSound.Play();
                         //設定彈出GameDialog
                         base.SetPopGameDialog(DialogStateEnum.STATE_TOPSCORE);
                     }
-                    else if (isClickHowToPlay && !(isClickPlay || isClickTopScore || isClickDictionary))
+                    else if (isClickHowToPlay && !(isClickPlay || isClickTopScore || isClickDictionary || isClickSetting))
                     {
                         base.SetPopGameDialog(DialogStateEnum.STATE_HOW_TO_PLAY);
                         base.clickSound.Play();
                         Debug.WriteLine("CLICK!! STATE_HOW_TO_PLAY");
+                    }
+                    else if (isClickSetting && !(isClickPlay || isClickTopScore || isClickDictionary || isClickHowToPlay))
+                    {
+                        base.SetPopGameDialog(DialogStateEnum.STATE_SETTING);
+                        base.clickSound.Play();
+                        Debug.WriteLine("CLICK!! STATE_SETTING");
                     }
                 }
                 

@@ -132,6 +132,11 @@ namespace CatcherGame.TextureManager
             LoadHowtoplayDialogPage1();
             LoadHowtoplayDialogPage2();
 
+
+            //載入SETTING所用的圖像資源
+            LoadSettingDialogBackground();
+            LoadMinusButton();
+
             Debug.WriteLine("Load Texture2Ds Done ");
         }
         /// <summary>
@@ -221,6 +226,7 @@ namespace CatcherGame.TextureManager
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/volume"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/volume_touch"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
@@ -1312,6 +1318,33 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
+
+
+
+        //SETTING元件----------------------------------
+
+        private void LoadSettingDialogBackground()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.SETTING_BACKGROUND;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Setting/setting_back"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+        private void LoadMinusButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.SETTING_MINUS;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Setting/setting_minus"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Setting/setting_minus_touch"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
        
     }
 }

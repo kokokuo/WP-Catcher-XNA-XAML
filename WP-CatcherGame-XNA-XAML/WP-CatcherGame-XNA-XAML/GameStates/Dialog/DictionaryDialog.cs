@@ -165,7 +165,7 @@ namespace CatcherGame.GameStates.Dialog
             //指定當前頁面是DictionaryDialog頁面
             stCurrent = DialogStateEnum.STATE_DICTIONARY;
 
-            //片段當前頁面是空值，就初始化給第一個角色
+            //判斷當前頁面是空值，就初始化給第一個角色
             if (gtCurrent == DialogGameObjectEnum.EMPTY)
                 gtCurrent = DialogGameObjectEnum.DICTIONARY_FATDANCER;
 
