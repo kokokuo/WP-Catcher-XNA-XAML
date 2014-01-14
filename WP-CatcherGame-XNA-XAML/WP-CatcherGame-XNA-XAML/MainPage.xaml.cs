@@ -59,8 +59,9 @@ namespace WP_CatcherGame_XNA_XAML
         }
 
         private void Exit() {
-
-            NavigationService.RemoveBackEntry();
+            //在WP7中沒有 像WP8有Application.Current.Termiated()這樣的函式
+            //所以唯一非正常方法是透過XNA的Game.Exit()離開
+            new Microsoft.Xna.Framework.Game().Exit();
             
         }
         //當動畫播完後會進入此事件，導向遊戲選單
