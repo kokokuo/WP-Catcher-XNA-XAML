@@ -30,8 +30,9 @@ namespace WP_CatcherGame_XNA_XAML
         }
         void NavigationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            FrameworkDispatcher.Update();
             //處理6.5.1
-            if (MediaPlayer.State == MediaState.Playing && !MediaPlayer.GameHasControl)
+            if (MediaPlayer.State == MediaState.Playing | !MediaPlayer.GameHasControl)
             {
                 string msg = String.Format("Music + Videos Hub is currently playing music. Catcher Game needs to stop music.\nPlease click Ok to continue or Cancel to close the Catcher Game.");
                 MessageBoxResult res = MessageBox.Show(msg, "Music + Videos Hub", MessageBoxButton.OKCancel);
@@ -42,10 +43,12 @@ namespace WP_CatcherGame_XNA_XAML
                 else
                 {
                     logo.Begin();
+                    NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
                 }
             }
             else
             {
+                
                 logo.Begin();
                 NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
             }

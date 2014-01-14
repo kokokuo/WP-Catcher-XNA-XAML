@@ -19,6 +19,7 @@ namespace CatcherGame.TextureManager
         MENU_HOW_TO_PLAY_BUTTON,
         MENU_TOP_SCORE_BUTTON,
         MENU_SETTING_BUTTON,
+
         TOP_SCORE_DIALOG_BACK,
         TOP_SCORE_CLOSE_BUTTON,
         DIALOG_CLOSE_BUTTON,
