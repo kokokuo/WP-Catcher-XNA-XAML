@@ -162,14 +162,14 @@ namespace CatcherGame.GameStates
                     {
                         
                         Debug.WriteLine("CLICK!! STATE_COMIC");
-                        base.clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         this.Release(); //釋放資料
                         SetNextGameSateByMain(GameStateEnum.STATE_START_COMIC);
                     }
                     else if ( isClickMenu && !isClickAgain && !isClickFBShare)
                     {
                         Debug.WriteLine("CLICK!! STATE_MENU");
-                        base.clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         this.Release(); //釋放資料
                         SetNextGameSateByMain(GameStateEnum.STATE_MENU);
                     }

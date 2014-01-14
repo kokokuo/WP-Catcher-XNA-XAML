@@ -103,13 +103,13 @@ namespace CatcherGame.GameStates.Dialog
                     //關閉按鈕
                     if (isClickCloseButton && !isClickLeftButton && !isClickRightButton)
                     {
-                        clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         base.CloseDialog();//透過父類別來關閉
                     }
                     //左邊按鈕
                     if (!isClickCloseButton && isClickLeftButton && !isClickRightButton)
                     {
-                        clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         if ((int)gtCurrent > pageStart)
                             gtCurrent--;
 
@@ -118,7 +118,7 @@ namespace CatcherGame.GameStates.Dialog
                     //右邊按鈕
                     if (!isClickCloseButton && !isClickLeftButton && isClickRightButton)
                     {
-                        clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         if ((int)gtCurrent < pageEnd)
                             gtCurrent++;
                     }

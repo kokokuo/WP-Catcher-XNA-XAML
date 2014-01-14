@@ -72,7 +72,7 @@ namespace CatcherGame.GameStates.Dialog
                 //關閉按鈕
                 if (isClickClose)
                 {
-                    clickSound.Play();
+                    SoundEffectPlay();//base.clickSound.Play();
                     base.CloseDialog();//透過父類別來關閉
                 }
             }

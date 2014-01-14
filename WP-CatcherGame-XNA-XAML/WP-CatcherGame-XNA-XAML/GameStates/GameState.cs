@@ -309,7 +309,12 @@ namespace CatcherGame.GameStates
         {
             mainGame.LoginFacebook();
         }
-        
+        //判斷是否為靜音
+        public void SoundEffectPlay()
+        {
+            if(MediaPlayer.Volume!=0.0f)
+            clickSound.Play();
+        }
     }
 
     //尚未使用
@@ -339,5 +344,9 @@ namespace CatcherGame.GameStates
         public bool IsOver;
         [DataMember]
         public bool IsWriteingFile;
+       
     }
+
+
+    
 }

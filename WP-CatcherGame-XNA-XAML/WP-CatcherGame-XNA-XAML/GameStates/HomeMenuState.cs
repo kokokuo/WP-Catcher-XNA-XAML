@@ -144,7 +144,7 @@ namespace CatcherGame.GameStates
                     if (isClickPlay && !(isClickDictionary || isClickTopScore || isClickHowToPlay))
                     {
                         Debug.WriteLine("CLICK!! STATE_START_COMIC");
-                        base.clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         
                         //停止音樂
                         isPlayedBackgroundSong = false;
@@ -155,27 +155,27 @@ namespace CatcherGame.GameStates
                     else if (isClickDictionary && !(isClickPlay || isClickTopScore || isClickHowToPlay||isClickSetting))
                     {
                         Debug.WriteLine("CLICK!! STATE_DICTIONARY");
-                        base.clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         //設定彈出DictionaryDialog
                         base.SetPopGameDialog(DialogStateEnum.STATE_DICTIONARY);
                     }
                     else if (isClickTopScore && !(isClickPlay || isClickDictionary || isClickHowToPlay || isClickSetting))
                     {
                         Debug.WriteLine("CLICK!! STATE_TOPSCORE");
-                        base.clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         //設定彈出GameDialog
                         base.SetPopGameDialog(DialogStateEnum.STATE_TOPSCORE);
                     }
                     else if (isClickHowToPlay && !(isClickPlay || isClickTopScore || isClickDictionary || isClickSetting))
                     {
                         base.SetPopGameDialog(DialogStateEnum.STATE_HOW_TO_PLAY);
-                        base.clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         Debug.WriteLine("CLICK!! STATE_HOW_TO_PLAY");
                     }
                     else if (isClickSetting && !(isClickPlay || isClickTopScore || isClickDictionary || isClickHowToPlay))
                     {
                         base.SetPopGameDialog(DialogStateEnum.STATE_SETTING);
-                        base.clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         Debug.WriteLine("CLICK!! STATE_SETTING");
                     }
                 }

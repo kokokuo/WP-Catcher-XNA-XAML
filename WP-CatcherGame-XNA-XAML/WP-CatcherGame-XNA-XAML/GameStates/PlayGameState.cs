@@ -347,7 +347,7 @@ namespace CatcherGame.GameStates
 
                    
                     if(isClickPause){
-                        base.clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
                     }
 

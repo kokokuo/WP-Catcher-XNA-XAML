@@ -102,21 +102,21 @@ namespace WP_CatcherGame_XNA_XAML.GameStates.Dialog
                     //關閉按鈕
                     if (isClickCloseButton && !isClickMinusButton && !isClickPlusButton)
                     {
-                        clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         base.CloseDialog();//透過父類別來關閉
                     }
 
                     //減少音量按鈕
                     if (!isClickCloseButton && isClickMinusButton && !isClickPlusButton)
                     {
-                        clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         VolumeSetting(MediaPlayer.Volume - 0.2f);
                     }
 
                     //增加音量按鈕
                     if (!isClickCloseButton && !isClickMinusButton && isClickPlusButton)
                     {
-                        clickSound.Play();
+                        SoundEffectPlay();//base.clickSound.Play();
                         VolumeSetting(MediaPlayer.Volume + 0.2f);
                     }
                 }

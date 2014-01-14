@@ -10,6 +10,7 @@ using CatcherGame.Sprite;
 using CatcherGame.GameStates;
 using Microsoft.Xna.Framework.Audio;
 using CatcherGame.TextureManager;
+using Microsoft.Xna.Framework.Media;
 
 namespace CatcherGame.GameObjects
 {
@@ -89,6 +90,9 @@ namespace CatcherGame.GameObjects
             base.isFalling = false;
             //切換圖片組
             pCurrentAnimation = animationList[CAUGHT_KEY];
+
+            //判斷是否背景音樂為靜音(暫時)
+            if(MediaPlayer.Volume!=0.0f)
             //播放接到音效
             caughtSound.Play();
         }
