@@ -136,6 +136,9 @@ namespace CatcherGame.TextureManager
             //載入SETTING所用的圖像資源
             LoadSettingDialogBackground();
             LoadMinusButton();
+            LoadPlusButton();
+            LoadVolumeOpenTexture();
+            LoadVolumeCloseTexture();
 
             Debug.WriteLine("Load Texture2Ds Done ");
         }
@@ -1344,7 +1347,36 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
-
-       
+        private void LoadPlusButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.SETTING_PLUS;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Setting/setting_plus"));
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Setting/setting_plus_touch"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+        private void LoadVolumeOpenTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.SETTING_VOLUME_OPEN;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Setting/setting_volume_open"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+        private void LoadVolumeCloseTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.SETTING_VOLUME_CLOSE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Dialog/Setting/setting_volume_close"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
     }
 }

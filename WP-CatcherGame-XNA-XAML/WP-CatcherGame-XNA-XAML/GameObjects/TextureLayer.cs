@@ -25,7 +25,6 @@ namespace CatcherGame.GameObjects
         {
             Init();
         }
-        
 
         protected override void Init()
         {

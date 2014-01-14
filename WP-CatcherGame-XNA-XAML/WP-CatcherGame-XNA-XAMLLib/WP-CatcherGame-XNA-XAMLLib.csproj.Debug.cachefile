@@ -167,6 +167,8 @@ Content\Dialog\Setting\setting_back.xnb
 Content\Menu\volume_touch.xnb
 Content\Dialog\Setting\setting_minus.xnb
 Content\Dialog\Setting\setting_minus_touch.xnb
+Content\Dialog\Setting\setting_plus.xnb
+Content\Dialog\Setting\setting_plus_touch.xnb
 Content\CurrentScoreFont.xnb
 Content\LostPeopleFont.xnb
 Content\SavedPeopleFont.xnb
@@ -178,4 +180,6 @@ Content\Sound\caught-2.xnb
 Content\Sound\click-1.xnb
 Content\Song\drum_wav.xnb
 Content\Song\drum_mp3.xnb
+Content\Dialog\Setting\setting_volume_open.xnb
+Content\Dialog\Setting\setting_volume_close.xnb
 Content\Song\drum_mp3.wma

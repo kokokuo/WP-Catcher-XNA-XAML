@@ -140,6 +140,8 @@ namespace CatcherGame.TextureManager
         //SETTING----------------------
         SETTING_BACKGROUND,
         SETTING_MINUS,
-        SETTING_PLUS
+        SETTING_PLUS,
+        SETTING_VOLUME_OPEN,
+        SETTING_VOLUME_CLOSE
     }
 }
