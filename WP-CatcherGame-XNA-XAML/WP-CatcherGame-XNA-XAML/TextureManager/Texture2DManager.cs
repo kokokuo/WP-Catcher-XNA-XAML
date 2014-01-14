@@ -35,6 +35,7 @@ namespace CatcherGame.TextureManager
             LoadHowToPlayButton();
             LoadTopScoreButton();
             LoadDictionaryButton();
+            LoadSettingButton();
 
             //載入對話框關閉用的按鈕
             LoadCloseDialog();
@@ -213,7 +214,16 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
-
+        private void LoadSettingButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.MENU_SETTING_BUTTON;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.GetContentManager.Load<Texture2D>("Menu/volume"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
         //選單
         private void LoadMenuBackground()
         {

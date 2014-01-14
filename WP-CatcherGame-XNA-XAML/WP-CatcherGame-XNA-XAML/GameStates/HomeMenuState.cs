@@ -21,6 +21,7 @@ namespace CatcherGame.GameStates
         Button topScoreButton;
         Button collectionDictionaryButton;
         Button howToPlayButtion;
+        Button settingButton;
         TextureLayer menuSide;
 
         Song backgroundSong;
@@ -32,6 +33,7 @@ namespace CatcherGame.GameStates
                 dialogTable.Add(DialogStateEnum.STATE_DICTIONARY, new DictionaryDialog(this));
                 dialogTable.Add(DialogStateEnum.STATE_TOPSCORE, new TopScoreDialog(this));
                 dialogTable.Add(DialogStateEnum.STATE_HOW_TO_PLAY, new HowToPlayDialog(this));
+                //dialogTable.Add(DialogStateEnum.STATE_SETTING, new SettingDialog(this));
 
                 base.x = 0; base.y = 0;
                 base.backgroundPos = new Vector2(base.x, base.y);
@@ -42,7 +44,7 @@ namespace CatcherGame.GameStates
             howToPlayButtion.LoadResource(TexturesKeyEnum.MENU_HOW_TO_PLAY_BUTTON);
             collectionDictionaryButton.LoadResource(TexturesKeyEnum.MENU_DICTIONARY_BUTTON);
             topScoreButton.LoadResource(TexturesKeyEnum.MENU_TOP_SCORE_BUTTON);
-
+            settingButton.LoadResource(TexturesKeyEnum.MENU_SETTING_BUTTON);
             //因為背景只有一張圖,所以這邊我們直接用index抽出圖片
             base.background = GetTexture2DList(TexturesKeyEnum.MENU_BACKGROUND)[0];
 
@@ -75,6 +77,7 @@ namespace CatcherGame.GameStates
             collectionDictionaryButton = new Button(this, objIdCount++, 0, 0);
             howToPlayButtion = new Button(this, objIdCount++, 0, 0);
             menuSide = new TextureLayer(this, objIdCount++, 0, 0);
+            settingButton = new Button(this, objIdCount++, 0, 0);
 
 
             //這邊的加入有順序,越下面的遊戲元件在繪圖時也會被繪製在最上層
@@ -82,6 +85,7 @@ namespace CatcherGame.GameStates
             AddGameObject(topScoreButton);
             AddGameObject(collectionDictionaryButton);
             AddGameObject(howToPlayButtion);
+            AddGameObject(settingButton);
             AddGameObject(menuSide);
 
 

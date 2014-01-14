@@ -47,6 +47,7 @@ namespace WP_CatcherGame_XNA_XAML
             else
             {
                 logo.Begin();
+                NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
             }
 
             

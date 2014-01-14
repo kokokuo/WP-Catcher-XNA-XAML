@@ -11,7 +11,8 @@ namespace CatcherGame.GameStates.Dialog
         STATE_DICTIONARY ,
         STATE_TOPSCORE,
         STATE_HOW_TO_PLAY,
-        STATE_PAUSE
+        STATE_PAUSE,
+        STATE_SETTING
         //STATE_EXIT_GAME ->好像沒用到 先註解掉
     }
 }
