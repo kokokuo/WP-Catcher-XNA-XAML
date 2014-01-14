@@ -7,6 +7,9 @@
       <Capability Name="ID_CAP_MEDIALIB" />
       <Capability Name="ID_CAP_SENSORS" />
     </Capabilities>
+    <Requirements>
+      <Requirement Name="ID_REQ_MEMORY_90" />
+    </Requirements>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
     </Tasks>
