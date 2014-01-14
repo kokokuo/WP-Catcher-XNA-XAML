@@ -32,8 +32,10 @@ namespace WP_CatcherGame_XNA_XAML
         {
             FrameworkDispatcher.Update();
             //處理6.5.1
-            if (MediaPlayer.State == MediaState.Playing | !MediaPlayer.GameHasControl)
+            //使用者有在放音樂 GameHasControl = false,沒有放音樂是true
+            if (!MediaPlayer.GameHasControl)
             {
+
                 string msg = String.Format("Music + Videos Hub is currently playing music. Catcher Game needs to stop music.\nPlease click Ok to continue or Cancel to close the Catcher Game.");
                 MessageBoxResult res = MessageBox.Show(msg, "Music + Videos Hub", MessageBoxButton.OKCancel);
                 if (res == MessageBoxResult.Cancel)
@@ -42,18 +44,18 @@ namespace WP_CatcherGame_XNA_XAML
                 }
                 else
                 {
+                    //有在撥放音樂,Stop (PodCast播客不包含,Podcast是走AudioPlayer,不過進入遊戲後Mediaplayer優先權高,所以會關掉Podcast)
+                    if (MediaPlayer.State == MediaState.Playing) {
+                        MediaPlayer.Stop();
+                    }
                     logo.Begin();
-                    NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
                 }
             }
             else
             {
-                
-                logo.Begin();
-                NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
+                logo.Begin();          
             }
 
-            
         }
 
         private void Exit() {
@@ -64,8 +66,7 @@ namespace WP_CatcherGame_XNA_XAML
         //當動畫播完後會進入此事件，導向遊戲選單
         private void DoubleAnimationUsingKeyFrames_Completed(object sender, EventArgs e)
         {
-            Exit();
-            //NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
         }
     }
 }

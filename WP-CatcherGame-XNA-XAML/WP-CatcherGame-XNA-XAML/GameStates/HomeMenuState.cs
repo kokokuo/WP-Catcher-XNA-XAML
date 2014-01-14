@@ -66,7 +66,7 @@ namespace CatcherGame.GameStates
             base.clickSound = base.mainGame.GetSoundEffectManagerByKey(SoundManager.SoundEffectKeyEnum.CLICK_SOUND);
             //音樂
             backgroundSong = base.mainGame.GetGameSongManagerByKey(SongManager.GameSongKeyEnum.MENU_BACKGOUND_SONG);
-            MediaPlayer.IsRepeating = true; //設定要重複撥放
+           
         }
 
         public override void BeginInit()
@@ -104,6 +104,7 @@ namespace CatcherGame.GameStates
         {
             if (!isPlayedBackgroundSong) {
                 MediaPlayer.Play(backgroundSong);
+                MediaPlayer.IsRepeating = true; //設定要重複撥放
                 isPlayedBackgroundSong = true;
             }
 
