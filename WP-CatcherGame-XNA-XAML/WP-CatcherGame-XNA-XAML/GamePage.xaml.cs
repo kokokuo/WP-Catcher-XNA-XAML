@@ -87,19 +87,19 @@ namespace WP_CatcherGame_XNA_XAML
         ContentManager contentManager;
         GameTimer timer;
         SpriteBatch spriteBatch;
+        
+        //音樂管理器
         GameSongManager songManager;
+        //音效管理器
         SoundEffectManager soundManager;
-        Queue<TouchLocation> touchQueue;
+        //圖片管理器
+        Texture2DManager texture2DManager;
+        //文字管理器
+        SpriteFontManager fontManager;
 
         //遊戲狀態表
         Dictionary<GameStateEnum, GameState> gameStateTable;
         GameState pCurrentScreenState;
-
-        //圖片管理器
-        Texture2DManager texture2DManager;
-
-        //文字管理器
-        SpriteFontManager fontManager;
 
         //現在這張frame所擁有的所有觸控點集合
         TouchCollection currtenTouchCollection;
@@ -124,8 +124,6 @@ namespace WP_CatcherGame_XNA_XAML
             // 從應用程式取得內容管理員
             contentManager = (Application.Current as App).Content;
 
-           
-
             // 為這個頁面建立計時器
             timer = new GameTimer();
             timer.UpdateInterval = TimeSpan.FromTicks(333333);
@@ -146,7 +144,6 @@ namespace WP_CatcherGame_XNA_XAML
             TouchPanel.DisplayOrientation = Microsoft.Xna.Framework.DisplayOrientation.LandscapeLeft;
             TouchPanel.EnabledGestures = GestureType.Tap | GestureType.FreeDrag | GestureType.None | GestureType.Hold;
 
-            touchQueue = new Queue<TouchLocation>();
 
             //三軸加速器
             accVector = new Vector3();
@@ -206,16 +203,11 @@ namespace WP_CatcherGame_XNA_XAML
                 // TODO: 在此處使用 this.content 載入遊戲內容
                 InitState();
               
-
                 isGameFirstEnter = false;
                 pCurrentScreenState.LoadResource();
             }
             else {
-                //gameStateTable.Clear();
-                //gameStateTable.Add(GameStateEnum.STATE_MENU, ((Dictionary<GameStateEnum, GameState>)settings["gameStateTable"])[GameStateEnum.STATE_MENU]);
-                //gameStateTable.Add(GameStateEnum.STATE_START_COMIC, ((Dictionary<GameStateEnum, GameState>)settings["gameStateTable"])[GameStateEnum.STATE_START_COMIC]);
-                //gameStateTable.Add(GameStateEnum.STATE_PLAYGAME, ((Dictionary<GameStateEnum, GameState>)settings["gameStateTable"])[GameStateEnum.STATE_PLAYGAME]);
-                //gameStateTable.Add(GameStateEnum.STATE_GAME_OVER, ((Dictionary<GameStateEnum, GameState>)settings["gameStateTable"])[GameStateEnum.STATE_GAME_OVER]);
+              
             }
             
 
@@ -233,19 +225,6 @@ namespace WP_CatcherGame_XNA_XAML
 
             // 設定圖形裝置的共用模式，以關閉 XNA 呈現 
             SharedGraphicsDeviceManager.Current.GraphicsDevice.SetSharingMode(false);
-            
-            
-            // txtInput is a TextBox defined in XAML.
-            //if (!settings.Contains("GameTable"))
-            //{
-                
-            //    settings.Add("GameTable", gameStateTable);
-            //}
-            //else
-            //{
-            //    settings["GameTable"] = gameStateTable;
-            //}
-            //settings.Save();
             
 
             base.OnNavigatedFrom(e);
@@ -267,14 +246,12 @@ namespace WP_CatcherGame_XNA_XAML
                     NavigationService.RemoveBackEntry();
                 }
             }
-            catcherTile.GetNewCatcherRecord();     //取得新的紀錄到Tile中
+            //取得新的紀錄到Tile中
+            catcherTile.GetNewCatcherRecord();     
                 
             TouchCollection tc = TouchPanel.GetState();
             currtenTouchCollection = tc;
-            foreach (TouchLocation location in tc)
-            {
-                touchQueue.Enqueue(location);
-            }
+
             pCurrentScreenState.Update();
         }
 
@@ -305,23 +282,6 @@ namespace WP_CatcherGame_XNA_XAML
             //處理每一個狀態下觸發返回鍵時的相對處理
             pCurrentScreenState.HandleBackButtonPressed();
             base.OnBackKeyPress(e);
-        }
-        /// <summary>
-        /// 清除TouchQueue裡面的所有狀態
-        /// </summary>
-        public void ClearTouchQueue()
-        {
-            touchQueue.Clear();
-        }
-
-        public bool IsEmptyQueue()
-        {
-            if (touchQueue.Count != 0) return false;
-            else return true;
-        }
-        public TouchLocation GetTouchLocation()
-        {
-            return touchQueue.Dequeue();
         }
 
         /// <summary>
@@ -355,8 +315,6 @@ namespace WP_CatcherGame_XNA_XAML
         }
 
 
-
-
         public void SetNextGameState(GameStateEnum nextStateKey)
         {
             //切換遊戲狀態
@@ -383,6 +341,9 @@ namespace WP_CatcherGame_XNA_XAML
             return SharedGraphicsDeviceManager.Current.PreferredBackBufferWidth;
         }
         
+        /// <summary>
+        /// 取得資源管理物件，來加入資源(音效圖片等到管理器中ex: SongManager, Texture2DManager...)
+        /// </summary>
         public ContentManager GetContentManager{
             get { return this.contentManager; }
         }

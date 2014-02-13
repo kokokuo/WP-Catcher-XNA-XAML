@@ -90,7 +90,7 @@ namespace CatcherGame.GameStates
 
 
             //設定消防員的移動邊界(包含角色掉落的邊界也算在內)
-            base.rightGameScreenBorder = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0].Width; ;
+            base.rightGameScreenBorder = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0].Width;
             base.leftGameScreenBorder = 0;
             isOver = false;
             isWriteingFile = false;

@@ -29,7 +29,7 @@ namespace CatcherGame.GameStates
         protected int y;
         protected int width;
         protected int height;
-        protected bool isInit;
+        protected bool isInit; //是否初始化過,如果被釋放資源了,則須重新初始化(BeginInit)
         protected Dictionary<DialogStateEnum, GameDialog> dialogTable;
         protected GameDialog pCurrentDialog;
         protected bool hasDialogShow;
@@ -39,13 +39,13 @@ namespace CatcherGame.GameStates
         protected float leftGameScreenBorder,rightGameScreenBorder; //遊戲狀態的左右邊界
         protected int objIdCount;
         protected bool isPlayedBackgroundSong; //是否播放背景音樂
-        protected SoundEffect clickSound;
+        protected SoundEffect clickSound; //點擊的聲音，因為每一個狀態都有點擊，所以放在抽象類別此
         protected SaveTemporaryGameStateInfo temporaryGameInfo;
        
-        public GameState(GamePage mainGamePointer)
+        public GameState(GamePage pMainGame)
         {
             gameObjects = new List<GameObject>();
-            this.mainGame = mainGamePointer;
+            this.mainGame = pMainGame; //取得參考(指標)
             isInit = false;
             width = mainGame.GetDeviceScreenWidth();
             height = mainGame.GetDeviceScreenHeight() ;
@@ -94,11 +94,12 @@ namespace CatcherGame.GameStates
         }
 
         /// <summary>
-        /// 處理返回鍵被按壓
+        /// 處理返回鍵被按壓(每一個狀態都要處理)
         /// </summary>
         public abstract void HandleBackButtonPressed();
+
         /// <summary>
-        /// 取得背景圖
+        /// 取得背景圖(透過取得背景圖可以用來做一些圖片的位置擺放時的相對位置參考)
         /// </summary>
         /// <returns></returns>
         public Texture2D GetBackgroundTexture()
@@ -122,7 +123,7 @@ namespace CatcherGame.GameStates
             this.objIdCount++;
         }
         /// <summary>
-        /// 取得遊戲螢幕的左邊邊框值
+        /// 取得此遊戲狀態螢幕的左邊邊框值
         /// </summary>
         /// <returns></returns>
         public float GetLeftGameScreenBorder()
@@ -131,28 +132,12 @@ namespace CatcherGame.GameStates
         }
 
         /// <summary>
-        /// 取得遊戲螢幕的右邊邊框值
+        /// 取得此遊戲狀態螢幕的右邊邊框值
         /// </summary>
         /// <returns></returns>
         public float GetRightGameScreenBorder()
         {
             return this.rightGameScreenBorder;
-        }
-
-
-
-        public bool IsEmptyQueue()
-        {
-            return mainGame.IsEmptyQueue();
-            
-        }
-        /// <summary>
-        /// 從MainGame中取得點擊時的資料
-        /// </summary>
-        /// <returns></returns>
-        public TouchLocation GetTouchLocation()
-        {
-            return mainGame.GetTouchLocation();
         }
 
         /// <summary>
@@ -289,18 +274,17 @@ namespace CatcherGame.GameStates
         }
 
         /// <summary>
-        /// 透過mainGame清除TouchQueue裡面的所有狀態
+        /// 取得手機裝置的寬(因為設定橫拿, 所以寬比較大)
         /// </summary>
-        public void ClearTouchQueue()
-        {
-            mainGame.ClearTouchQueue();
-        }
-
-
+        /// <returns></returns>
         public int GetDeviceScreenWidthByMainGame()
         {
             return mainGame.GetDeviceScreenWidth();
         }
+        /// <summary>
+        /// 取得手機裝置的高(因為設定橫拿, 所以高比較小)
+        /// </summary>
+        /// <returns></returns>
         public int GetDeviceScreenHeightByMainGame()
         {
             return mainGame.GetDeviceScreenHeight();
