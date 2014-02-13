@@ -18,13 +18,14 @@ namespace CatcherGame.GameStates
 {
     public class HomeMenuState : GameState
     {
+        //按鈕元件
         Button playButton;
         Button topScoreButton;
         Button collectionDictionaryButton;
         Button howToPlayButtion;
         Button settingButton;
         TextureLayer menuSide;
-
+        //背景音樂
         Song backgroundSong;
         
         public HomeMenuState(GamePage gMainGame)
