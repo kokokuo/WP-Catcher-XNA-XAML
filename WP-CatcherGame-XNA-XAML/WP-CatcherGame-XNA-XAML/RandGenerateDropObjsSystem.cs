@@ -238,7 +238,7 @@ namespace CatcherGame
                 if (priorityDropObjKey != DropObjectsKeyEnum.EMPTY) //如果有符合的機率產生角色
                 {
                     //加入至陣列
-                    Creature c = new Creature(this.currentState, priorityDropObjKey, this.currentState.GetObjId(), x, y,
+                    Creature c = new Creature(this.currentState, priorityDropObjKey, this.currentState.GetCurrentObjId(), x, y,
                         generaterCreatureReocrd[priorityDropObjKey].FallSpeed,
                         generaterCreatureReocrd[priorityDropObjKey].WaveDisplacement,
                         ((CreatureDataRecord)generaterCreatureReocrd[priorityDropObjKey]).WalkSpeed,
@@ -281,7 +281,7 @@ namespace CatcherGame
                 if (priorityDropObjKey != DropObjectsKeyEnum.EMPTY) //如果有符合的機率產生角色
                 {
                     //加入至陣列
-                    EffectItem item = new EffectItem(this.currentState, priorityDropObjKey, this.currentState.GetObjId(), x, y,
+                    EffectItem item = new EffectItem(this.currentState, priorityDropObjKey, this.currentState.GetCurrentObjId(), x, y,
                         generaterEffectItemReocrd[priorityDropObjKey].FallSpeed,
                         generaterEffectItemReocrd[priorityDropObjKey].WaveDisplacement,
                         ((EffectItemDataRecord)generaterEffectItemReocrd[priorityDropObjKey]).EffectTimer);

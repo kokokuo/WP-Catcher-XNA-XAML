@@ -31,7 +31,7 @@ namespace CatcherGame.GameStates
         protected int height;
         protected bool isInit; //是否初始化過,如果被釋放資源了,則須重新初始化(BeginInit)
         protected Dictionary<DialogStateEnum, GameDialog> dialogTable;
-        protected GameDialog pCurrentDialog;
+        protected GameDialog pCurrentDialog; //現在的Dialog
         protected bool hasDialogShow;
         protected GamePage mainGame;
         protected Texture2D background; //此遊戲狀態的背景圖
@@ -111,7 +111,7 @@ namespace CatcherGame.GameStates
         /// 取得目前遊戲中的Id值
         /// </summary>
         /// <returns></returns>
-        public int GetObjId()
+        public int GetCurrentObjId()
         {
             return this.objIdCount;
         }
@@ -293,11 +293,13 @@ namespace CatcherGame.GameStates
         {
             mainGame.LoginFacebook();
         }
-        //判斷是否為靜音
+        /// <summary>
+        /// 判斷是否為靜音，這邊之後要改成有聲音與沒聲音，不用條音量了
+        /// </summary>
         public void SoundEffectPlay()
         {
             if(MediaPlayer.Volume!=0.0f)
-            clickSound.Play();
+                clickSound.Play();
         }
     }
 

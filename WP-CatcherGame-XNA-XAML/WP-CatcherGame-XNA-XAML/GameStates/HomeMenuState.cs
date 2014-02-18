@@ -37,8 +37,6 @@ namespace CatcherGame.GameStates
                 dialogTable.Add(DialogStateEnum.STATE_HOW_TO_PLAY, new HowToPlayDialog(this));
                 dialogTable.Add(DialogStateEnum.STATE_SETTING, new SettingDialog(this));
 
-                base.x = 0; base.y = 0;
-                base.backgroundPos = new Vector2(base.x, base.y);
         }
 
         public override void LoadResource(){
@@ -73,6 +71,8 @@ namespace CatcherGame.GameStates
 
         public override void BeginInit()
         {
+            base.x = 0; base.y = 0;
+            base.backgroundPos = new Vector2(base.x, base.y);
             base.objIdCount = 0; 
             playButton = new Button(this, objIdCount++,0,0);
             topScoreButton = new Button(this, objIdCount++, 0, 0);
@@ -145,7 +145,7 @@ namespace CatcherGame.GameStates
                     if (isClickPlay && !(isClickDictionary || isClickTopScore || isClickHowToPlay))
                     {
                         Debug.WriteLine("CLICK!! STATE_START_COMIC");
-                        SoundEffectPlay();//base.clickSound.Play();
+                        SoundEffectPlay();
                         
                         //停止音樂
                         isPlayedBackgroundSong = false;
@@ -156,14 +156,14 @@ namespace CatcherGame.GameStates
                     else if (isClickDictionary && !(isClickPlay || isClickTopScore || isClickHowToPlay||isClickSetting))
                     {
                         Debug.WriteLine("CLICK!! STATE_DICTIONARY");
-                        SoundEffectPlay();//base.clickSound.Play();
+                        SoundEffectPlay();
                         //設定彈出DictionaryDialog
                         base.SetPopGameDialog(DialogStateEnum.STATE_DICTIONARY);
                     }
                     else if (isClickTopScore && !(isClickPlay || isClickDictionary || isClickHowToPlay || isClickSetting))
                     {
                         Debug.WriteLine("CLICK!! STATE_TOPSCORE");
-                        SoundEffectPlay();//base.clickSound.Play();
+                        SoundEffectPlay();
                         //設定彈出GameDialog
                         base.SetPopGameDialog(DialogStateEnum.STATE_TOPSCORE);
                     }
@@ -186,7 +186,7 @@ namespace CatcherGame.GameStates
             base.Update();
         }
         /// <summary>
-        /// 複寫處理
+        /// 複寫處理(當Back鍵被按下時啟動)
         /// </summary>
         public override void HandleBackButtonPressed() {
             //如果有在顯示Dialog =>關閉Dialog

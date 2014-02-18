@@ -22,11 +22,10 @@ namespace CatcherGame.GameStates
         int FIREMAN_INIT_Y ;
         int RIGHT_DROPITEM_X_BORDER;
         int LEFT_DROPITEM_BORDER;
-        int MOVE_BUTTON_Y_POS = 355;
-        int LIFE_X = 710;
-        int LIFE_Y = 20;
-        int SCORE_X = 15;
-        int SCORE_Y = 95;
+        int LIFE_X;
+        int LIFE_Y;
+        int SCORE_X;
+        int SCORE_Y ;
 
         float savedPeoplefontX;
         float savedPeoplefontY;
@@ -54,8 +53,9 @@ namespace CatcherGame.GameStates
         List<DropObjects> fallingObjects;
        
         RandGenerateDropObjsSystem randSys;
-        bool isOver,isWriteingFile;
-
+        bool isOver,isWritingFile; //是否結束, 是否正在寫檔案
+        
+        //紀錄手指拖移時的座標點
         LinkedList<TouchLocation> moveLocationList;
         public PlayGameState(GamePage gMainGame) 
             :base(gMainGame)
@@ -64,9 +64,7 @@ namespace CatcherGame.GameStates
             dialogTable.Add(DialogStateEnum.STATE_PAUSE, new PauseDialog(this));
             fallingObjects = new List<DropObjects>();
             willRemoveObjectId = new List<int>();
-            base.x = 0; base.y = 0;
-            base.backgroundPos = new Vector2(base.x, base.y);
-
+          
             moveLocationList = new LinkedList<TouchLocation>();
         }
 
@@ -74,26 +72,34 @@ namespace CatcherGame.GameStates
 
         public override void BeginInit()
         {
+            base.x = 0; base.y = 0;
+            base.backgroundPos = new Vector2(base.x, base.y);
+            //計算消防員的起始位置
             int player_x = base.GetDeviceScreenWidthByMainGame() / 2 - 
                 (base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_LEFT)[0].Width + base.GetTexture2DList(TexturesKeyEnum.PLAY_NET_NORMAL)[0].Width + base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_RIGHT)[0].Width) / 2;
             int player_y = base.GetDeviceScreenHeightByMainGame() - 
                 base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height / 2 -  ( base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_LEFT)[0].Height + base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN_RIGHT)[0].Height)/2;
             FIREMAN_INIT_X = player_x;
             FIREMAN_INIT_Y = player_y;
+            //計算遊戲中的邊界(因為考慮到消防員的人物位置掉下來會接不到，所以要扣除消防員的區塊)
             RIGHT_DROPITEM_X_BORDER = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_LIFE)[0].Width;
             LEFT_DROPITEM_BORDER = base.GetTexture2DList(TexturesKeyEnum.PLAY_SCORE)[0].Width;
-            MOVE_BUTTON_Y_POS = base.GetDeviceScreenHeightByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height / 2 -base.GetTexture2DList(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON)[0].Height;
-            LIFE_X = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_LIFE)[0].Width -30; //- 70;
+            
+            
+            //顯示生命數
+            LIFE_X = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_LIFE)[0].Width -30;
             LIFE_Y = 20;
+            //顯示分數的座標
             SCORE_X = 15;
             SCORE_Y = base.GetTexture2DList(TexturesKeyEnum.PLAY_PAUSE_BUTTON)[0].Height;
 
 
             //設定消防員的移動邊界(包含角色掉落的邊界也算在內)
-            base.rightGameScreenBorder = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0].Width;
             base.leftGameScreenBorder = 0;
+            base.rightGameScreenBorder = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0].Width;
+            
             isOver = false;
-            isWriteingFile = false;
+            isWritingFile = false;
             //初始化隨機角色產生系統
             randSys = new RandGenerateDropObjsSystem(this, 2,3, 3,3,5,2);
             randSys.SetBorder(LEFT_DROPITEM_BORDER, RIGHT_DROPITEM_X_BORDER);
@@ -102,8 +108,6 @@ namespace CatcherGame.GameStates
             lostPeopleNumber = 3;
             savedPeopleNumber = 0;
             pauseButton = new Button(this, objIdCount++, 0, 0);
-           // leftMoveButton = new Button(this, objIdCount++, LEFT_DROPITEM_BORDER, MOVE_BUTTON_Y_POS);
-            //rightMoveButton = new Button(this, objIdCount++, RIGHT_DROPITEM_X_BORDER, MOVE_BUTTON_Y_POS);
 
             player = new FiremanPlayer(this, objIdCount++, FIREMAN_INIT_X, FIREMAN_INIT_Y);
             player.SaveNewPerson +=player_SaveNewPerson;
@@ -143,9 +147,6 @@ namespace CatcherGame.GameStates
             //訂閱事件
             randSys.GenerateDropObjs += randSys_GenerateDropObjs;
 
-            //加入圖層
-            //AddGameObject(leftMoveButton);
-           // AddGameObject(rightMoveButton);
             AddGameObject(pauseButton);
 
             //對 對話框做初始化
@@ -288,14 +289,14 @@ namespace CatcherGame.GameStates
             }
             saveData.CurrentSavePeopleNumber = savedPeopleNumber;
 
-            if (!isWriteingFile)
+            if (!isWritingFile)
             {
                 try
                 {
                     FileStorageHelper.StorageHelperSingleton.Instance.SaveGameRecordData(saveData);
                 }
                 catch { }
-                isWriteingFile = true;
+                isWritingFile = true;
             }
         }
 
@@ -339,6 +340,7 @@ namespace CatcherGame.GameStates
                         }
                         if (moveLocationList.Count >= 2 && player.GetBeTouched())
                         {
+                            //計算前一點與目前點擊的座標位移差
                             float vectorX = (moveLocationList.First.Next.Value.Position.X - moveLocationList.First.Value.Position.X);
                             moveLocationList.RemoveFirst();
                             player.MoveByTouch(vectorX);
@@ -388,16 +390,15 @@ namespace CatcherGame.GameStates
             scoreTexture.Draw(gSpriteBatch);
             //繪製文字資源
             //座標位置以調整為依照圖片之間的位置距離去設定,帶有待調整
-            //
+            
             savedPeoplefontX = ((SCORE_X + scoreTexture.Width)/2) - savedPeopleNumberFont.MeasureString(savedPeopleNumber.ToString()).X/2 +5;
             savedPeoplefontY = ((SCORE_Y + scoreTexture.Height)/2) + savedPeopleNumberFont.MeasureString(savedPeopleNumber.ToString()).Y/2 - 10;
-            lifefontX = LIFE_X + lifeTexture.Width -5;
+            lifefontX = LIFE_X + lifeTexture.Width -5; 
             lifefontY = LIFE_Y - 10; //微修正
             gSpriteBatch.DrawString(savedPeopleNumberFont, savedPeopleNumber.ToString(), new Vector2(savedPeoplefontX, savedPeoplefontY), Color.White);
             gSpriteBatch.DrawString(lostPeopleNumberFont, lostPeopleNumber.ToString(), new Vector2(lifefontX, lifefontY), Color.White);
-
-          
         }
+        
         
 
         /// <summary>
@@ -437,7 +438,7 @@ namespace CatcherGame.GameStates
         /// <param name="fallingObj"></param>
         public void RemoveDropObjs(DropObjects fallingObj) {
             fallingObjects.Remove(fallingObj);
-            //不可Dispose,Dispose應該要由GameObjects來做
+            //不可Dispose,Dispose應該要由GameObjects物件來做
         }
 
         public TextureLayer GetLifeTextureLayer() {
