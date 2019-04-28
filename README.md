@@ -17,7 +17,7 @@ Sometimes, there will be some special effects props falling in the game, such as
 </p>
 
 ## Platform and Tools
-Developing the game by **C#**, **XNA 3.0 Game Framework**. Through Windows Phone App XAML Process invoke XNA Game Graphics system to rendering on **Windows Phone** Platfrom.
+Developing the game by **C#**, **XNA 3.0 Game Framework**. Through **Windows Phone App XAML Process** invokes **XNA Game Graphics system** to rendering on **Windows Phone** Platfrom.
 
 ## Team Member 
 * Eason Kuo: Team Leading / Game Developer / The Game Development and Architecture Coaching 
