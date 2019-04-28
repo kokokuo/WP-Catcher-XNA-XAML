@@ -1,6 +1,3 @@
-WP-Catcher-XNA-XAML
-===================
-
 # Catcher Game Windows Project 
 This is Catcher Game build on XNA Game Framework and XNA rendering by XAML Procss on Windows Phone Prject.
 
