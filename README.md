@@ -24,6 +24,8 @@ Developing the game by **C#**, **XNA 3.0 Game Framework**. Through **Windows Pho
 * Rick Chiang : Game and Web API Developer / Project Management / Resoueces Providing
 * Hsin-Yu Shih : Game Material Desgner / Idea Thinking
 
+## Game Itroduction Slide
+You could read the game introduction slide from the **[slide link](../master/CcatcherGame%20Intro%20(Final%20ver4).pdf)**
 
 ## Game Demo Video
 You could watch the game demo from the **[Video Link](https://www.youtube.com/watch?v=ouuagv4ibdc)**
