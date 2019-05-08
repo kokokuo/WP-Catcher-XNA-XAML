@@ -25,5 +25,8 @@ Eason Kuo: 團隊領導 / 遊戲開發 / 遊戲開發與架構指導
 Rick Chiang : 遊戲和 Web API 開發 / 專案管理 / 外部資源提供
 Hsin-Yu Shih : 遊戲素材設計師 / 點子思考
 
+## 遊戲介紹 Slide :
+你可以透過此連結觀看遊戲的介紹 Slide : **[Slide 連結](../master/CcatcherGame%20Intro%20(Final%20ver4).pdf)**
+
 ## 遊戲影片：
 你可以透過此連結看到遊戲的 Demo 影片： **[影片連結](https://www.youtube.com/watch?v=ouuagv4ibdc)**
