@@ -1,5 +1,5 @@
 # Catcher Game (Windows Phone Game) 
-This is Catcher Game build on **XNA Game Framework** and **rendering XNA Graphic** by **XAML Procss** of Windows Phone Project.
+This is Catcher Game build on **XNA Game Framework** and **rendering XNA Graphic** by **XAML Process** of Windows Phone Project.
 
 ## Summary
 A Catch game with firefighters in the background to save people. The game is a "side-scrolling game where players need to operate two firefighters with a hand-held safety net to catch people from the high-rise building who are not in a hurry to escape.
@@ -17,7 +17,7 @@ Sometimes, there will be some special effects props falling in the game, such as
 </p>
 
 ## Platform and Tools
-Developing the game by **C#**, **XNA 3.0 Game Framework**. Through **Windows Phone App XAML Process** invokes **XNA Game Graphics system** to rendering on **Windows Phone** Platfrom.
+Developing the game by **C#**, **XNA 3.0 Game Framework**. Through **Windows Phone App XAML Process** invokes **XNA Game Graphics system** to rendering on **Windows Phone** Platform.
 
 ## Team Member 
 * Eason Kuo: Team Leading / Game Developer / The Game Development and Architecture Coaching 
