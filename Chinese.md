@@ -1,4 +1,4 @@
-# Catcher Game Windows Phone 專案
+# Catcher Game (Windows Phone Game)
 這款 Catcher Game 採用 **XNA 遊戲框架** 開發，並透過 Windows Phone App XAML 來啟動 XNA 遊戲圖像引擎繪製在 Windows Phone 平台上。
 
 ## 中文簡介：
