@@ -1,4 +1,4 @@
-# Catcher Game Windows Project 
+# Catcher Game Windows Phone Project 
 This is Catcher Game build on **XNA Game Framework** and **rendering XNA Graphic** by **XAML Procss** of Windows Phone Prject.
 
 ## Summary
